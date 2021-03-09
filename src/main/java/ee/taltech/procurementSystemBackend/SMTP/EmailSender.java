@@ -13,11 +13,11 @@ public class EmailSender {
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("127.0.0.1");
-        mailSender.setPort(25);
+        mailSender.setHost("smtp-mail.outlook.com");
+        mailSender.setPort(587);
 
-        mailSender.setUsername("a");
-        mailSender.setPassword("b");
+        mailSender.setUsername("minihanked@outlook.com");
+        mailSender.setPassword("tarkvaratehnikaprojekt2021");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
