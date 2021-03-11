@@ -22,7 +22,8 @@ public class TestController {
     public String group1(Authentication authentication) {
         DefaultOidcUser principal = (DefaultOidcUser) authentication.getPrincipal();
         String username = principal.getPreferredUsername();
-        return "Hello " + username;
+        String fullName = principal.getFullName();
+        return "Hello " + username + " your name is " + fullName;
     }
 
     @GetMapping("userdetails")
