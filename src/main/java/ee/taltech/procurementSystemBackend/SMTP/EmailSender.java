@@ -10,14 +10,14 @@ import java.util.Properties;
 
 public class EmailSender {
 
-    @Bean
+//    @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp-mail.outlook.com");
+        mailSender.setHost("smtp.office365.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("minihanked@outlook.com");
-        mailSender.setPassword("tarkvaratehnikaprojekt2021");
+        mailSender.setUsername("");
+        mailSender.setPassword("");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
