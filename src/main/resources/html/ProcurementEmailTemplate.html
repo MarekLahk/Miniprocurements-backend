@@ -7,25 +7,19 @@
 
         body {
             font-family: Proxima nova, Regular,Verdana,serif ;
-            background-color: #F6F6F6;
-            width: auto;
-            height: auto;
-            display: block;
-            /*justify-content: center;*/
-            /*align-content: center;*/
-            flex-direction: column;
+            color: #353535;
+            background-color: #F6F9FC;
             margin: 0;
             padding: 0;
+
         }
 
         .mainWrapper {
-            background-color: #ffffff;
-            /*height: auto;*/
-            margin: 0;
-            padding: 0;
-            display: block;
-            justify-content: center;
-            flex-direction: column
+            background-color: #F6F9FC;
+            height: 100%;
+            table-layout: fixed;
+            padding-bottom: 40px;
+            /*text-align: center;*/
         }
 
         div {
@@ -36,19 +30,21 @@
             margin: 10px 20px;
             text-align: center;
         }
-        section img {
-            width: 50%;
-            height: auto;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            display:block
-        }
 
         .wrapperSection {
             text-align: left;
             padding-left: 30px;
             padding-right: 30px;
+        }
+        .webkit {
+            max-width: 680px;
+            background-color: white;
+        }
+        .outer {
+            Margin: 0 auto 40px;
+            width: 100%;
+            max-width: 600px;
+            border-spacing: 0;
         }
 
 
@@ -57,21 +53,24 @@
             text-align: center;
             font-style: normal;
             font-weight: bold;
-            font-size: 40px;
+            font-size: 36px;
             margin-top: 0;
         }
 
         h2 {
             text-transform: uppercase;
             font-style: normal;
+            text-align: left;
             font-weight: bold;
             font-size: 28px;
-            line-height: 30px;
+            margin-bottom: 30px;
+            margin-top: 10px;
         }
 
         .bodyText {
             font-size: 14px;
             line-height: 20px;
+            text-align: left;
         }
 
         .textWarning {
@@ -108,24 +107,46 @@
 <body>
 <!--    Body wrapper    -->
 <div class="mainWrapper">
-    <!--   Header section     -->
-    <div>
-        <img src="https://lh6.googleusercontent.com/spVDi-7jPNtzlretiqESKs8VCMPcGxrsUUfx-xQssOMbcz5pKDAZ8Crg7pBHx1dEp3p5UGVjkY2z8w=w1920-h902-rw">
-<!--        <div class="wrapperSection">-->
-            <!--     Procurement name      -->
-            <h1>Mööbli hange</h1>
-<!--        </div>-->
-    </div>
-    <!--   Requirements section     -->
-    <div class="wrapperSection">
-        <hr>
-        <h2>Hanke Tingimused</h2>
-        <p class="bodyText">
-                                        <!--     Framework agreement number       -->
-            Palume teil esitada pakkumus raamlepingu nr <b>207933</b> alusel.
-        </p>
-        <!--    Requirements    -->
-        <p class="bodyText" style="white-space: pre-wrap">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et pellentesque dolor.
+    <div class="webkit">
+        <table class="outer">
+            <tr>
+                <td>
+                    <table width="100%">
+                        <tr>
+                            <td style="background-color: #ffffff; text-align: center">
+                                <img style="max-width: 83%; height: auto" src="https://lh6.googleusercontent.com/6Ebq5WcXtKvEirLAJ1vzwyFNq_iTD6FGjqR4DwKAtWnITiggtgTbsK2EREP31Dw2wh9Qhx_-BVJxYw=w1920-h937-rw">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h1>
+                                    Mööbli hange
+                                </h1>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <hr>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h2>
+                        Hanke Tingimused
+                    </h2>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="bodyText">
+                        <!--     Framework agreement number       -->
+                        Palume teil esitada pakkumus raamlepingu nr <b>207933</b> alusel.
+                    </p>
+                    <!--    Requirements    -->
+                    <p class="bodyText" style="white-space: pre-wrap">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et pellentesque dolor.
 Integer arcu urna, imperdiet sit amet gravida sit amet, tristique sed eros.
 
 Donec arcu risus, luctus vel rutrum venenatis, tristique id nibh.
@@ -135,56 +156,100 @@ lorem sed semper placerat, ante lorem bibendum turpis, et pulvinar est neque qui
 In convallis est at iaculis semper. Integer sed mattis orci, eu aliquet metus.
 Vestibulum mattis, lacus at aliquet molestie, nibh purus tincidunt dui, non ullamcorper purus diam at dui.
 Nam elit diam, scelerisque vel pulvinar eget, egestas vitae massa.
-Nam nec nisl et libero tincidunt auctor non ac risus.</p>
-        <p class="bodyText">
-            Hankeleping sõlmitakse pakkujaga, kes on esitanud madalaima pakkumuse.
-        </p>
-        <p class="bodyText">
-                                    <!--    Procurement offers deadline    -->
-            Pakkumuste esitamise tähtaeg: <b>15.03.2021 12:00</b>.
-        </p>
-        <p class="bodyText textWarning">
-            Pärast pakkumuste esitamise tähtaega laekunud pakkumusi ei arvestata.
-        </p>
-        <p class="bodyText">
-            Kui pakkumuse esitamise tähtpäevaks ei ole laekunud pakkumust, loeb hankija seda minikonkursil osalemisest loobumiseks.
-        </p>
-    </div>
-    <!--   Offer section     -->
-    <div class="wrapperSection">
-        <hr>
-        <h2>Pakkumusete Esitamine</h2>
-        <p class="bodyText">
-            Pakkumuse saate esitada vajutates alljärgnevale nupule “Esita pakkumus”.
-        </p>
-        <a href="https://google.com"><button class="ttButton">Esita pakkumus</button></a>
-    </div>
-    <!--   Questions section     -->
-    <div class="wrapperSection">
-        <hr>
-        <h2>Küsimused</h2>
-        <p class="bodyText">
-            Kõik tekkinud küsimused saate esitada kasutades alljärgnevat nuppu “Esita küsimus”.
-        </p>
-        <a href="https://google.com"><button class="ttButton">Esita küsimus</button></a>
-    </div>
-    <!--   Questions section     -->
-    <div class="wrapperSection">
-        <hr>
-        <p class="footerText">
-            <!--     Procurement contacts name       -->
-            Nimi Nimeste<br>
-            <!--     Procurement contacts job position       -->
-            ametikoht<br>
-            <!--     Procurement contacts department       -->
-            struktuuriüksus (vajadusel)<br>
-            Tallinna Tehnikaülikool<br>
-            <!--     Procurement contacts phone number       -->
-            tel 620 2002, 5123 4567 (mobiilinumber vajadusel)<br>
-            <!--     Procurement contacts email adress       -->
-            nimi.nimeste@taltech.ee<br>
-            www.taltech.ee<br>
-        </p>
+                        Nam nec nisl et libero tincidunt auctor non ac risus.</p>
+                    <p class="bodyText">
+                        Hankeleping sõlmitakse pakkujaga, kes on esitanud madalaima pakkumuse.
+                    </p>
+                    <p class="bodyText">
+                        <!--    Procurement offers deadline    -->
+                        Pakkumuste esitamise tähtaeg: <b>15.03.2021 12:00</b>.
+                    </p>
+                    <p class="bodyText textWarning">
+                        Pärast pakkumuste esitamise tähtaega laekunud pakkumusi ei arvestata.
+                    </p>
+                    <p class="bodyText">
+                        Kui pakkumuse esitamise tähtpäevaks ei ole laekunud pakkumust, loeb hankija seda minikonkursil osalemisest loobumiseks.
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <!--   Header section     -->
+        <div>
+    <!--        <div class="wrapperSection">-->
+                <!--     Procurement name      -->
+                <h1>Mööbli hange</h1>
+    <!--        </div>-->
+        </div>
+        <!--   Requirements section     -->
+        <div class="wrapperSection">
+            <hr>
+            <h2>Hanke Tingimused</h2>
+            <p class="bodyText">
+                                            <!--     Framework agreement number       -->
+                Palume teil esitada pakkumus raamlepingu nr <b>207933</b> alusel.
+            </p>
+            <!--    Requirements    -->
+            <p class="bodyText" style="white-space: pre-wrap">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et pellentesque dolor.
+Integer arcu urna, imperdiet sit amet gravida sit amet, tristique sed eros.
+
+Donec arcu risus, luctus vel rutrum venenatis, tristique id nibh.
+Ut accumsan lectus risus, nec lacinia arcu pretium egestas. Morbi consectetur,
+lorem sed semper placerat, ante lorem bibendum turpis, et pulvinar est neque quis ante.
+
+In convallis est at iaculis semper. Integer sed mattis orci, eu aliquet metus.
+Vestibulum mattis, lacus at aliquet molestie, nibh purus tincidunt dui, non ullamcorper purus diam at dui.
+Nam elit diam, scelerisque vel pulvinar eget, egestas vitae massa.
+    Nam nec nisl et libero tincidunt auctor non ac risus.</p>
+            <p class="bodyText">
+                Hankeleping sõlmitakse pakkujaga, kes on esitanud madalaima pakkumuse.
+            </p>
+            <p class="bodyText">
+                                        <!--    Procurement offers deadline    -->
+                Pakkumuste esitamise tähtaeg: <b>15.03.2021 12:00</b>.
+            </p>
+            <p class="bodyText textWarning">
+                Pärast pakkumuste esitamise tähtaega laekunud pakkumusi ei arvestata.
+            </p>
+            <p class="bodyText">
+                Kui pakkumuse esitamise tähtpäevaks ei ole laekunud pakkumust, loeb hankija seda minikonkursil osalemisest loobumiseks.
+            </p>
+        </div>
+        <!--   Offer section     -->
+        <div class="wrapperSection">
+            <hr>
+            <h2>Pakkumusete Esitamine</h2>
+            <p class="bodyText">
+                Pakkumuse saate esitada vajutates alljärgnevale nupule “Esita pakkumus”.
+            </p>
+            <a href="https://google.com"><button class="ttButton">Esita pakkumus</button></a>
+        </div>
+        <!--   Questions section     -->
+        <div class="wrapperSection">
+            <hr>
+            <h2>Küsimused</h2>
+            <p class="bodyText">
+                Kõik tekkinud küsimused saate esitada kasutades alljärgnevat nuppu “Esita küsimus”.
+            </p>
+            <a href="https://google.com"><button class="ttButton">Esita küsimus</button></a>
+        </div>
+        <!--   Questions section     -->
+        <div class="wrapperSection">
+            <hr>
+            <p class="footerText">
+                <!--     Procurement contacts name       -->
+                Nimi Nimeste<br>
+                <!--     Procurement contacts job position       -->
+                ametikoht<br>
+                <!--     Procurement contacts department       -->
+                struktuuriüksus (vajadusel)<br>
+                Tallinna Tehnikaülikool<br>
+                <!--     Procurement contacts phone number       -->
+                tel 620 2002, 5123 4567 (mobiilinumber vajadusel)<br>
+                <!--     Procurement contacts email adress       -->
+                nimi.nimeste@taltech.ee<br>
+                www.taltech.ee<br>
+            </p>
+        </div>
     </div>
 </div>
 </body>
