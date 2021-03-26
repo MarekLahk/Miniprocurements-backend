@@ -22,6 +22,7 @@ public class ProcurementUtils {
 
     public MiniProcurementDto convertFromProcurementToDto(Miniprocurement procurement) {
         return MiniProcurementDto.builder()
+                .procurementId(procurement.getProcurementId())
                 .procurementName(procurement.getProcurementName())
                 .amount(procurement.getAmount())
                 .description(procurement.getDescription())
