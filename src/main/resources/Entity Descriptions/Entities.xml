@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="ee.taltech.procurementSystemBackend.model.Miniprocurement">
+        <table name="Miniprocurement" schema="miniprocurements" catalog=""/>
+        <attributes>
+            <id name="procurementId">
+                <column name="procurement_id" precision="-1"/>
+            </id>
+            <basic name="procurementName">
+                <column name="procurement_name" length="50"/>
+            </basic>
+            <basic name="amount">
+                <column name="amount" nullable="false" precision="-1"/>
+            </basic>
+            <basic name="description">
+                <column name="description" nullable="false"/>
+            </basic>
+            <basic name="requirements">
+                <column name="requirements" nullable="false"/>
+            </basic>
+            <basic name="contractId">
+                <column name="contract_id" nullable="false" precision="-1"/>
+            </basic>
+            <basic name="timeAdded">
+                <column name="time_added" precision="-1"/>
+            </basic>
+            <basic name="addedBy">
+                <column name="added_by" precision="-1"/>
+            </basic>
+            <basic name="deadline">
+                <column name="deadline" precision="-1"/>
+            </basic>
+            <basic name="status">
+                <column name="status" precision="-1"/>
+            </basic>
+            <basic name="timeFinished">
+                <column name="time_finished" nullable="false" precision="-1"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="ee.taltech.procurementSystemBackend.model.Announcement">
+        <table name="Announcement" schema="miniprocurements" catalog=""/>
+        <attributes>
+            <id name="announcementId">
+                <column name="announcement_id" precision="-1"/>
+            </id>
+            <basic name="procurementId">
+                <column name="procurement_id" precision="-1"/>
+            </basic>
+            <basic name="employeeId">
+                <column name="employee_id" precision="-1"/>
+            </basic>
+            <basic name="announcement">
+                <column name="announcement"/>
+            </basic>
+            <basic name="dateAdded">
+                <column name="date_added" precision="-1"/>
+            </basic>
+        </attributes>
+    </entity>
+    <entity class="ee.taltech.procurementSystemBackend.model.Bid">
+        <table name="Bid" schema="miniprocurements" catalog=""/>
+        <attributes>
+            <id name="bidId">
+                <column name="bid_id" precision="-1"/>
+            </id>
+            <basic name="bidValue">
+                <column name="bid_value" precision="-1"/>
+            </basic>
+            <basic name="description">
+                <column name="description" nullable="false"/>
+            </basic>
+            <basic name="timeOfRegister">
+                <column name="time_of_register" precision="-1"/>
+            </basic>
+            <one-to-one name="statusName" optional="true" mapped-by="statusName"
+                        target-entity="ee.taltech.procurementSystemBackend.model.BidStatus"/>
+        </attributes>
+    </entity>
+    <entity class="ee.taltech.procurementSystemBackend.model.BidStatus">
+        <table name="BidStatus" schema="miniprocurements" catalog=""/>
+        <attributes>
+            <basic name="statusId">
+                <column name="status_id" precision="-1"/>
+            </basic>
+            <one-to-one name="statusName" optional="true" target-entity="ee.taltech.procurementSystemBackend.model.Bid">
+                <join-column name="status_name" referenced-column-name="bid_status"/>
+            </one-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>
