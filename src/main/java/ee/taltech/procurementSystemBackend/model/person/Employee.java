@@ -4,6 +4,7 @@ package ee.taltech.procurementSystemBackend.model.person;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 

@@ -16,7 +16,7 @@ public class Bid {
     private String description;
     @Basic@Column(name = "time_of_register", nullable = false)
     private Timestamp timeOfRegister;
-    @OneToOne(mappedBy = "statusName")
-    private BidStatus statusName;
+    @Column(name = "bid_status")
+    private Integer bidStatus;
 
 }

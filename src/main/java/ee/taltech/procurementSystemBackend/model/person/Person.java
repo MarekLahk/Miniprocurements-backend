@@ -9,12 +9,13 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@Data
-@Entity
-@Table(name = "Person")
-@Inheritance(
-        strategy = InheritanceType.JOINED
-)
+//@Data
+//@Table(name = "Person")
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+//@Inheritance(
+//        strategy = InheritanceType.JOINED
+//)
 public class Person {
 
     @Id()
