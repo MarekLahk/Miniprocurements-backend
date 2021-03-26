@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 //)
 public class Person {
 
-    @Id()
-    @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer personID;
     @Column(name = "person_name", length=100, nullable = true)
     private String personName;

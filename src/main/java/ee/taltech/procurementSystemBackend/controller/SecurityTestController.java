@@ -9,13 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api")
-public class TestController {
-
-    @GetMapping("public")
-    public String openEndpoint() {
-        return "This is not secured endpoint.";
-    }
+@RequestMapping("")
+public class SecurityTestController {
 
     @GetMapping("group1")
     @PreAuthorize("hasRole('ROLE_group1')")

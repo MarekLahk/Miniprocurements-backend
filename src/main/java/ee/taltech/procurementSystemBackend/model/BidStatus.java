@@ -7,7 +7,9 @@ import javax.persistence.*;
 @Data
 @Entity
 public class BidStatus {
-    @Id@Column(name = "status_id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "status_id", nullable = false)
     private Short statusId;
 
 

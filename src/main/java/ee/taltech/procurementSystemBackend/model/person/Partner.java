@@ -15,9 +15,11 @@ import javax.persistence.Table;
 @Table(name = "Partner")
 public class Partner extends Person {
 
-    @Basic@Column(name = "reg_nr", nullable = true)
+    @Basic
+    @Column(name = "reg_nr", nullable = true)
     Long regNr;
-    @Basic@Column(name = "partner_info")
+    @Basic
+    @Column(name = "partner_info")
     String partnerInfo;
 
 }
