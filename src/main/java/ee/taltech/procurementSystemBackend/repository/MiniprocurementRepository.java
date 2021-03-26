@@ -10,4 +10,6 @@ import java.util.List;
 public interface MiniprocurementRepository extends JpaRepository<Miniprocurement, Integer> {
 
     Miniprocurement findByProcurementId(Integer id);
+
+    List<Miniprocurement> findMiniprocurementByAddedBy(Integer addedBy);
 }

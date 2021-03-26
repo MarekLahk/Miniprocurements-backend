@@ -8,7 +8,11 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @Table(name = "Miniprocurement")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Miniprocurement {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "procurement_id", nullable = false)
