@@ -21,9 +21,5 @@ public class PersonService extends PersonServiceInterface<Person> {
         return personRepository.findById(id);
     }
 
-    public Optional<Person> getPersonByEmail(String email) {
-        return personRepository.findPersonByeMail(email);
-    }
-
 
 }

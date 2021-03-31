@@ -17,15 +17,9 @@ import java.util.Optional;
 @Service
 public class PartnerService extends PersonServiceInterface<Partner> {
 
-    private final PartnerRepository partnerRepository;
-
-    public PartnerService(PersonRepositoryInterface<Partner> personRepository, PartnerRepository partnerRepository) {
+    public PartnerService(PartnerRepository personRepository) {
         super(personRepository);
-        this.partnerRepository = partnerRepository;
     }
 
-    public Optional<Partner> getPartnerByRegNr(Long regNr) {
-        return partnerRepository.findPartnerByRegNr(regNr);
-    }
 
 }

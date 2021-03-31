@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 public class Specifications {
 
     public static <T extends Person> Specification<T> specAfter(LocalDateTime after) {
-        return ((root, query, builder) -> builder.greaterThanOrEqualTo(root.get("timeOfRegister"), after));
+        return (root, query, builder) -> builder.greaterThanOrEqualTo(root.get("timeOfRegister"), after);
     }
 
     public static <T extends Person> Specification<T> specBefore(LocalDateTime before) {
-        return ((root, query, builder) -> builder.lessThanOrEqualTo(root.get("timeOfRegister"), before));
+        return (root, query, builder) -> builder.lessThanOrEqualTo(root.get("timeOfRegister"), before);
     }
 
 //    public static <T extends Person> Specification<T> specGreater(Long number) {
@@ -26,9 +26,10 @@ public class Specifications {
 //        return ((root, query, builder) -> builder.greaterThanOrEqualTo(root.get("timeOfRegister"), number));
 //    }
 
-    public static <T extends Person> Specification<T> specEquals(Long number) {
-        return ((root, query, builder) -> builder.equal(root.get("regNr"), number));
+    public static <T extends Person> Specification<T> specEquals(String columnName, Object value) {
+        return (root, query, builder) -> builder.equal(root.get(columnName), value);
     }
+
 
 
 

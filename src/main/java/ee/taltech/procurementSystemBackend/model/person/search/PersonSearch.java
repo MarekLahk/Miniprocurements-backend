@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.Predicate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static ee.taltech.procurementSystemBackend.repository.person.Specifications.specAfter;
-import static ee.taltech.procurementSystemBackend.repository.person.Specifications.specBefore;
+import static ee.taltech.procurementSystemBackend.repository.person.Specifications.*;
 
 
 @Data
@@ -43,13 +43,16 @@ public class PersonSearch<T extends Person> implements SearchObject<T> {
 
     public Specification<T> generateMatchers() {
         Specification<T> spec = Specification.where(null);
-
         if (after != null) {
-            spec.and(specAfter(this.after));
+            spec = spec.and(specAfter(this.after));
         }
         if (before != null) {
-            spec.and(specBefore(this.before));
+            spec = spec.and(specBefore(this.before));
         }
+        if (name != null) {
+            spec = spec.and(specEquals("personName", this.name));
+        }
+        System.out.println(spec);
         return spec;
     }
 

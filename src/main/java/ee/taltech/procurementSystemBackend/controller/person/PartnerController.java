@@ -19,9 +19,5 @@ public class PartnerController extends PersonControllerInterface<Partner, Partne
         super(partnerService);
     }
 
-//    @GetMapping
-//    public Optional<Partner> getPartnerByRegNr(@RequestParam(name = "regNr") Long regNr) {
-//        System.out.println("Here");
-//        return partnerService.getPartnerByRegNr(regNr);
-//    }
+    //Note: Contains all search attributes of PersonControllerInterface
 }

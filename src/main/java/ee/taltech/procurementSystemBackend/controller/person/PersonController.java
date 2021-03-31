@@ -21,5 +21,5 @@ public class PersonController extends PersonControllerInterface<Person, PersonSe
         super(personService);
     }
 
-
+    //Note: Contains all search attributes of PersonControllerInterface
 }

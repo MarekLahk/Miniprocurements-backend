@@ -20,8 +20,6 @@ public abstract class PersonControllerInterface<T extends Person, O extends Sear
 
     @GetMapping()
     public List<T> getByParams(O searchObject) {
-        System.out.println(searchObject);
-        System.out.println(searchObject.getClass());
         return personService.getByParams(searchObject);
     }
 

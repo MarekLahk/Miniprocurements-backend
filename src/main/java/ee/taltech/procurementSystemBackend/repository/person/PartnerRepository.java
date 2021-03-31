@@ -1,11 +1,9 @@
 package ee.taltech.procurementSystemBackend.repository.person;
 
 import ee.taltech.procurementSystemBackend.model.person.Partner;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
+@Repository
 public interface PartnerRepository extends PersonRepositoryInterface<Partner> {
-
-    Optional<Partner> findPartnerByRegNr(Long regNr);
 
 }
