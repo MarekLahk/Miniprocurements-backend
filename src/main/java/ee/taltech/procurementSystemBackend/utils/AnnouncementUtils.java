@@ -22,7 +22,6 @@ public class AnnouncementUtils {
                 .announcementId(announcement.getAnnouncementId())
                 .procurementId(announcement.getProcurementId())
                 .employeeId(announcement.getEmployeeId())
-                .announcement(announcement.getAnnouncement())
-                .dateAdded(new Timestamp(System.currentTimeMillis())).build();
+                .announcement(announcement.getAnnouncement()).build();
     }
 }

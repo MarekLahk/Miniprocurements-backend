@@ -34,4 +34,15 @@ public class AnnouncmentController {
         return announcementService.addAnnouncement(dto);
     }
 
+    @PutMapping("{id}")
+    public AnnouncementDto updateAnnouncement(@PathVariable Integer id, @RequestBody AnnouncementDto dto) {
+        return announcementService.updateAnnouncement(id, dto);
+    }
+
+    @Deprecated
+    @DeleteMapping("{id}")
+    public void deleteAnnouncement(@PathVariable Integer id) {
+        announcementService.deleteAnnouncement(id);
+    }
+
 }
