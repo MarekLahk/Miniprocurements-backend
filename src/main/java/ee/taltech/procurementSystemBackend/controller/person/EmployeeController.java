@@ -1,5 +1,6 @@
 package ee.taltech.procurementSystemBackend.controller.person;
 
+import ee.taltech.procurementSystemBackend.controller.ControllerBase;
 import ee.taltech.procurementSystemBackend.model.person.Employee;
 import ee.taltech.procurementSystemBackend.model.search.person.EmployeeSearch;
 import ee.taltech.procurementSystemBackend.service.person.EmployeeService;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/employee")
-public class EmployeeController extends PersonControllerInterface<Employee, EmployeeSearch> {
+public class EmployeeController extends ControllerBase<Employee, EmployeeSearch> {
     public EmployeeController(EmployeeService employeeService) {
         super(employeeService);
     }

@@ -16,8 +16,8 @@ public class SearchSpecPack<T> {
     Specification<T> specification;
     Pageable pageable;
 
-    public void addSpec() {
-
+    public void addSpec(Specification<T> spec) {
+        this.specification = this.specification.and(spec);
     }
 
 }

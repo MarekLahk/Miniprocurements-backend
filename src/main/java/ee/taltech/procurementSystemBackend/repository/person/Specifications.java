@@ -1,6 +1,5 @@
 package ee.taltech.procurementSystemBackend.repository.person;
 
-import ee.taltech.procurementSystemBackend.model.person.Person;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDateTime;
@@ -10,12 +9,12 @@ import java.time.LocalDateTime;
 // TODO: Make Person extend Global specifications
 public class Specifications {
 
-    public static <T extends Person> Specification<T> specAfter(LocalDateTime after) {
-        return (root, query, builder) -> builder.greaterThanOrEqualTo(root.get("timeOfRegister"), after);
+    public static <T> Specification<T> specAfter(String columnName,LocalDateTime after) {
+        return (root, query, builder) -> builder.greaterThanOrEqualTo(root.get(columnName), after);
     }
 
-    public static <T extends Person> Specification<T> specBefore(LocalDateTime before) {
-        return (root, query, builder) -> builder.lessThanOrEqualTo(root.get("timeOfRegister"), before);
+    public static <T> Specification<T> specBefore(String columnName, LocalDateTime before) {
+        return (root, query, builder) -> builder.lessThanOrEqualTo(root.get(columnName), before);
     }
 
 //    public static <T extends Person> Specification<T> specGreater(Long number) {
@@ -26,7 +25,7 @@ public class Specifications {
 //        return ((root, query, builder) -> builder.greaterThanOrEqualTo(root.get("timeOfRegister"), number));
 //    }
 
-    public static <T extends Person> Specification<T> specEquals(String columnName, Object value) {
+    public static <T> Specification<T> specEquals(String columnName, Object value) {
         return (root, query, builder) -> builder.equal(root.get(columnName), value);
     }
 

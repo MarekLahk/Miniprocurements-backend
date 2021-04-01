@@ -1,9 +1,12 @@
 package ee.taltech.procurementSystemBackend.model.search.person;
 
-import ee.taltech.procurementSystemBackend.model.search.SearchObject;
 import ee.taltech.procurementSystemBackend.model.person.Person;
-import lombok.*;
-import org.springframework.data.jpa.domain.Specification;
+import ee.taltech.procurementSystemBackend.model.search.SearchObject;
+import ee.taltech.procurementSystemBackend.model.search.SearchSpecPack;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.domain.Sort.Direction;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,12 +14,12 @@ import java.time.format.DateTimeFormatter;
 import static ee.taltech.procurementSystemBackend.repository.person.Specifications.*;
 
 
-
 @EqualsAndHashCode(callSuper = true)
 @Getter@Setter
 public class PersonSearch<T extends Person> extends SearchObject<T> {
 
-    public PersonSearch(LocalDateTime before, LocalDateTime after, String name, Integer limit) {
+    public PersonSearch(Integer limit, Integer page, String sort, Direction dir, LocalDateTime before, LocalDateTime after, String name) {
+        super(limit, page, sort, dir);
         this.before = before;
         this.after = after;
         this.name = name;
@@ -36,19 +39,18 @@ public class PersonSearch<T extends Person> extends SearchObject<T> {
         this.after = LocalDateTime.parse(after, formatter);
     }
 
-    public Specification<T> getSearchSpecPack() {
-        Specification<T> spec = Specification.where(null);
+    public SearchSpecPack<T> getSearchSpec() {
+        SearchSpecPack<T> specPack = super.getSearchSpec();
         if (after != null) {
-            spec = spec.and(specAfter(this.after));
+            specPack.addSpec(specAfter("timeOfRegister", this.after));
         }
         if (before != null) {
-            spec = spec.and(specBefore(this.before));
+            specPack.addSpec(specBefore("timeOfRegister", this.before));
         }
         if (name != null) {
-            spec = spec.and(specEquals("personName", this.name));
+            specPack.addSpec(specEquals("personName", this.name));
         }
-        System.out.println(spec);
-        return spec;
+        return specPack;
     }
 
     @Override

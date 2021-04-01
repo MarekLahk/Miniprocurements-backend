@@ -1,8 +1,7 @@
-package ee.taltech.procurementSystemBackend.controller.person;
+package ee.taltech.procurementSystemBackend.controller;
 
 import ee.taltech.procurementSystemBackend.model.search.SearchObject;
-import ee.taltech.procurementSystemBackend.model.person.Person;
-import ee.taltech.procurementSystemBackend.service.person.PersonServiceInterface;
+import ee.taltech.procurementSystemBackend.service.ServiceBase;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,19 +10,20 @@ import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
-public abstract class PersonControllerInterface<T extends Person, O extends SearchObject<T>  > {
+public abstract class ControllerBase<T, O extends SearchObject<T>  > {
 
-    private final PersonServiceInterface<T> personService;
+    private final ServiceBase<T> personService;
 
     @GetMapping()
     public List<T> getByParams(O searchObject) {
+        System.out.println(searchObject);
         return personService.getByParams(searchObject);
     }
 
 
     @GetMapping("{id}")
-    public Optional<T> getPersonById(@PathVariable Integer id) {
-        return personService.getPersonById(id);
+    public Optional<T> getById(@PathVariable Integer id) {
+        return personService.getById(id);
     }
 //    @GetMapping()
 //    public Optional<T> getPersonRegBefore(@RequestParam(name = "regbefore") LocalDateTime regTime) {
