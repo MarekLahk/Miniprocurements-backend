@@ -1,5 +1,6 @@
 package ee.taltech.procurementSystemBackend.service;
 
+import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
 import ee.taltech.procurementSystemBackend.model.Dto.MiniProcurementDto;
 import ee.taltech.procurementSystemBackend.model.Miniprocurement;
 import ee.taltech.procurementSystemBackend.repository.MiniprocurementRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,7 +21,12 @@ public class MiniprocurementService {
     private final ProcurementUtils procurementUtils;
 
     public MiniProcurementDto getMiniprocurementById(Integer id) {
-        return procurementUtils.convertFromProcurementToDto(miniprocurementRepository.findByProcurementId(id));
+        return miniprocurementRepository.findById(id).map(
+                procurementUtils::convertFromProcurementToDto)
+                .orElseThrow(() ->
+                        new RequestedObjectNotFoundException(
+                                String.format("Procurement with id [%d] does not exist", id))
+                        );
     }
 
     public List<MiniProcurementDto> getAllMiniprocurements() {
@@ -40,5 +47,29 @@ public class MiniprocurementService {
         return procurementUtils.convertFromProcurementToDto(
                 miniprocurementRepository.save(procurement)
         );
+    }
+
+    public MiniProcurementDto updateProcurement(Integer id, MiniProcurementDto dto) {
+        Optional<Miniprocurement> optionalProcurement = miniprocurementRepository.findById(id);
+        if (optionalProcurement.isEmpty()) {
+            throw new RequestedObjectNotFoundException(
+                    String.format("Procurement with id [%d] does not exist", id));
+        }
+        Miniprocurement procurement = procurementUtils.convertFromDtoToProcurement(dto);
+        procurement.setProcurementId(id);
+        procurement.setTimeAdded(dto.getTimeAdded());
+        return procurementUtils.convertFromProcurementToDto(
+                miniprocurementRepository.save(procurement)
+        );
+    }
+
+    @Deprecated
+    public void deleteProcurement(Integer id) {
+        Optional<Miniprocurement> optionalProcurement = miniprocurementRepository.findById(id);
+        if (optionalProcurement.isEmpty()) {
+            throw new RequestedObjectNotFoundException(
+                    String.format("Procurement with id [%d] does not exist", id));
+        }
+        miniprocurementRepository.deleteById(id);
     }
 }

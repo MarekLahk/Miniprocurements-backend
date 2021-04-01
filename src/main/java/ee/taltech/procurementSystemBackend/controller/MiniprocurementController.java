@@ -34,4 +34,15 @@ public class MiniprocurementController {
     public MiniProcurementDto addProcurement(@RequestBody MiniProcurementDto dto) {
         return miniprocurementService.addProcurement(dto);
     }
+
+    @PutMapping("{id}")
+    public MiniProcurementDto updateProcurement(@PathVariable Integer id, @RequestBody MiniProcurementDto dto) {
+        return miniprocurementService.updateProcurement(id, dto);
+    }
+
+    @Deprecated
+    @DeleteMapping("{id}")
+    public void deleteProcurement(@PathVariable Integer id) {
+        miniprocurementService.deleteProcurement(id);
+    }
 }

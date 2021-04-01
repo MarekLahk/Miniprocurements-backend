@@ -9,7 +9,5 @@ import java.util.List;
 @Repository
 public interface MiniprocurementRepository extends JpaRepository<Miniprocurement, Integer> {
 
-    Miniprocurement findByProcurementId(Integer id);
-
     List<Miniprocurement> findMiniprocurementByAddedBy(Integer addedBy);
 }
