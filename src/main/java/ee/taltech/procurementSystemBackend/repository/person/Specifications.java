@@ -5,8 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 import java.time.LocalDateTime;
 
 
-// TODO: Make specifications independent of Person.
-// TODO: Make Person extend Global specifications
+
 public class Specifications {
 
     public static <T> Specification<T> specAfter(String columnName,LocalDateTime after) {
@@ -28,6 +27,7 @@ public class Specifications {
     public static <T> Specification<T> specEquals(String columnName, Object value) {
         return (root, query, builder) -> builder.equal(root.get(columnName), value);
     }
+
 
 
 

@@ -1,5 +1,6 @@
 package ee.taltech.procurementSystemBackend.model;
 
+import ee.taltech.procurementSystemBackend.model.Dto.AnnouncementDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,4 +29,11 @@ public class Announcement {
     @Column(name = "date_added", nullable = false)
     private Timestamp dateAdded;
 
+    public Announcement(AnnouncementDto announcementDto) {
+        this.announcementId = announcementDto.getAnnouncementId();
+        this.procurementId = announcementDto.getProcurementId();
+        this.employeeId = announcementDto.getEmployeeId();
+        this.announcement = announcementDto.getAnnouncement();
+        this.dateAdded = announcementDto.getDateAdded();
+    }
 }

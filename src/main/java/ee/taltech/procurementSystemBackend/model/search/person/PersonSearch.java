@@ -9,7 +9,6 @@ import lombok.Setter;
 import org.springframework.data.domain.Sort.Direction;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static ee.taltech.procurementSystemBackend.repository.person.Specifications.*;
 
@@ -25,7 +24,6 @@ public class PersonSearch<T extends Person> extends SearchObject<T> {
         this.name = name;
     }
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private LocalDateTime before;
     private LocalDateTime after;

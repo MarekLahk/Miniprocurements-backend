@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.format.DateTimeFormatter;
+
 
 @Data
 @AllArgsConstructor
@@ -16,6 +18,8 @@ public abstract class SearchObject<T> {
     private Integer page;
     private String sort;
     private Sort.Direction dir;
+
+    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private Sort getSort() {
         if (sort == null) return Sort.unsorted();
