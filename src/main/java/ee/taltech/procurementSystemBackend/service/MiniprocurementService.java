@@ -65,11 +65,6 @@ public class MiniprocurementService {
 
     @Deprecated
     public void deleteProcurement(Integer id) {
-        Optional<Miniprocurement> optionalProcurement = miniprocurementRepository.findById(id);
-        if (optionalProcurement.isEmpty()) {
-            throw new RequestedObjectNotFoundException(
-                    String.format("Procurement with id [%d] does not exist", id));
-        }
         miniprocurementRepository.deleteById(id);
     }
 }

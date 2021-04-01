@@ -1,7 +1,6 @@
 package ee.taltech.procurementSystemBackend.controller;
 
 import ee.taltech.procurementSystemBackend.model.Dto.QuestionDto;
-import ee.taltech.procurementSystemBackend.model.Question;
 import ee.taltech.procurementSystemBackend.service.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +32,11 @@ public class QuestionController {
     @PostMapping
     public QuestionDto addQuestion(@RequestBody QuestionDto dto) {
         return questionService.addQuestion(dto);
+    }
+
+    @Deprecated
+    @DeleteMapping("{id}")
+    public void deleteQuestion(@PathVariable Integer id) {
+        questionService.deleteQuestion(id);
     }
 }

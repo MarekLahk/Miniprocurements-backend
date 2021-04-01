@@ -1,5 +1,6 @@
 package ee.taltech.procurementSystemBackend.service;
 
+import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
 import ee.taltech.procurementSystemBackend.model.Dto.ReplyDto;
 import ee.taltech.procurementSystemBackend.model.Reply;
 import ee.taltech.procurementSystemBackend.repository.ReplyRepository;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,9 +20,13 @@ public class ReplyService {
     private final ReplyUtils replyUtils;
 
     public ReplyDto getReplyByReplyId(Integer id) {
-        return replyUtils.convertFromReplyToDto(
-                replyRepository.findByReplyId(id)
-        );
+        Optional<Reply> replyOptional = replyRepository.findById(id);
+        if (replyOptional.isEmpty()) {
+            throw new RequestedObjectNotFoundException(
+                    String.format("Reply with id [%d] does not exist", id));
+        }
+        Reply reply = replyOptional.get();
+        return replyUtils.convertFromReplyToDto(reply);
     }
 
     public List<ReplyDto> getAllReplies() {
@@ -46,5 +52,10 @@ public class ReplyService {
         return replyUtils.convertFromReplyToDto(
                 replyRepository.save(reply)
         );
+    }
+
+    @Deprecated
+    public void deleteReply(Integer id) {
+        replyRepository.deleteById(id);
     }
 }

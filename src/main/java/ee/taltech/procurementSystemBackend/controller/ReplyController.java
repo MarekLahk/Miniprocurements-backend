@@ -38,4 +38,10 @@ public class ReplyController {
     public ReplyDto addReply(@RequestBody ReplyDto dto) {
         return replyService.addReply(dto);
     }
+
+    @Deprecated
+    @DeleteMapping("{id}")
+    public void deleteReply(@PathVariable Integer id) {
+        replyService.deleteReply(id);
+    }
 }

@@ -13,5 +13,4 @@ public interface ReplyRepository extends JpaRepository<Reply, Integer> {
 
     List<Reply> findAllByQuestionId(Integer id);
 
-    Reply findByReplyId(Integer id);
 }

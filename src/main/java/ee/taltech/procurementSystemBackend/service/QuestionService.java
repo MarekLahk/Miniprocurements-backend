@@ -1,5 +1,6 @@
 package ee.taltech.procurementSystemBackend.service;
 
+import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
 import ee.taltech.procurementSystemBackend.model.Dto.QuestionDto;
 import ee.taltech.procurementSystemBackend.model.Question;
 import ee.taltech.procurementSystemBackend.repository.QuestionRepository;
@@ -7,8 +8,11 @@ import ee.taltech.procurementSystemBackend.utils.QuestionUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -18,9 +22,13 @@ public class QuestionService {
     private final QuestionUtils questionUtils;
 
     public QuestionDto getQuestionByQuestionId(Integer id) {
-        return questionUtils.convertFromQuestionToDto(
-                questionRepository.findByQuestionId(id)
-        );
+        Optional<Question> questionOptional = questionRepository.findById(id);
+        if (questionOptional.isEmpty()) {
+            throw new RequestedObjectNotFoundException(
+                    String.format("Question with id [%d] does not exist", id));
+        }
+        Question question = questionOptional.get();
+        return questionUtils.convertFromQuestionToDto(question);
     }
 
     public List<QuestionDto> getAllQuestions() {
@@ -41,5 +49,10 @@ public class QuestionService {
         return questionUtils.convertFromQuestionToDto(
                 questionRepository.save(question)
         );
+    }
+
+    @Deprecated
+    public void deleteQuestion(Integer id) {
+        questionRepository.deleteById(id);
     }
 }
