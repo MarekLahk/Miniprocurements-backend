@@ -1,29 +1,25 @@
-package ee.taltech.procurementSystemBackend.model.person.search;
+package ee.taltech.procurementSystemBackend.model.search.person;
 
-import ee.taltech.procurementSystemBackend.model.SearchObject;
+import ee.taltech.procurementSystemBackend.model.search.SearchObject;
 import ee.taltech.procurementSystemBackend.model.person.Person;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.Predicate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static ee.taltech.procurementSystemBackend.repository.person.Specifications.*;
 
 
-@Data
-@ToString
-public class PersonSearch<T extends Person> implements SearchObject<T> {
+
+@EqualsAndHashCode(callSuper = true)
+@Getter@Setter
+public class PersonSearch<T extends Person> extends SearchObject<T> {
 
     public PersonSearch(LocalDateTime before, LocalDateTime after, String name, Integer limit) {
         this.before = before;
         this.after = after;
         this.name = name;
-        this.limit = limit;
     }
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -31,7 +27,6 @@ public class PersonSearch<T extends Person> implements SearchObject<T> {
     private LocalDateTime before;
     private LocalDateTime after;
     private String name;
-    private Integer limit;
 
     public void setBefore(String before) {
         this.before = LocalDateTime.parse(before, formatter);
@@ -41,7 +36,7 @@ public class PersonSearch<T extends Person> implements SearchObject<T> {
         this.after = LocalDateTime.parse(after, formatter);
     }
 
-    public Specification<T> generateMatchers() {
+    public Specification<T> getSearchSpecPack() {
         Specification<T> spec = Specification.where(null);
         if (after != null) {
             spec = spec.and(specAfter(this.after));
@@ -56,4 +51,12 @@ public class PersonSearch<T extends Person> implements SearchObject<T> {
         return spec;
     }
 
+    @Override
+    public String toString() {
+        return "PersonSearch{" +
+                "before=" + before +
+                ", after=" + after +
+                ", name='" + name + '\'' +
+                "} " + super.toString();
+    }
 }

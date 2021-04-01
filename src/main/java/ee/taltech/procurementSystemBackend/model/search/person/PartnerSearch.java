@@ -1,6 +1,5 @@
-package ee.taltech.procurementSystemBackend.model.person.search;
+package ee.taltech.procurementSystemBackend.model.search.person;
 
-import ee.taltech.procurementSystemBackend.model.SearchObject;
 import ee.taltech.procurementSystemBackend.model.person.Partner;
 import lombok.*;
 import org.springframework.data.jpa.domain.Specification;
@@ -11,7 +10,7 @@ import static ee.taltech.procurementSystemBackend.repository.person.Specificatio
 
 @EqualsAndHashCode(callSuper = true)
 @Getter@Setter
-public class PartnerSearch extends PersonSearch<Partner> implements SearchObject<Partner> {
+public class PartnerSearch extends PersonSearch<Partner> {
 
     public PartnerSearch(LocalDateTime before, LocalDateTime after, String name, Integer limit, Long regnr) {
         super(before, after, name, limit);
@@ -21,8 +20,8 @@ public class PartnerSearch extends PersonSearch<Partner> implements SearchObject
     private Long regNr;
 
     @Override
-    public Specification<Partner> generateMatchers() {
-        Specification<Partner> spec = super.generateMatchers();
+    public Specification<Partner> getSearchSpecPack() {
+        Specification<Partner> spec = super.getSearchSpecPack();
         if (regNr != null) {
             spec = spec.and(specEquals("regNr", regNr));
         }

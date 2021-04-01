@@ -20,11 +20,11 @@ public class Miniprocurement {
     @Basic@Column(name = "requirements", length = -1)
     private String requirements;
     @Basic@Column(name = "contract_id")
-    private Object contractId;
+    private Integer contractId;
     @Basic@Column(name = "time_added", nullable = false)
     private Timestamp timeAdded;
     @Basic@Column(name = "added_by", nullable = false)
-    private Object addedBy;
+    private Integer addedBy;
     @Basic@Column(name = "deadline", nullable = false)
     private Timestamp deadline;
     @Basic@Column(name = "status", nullable = false)

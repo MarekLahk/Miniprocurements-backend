@@ -18,6 +18,7 @@ public abstract class Person {
 
     @Id()
     @GeneratedValue
+    @Column(name = "person_id")
     Integer personID;
 
     @Column(name = "person_name", length=100)
