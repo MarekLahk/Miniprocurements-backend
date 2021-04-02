@@ -1,8 +1,8 @@
 package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
-import ee.taltech.procurementSystemBackend.model.Dto.ReplyDto;
-import ee.taltech.procurementSystemBackend.model.Reply;
+import ee.taltech.procurementSystemBackend.models.Dto.ReplyDto;
+import ee.taltech.procurementSystemBackend.models.model.Reply;
 import ee.taltech.procurementSystemBackend.repository.ReplyRepository;
 import ee.taltech.procurementSystemBackend.utils.ReplyUtils;
 import lombok.AllArgsConstructor;

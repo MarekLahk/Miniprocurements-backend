@@ -1,6 +1,6 @@
 package ee.taltech.procurementSystemBackend.repository;
 
-import ee.taltech.procurementSystemBackend.model.Question;
+import ee.taltech.procurementSystemBackend.models.model.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

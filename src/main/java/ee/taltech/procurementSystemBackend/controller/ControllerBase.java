@@ -1,6 +1,8 @@
 package ee.taltech.procurementSystemBackend.controller;
 
-import ee.taltech.procurementSystemBackend.model.search.SearchObject;
+import ee.taltech.procurementSystemBackend.models.DtoBase;
+import ee.taltech.procurementSystemBackend.models.ModelBase;
+import ee.taltech.procurementSystemBackend.models.SearchObject;
 import ee.taltech.procurementSystemBackend.service.ServiceBase;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,20 +12,26 @@ import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
-public abstract class ControllerBase<T, O extends SearchObject<T>  > {
+public abstract class ControllerBase<ModelT extends ModelBase, DtoT extends DtoBase, O extends SearchObject<ModelT>  > {
 
-    private final ServiceBase<T> personService;
+    private final ServiceBase<ModelT, DtoT> service;
+    private final Class<DtoT> dto;
+
+    public ControllerBase(ServiceBase<ModelT, DtoT> personService, Class<ModelT> model, Class<DtoT> dto) {
+        this.service = personService;
+        this.dto = dto;
+    }
 
     @GetMapping()
-    public List<T> getByParams(O searchObject) {
+    public List<DtoT> getByParams(O searchObject) {
         System.out.println(searchObject);
-        return personService.getByParams(searchObject);
+        return service.getByParams(searchObject);
     }
 
 
     @GetMapping("{id}")
-    public Optional<T> getById(@PathVariable Integer id) {
-        return personService.getById(id);
+    public Optional<DtoT> getById(@PathVariable Integer id) {
+        return service.getById(id);
     }
 //    @GetMapping()
 //    public Optional<T> getPersonRegBefore(@RequestParam(name = "regbefore") LocalDateTime regTime) {

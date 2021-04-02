@@ -1,8 +1,8 @@
 package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
-import ee.taltech.procurementSystemBackend.model.Dto.QuestionDto;
-import ee.taltech.procurementSystemBackend.model.Question;
+import ee.taltech.procurementSystemBackend.models.Dto.QuestionDto;
+import ee.taltech.procurementSystemBackend.models.model.Question;
 import ee.taltech.procurementSystemBackend.repository.QuestionRepository;
 import ee.taltech.procurementSystemBackend.utils.QuestionUtils;
 import org.junit.jupiter.api.BeforeEach;

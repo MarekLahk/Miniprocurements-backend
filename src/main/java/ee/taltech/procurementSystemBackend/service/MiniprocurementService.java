@@ -1,8 +1,8 @@
 package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
-import ee.taltech.procurementSystemBackend.model.Dto.MiniProcurementDto;
-import ee.taltech.procurementSystemBackend.model.Miniprocurement;
+import ee.taltech.procurementSystemBackend.models.Dto.MiniProcurementDto;
+import ee.taltech.procurementSystemBackend.models.model.Miniprocurement;
 import ee.taltech.procurementSystemBackend.repository.MiniprocurementRepository;
 import ee.taltech.procurementSystemBackend.utils.ProcurementUtils;
 import lombok.AllArgsConstructor;

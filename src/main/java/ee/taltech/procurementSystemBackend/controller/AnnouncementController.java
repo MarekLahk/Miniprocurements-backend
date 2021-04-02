@@ -1,20 +1,20 @@
 package ee.taltech.procurementSystemBackend.controller;
 
-import ee.taltech.procurementSystemBackend.model.Announcement;
-import ee.taltech.procurementSystemBackend.model.Dto.AnnouncementDto;
-import ee.taltech.procurementSystemBackend.model.search.AnnouncementSearch;
+import ee.taltech.procurementSystemBackend.models.model.Announcement;
+import ee.taltech.procurementSystemBackend.models.Dto.AnnouncementDto;
+import ee.taltech.procurementSystemBackend.models.search.AnnouncementSearch;
 import ee.taltech.procurementSystemBackend.service.AnnouncementService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 
 @RequestMapping("api/announcement")
-public class AnnouncementController extends ControllerBase<Announcement, AnnouncementSearch>{
+public class AnnouncementController extends ControllerBase<Announcement, AnnouncementDto, AnnouncementSearch>{
 
     private final AnnouncementService announcementService;
 
     public AnnouncementController(AnnouncementService announcementService) {
-        super(announcementService);
+        super(announcementService, Announcement.class, AnnouncementDto.class);
         this.announcementService = announcementService;
     }
 

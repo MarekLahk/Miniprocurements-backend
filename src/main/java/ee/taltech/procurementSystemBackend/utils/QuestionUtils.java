@@ -1,7 +1,7 @@
 package ee.taltech.procurementSystemBackend.utils;
 
-import ee.taltech.procurementSystemBackend.model.Dto.QuestionDto;
-import ee.taltech.procurementSystemBackend.model.Question;
+import ee.taltech.procurementSystemBackend.models.Dto.QuestionDto;
+import ee.taltech.procurementSystemBackend.models.model.Question;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;

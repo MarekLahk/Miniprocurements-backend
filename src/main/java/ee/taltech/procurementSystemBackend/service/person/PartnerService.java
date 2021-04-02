@@ -1,24 +1,17 @@
 package ee.taltech.procurementSystemBackend.service.person;
 
-import ee.taltech.procurementSystemBackend.model.person.Partner;
+import ee.taltech.procurementSystemBackend.models.Dto.Person.PartnerDto;
+import ee.taltech.procurementSystemBackend.models.mapper.person.PartnerMapper;
+import ee.taltech.procurementSystemBackend.models.model.person.Partner;
 import ee.taltech.procurementSystemBackend.repository.person.PartnerRepository;
-import ee.taltech.procurementSystemBackend.repository.person.PersonRepositoryInterface;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 
 @Service
-public class PartnerService extends PersonServiceInterface<Partner> {
+public class PartnerService extends PersonServiceInterface<Partner, PartnerDto> {
 
-    public PartnerService(PartnerRepository personRepository) {
-        super(personRepository);
+    public PartnerService(PartnerRepository partnerRepository) {
+        super(partnerRepository, PartnerMapper.INSTANCE);
     }
 
 

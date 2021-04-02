@@ -1,14 +1,13 @@
 package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
-import ee.taltech.procurementSystemBackend.model.Dto.QuestionDto;
-import ee.taltech.procurementSystemBackend.model.Question;
+import ee.taltech.procurementSystemBackend.models.Dto.QuestionDto;
+import ee.taltech.procurementSystemBackend.models.model.Question;
 import ee.taltech.procurementSystemBackend.repository.QuestionRepository;
 import ee.taltech.procurementSystemBackend.utils.QuestionUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

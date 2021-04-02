@@ -1,6 +1,6 @@
 package ee.taltech.procurementSystemBackend.repository.person;
 
-import ee.taltech.procurementSystemBackend.model.person.Employee;
+import ee.taltech.procurementSystemBackend.models.model.person.Employee;
 import org.springframework.stereotype.Repository;
 
 @Repository

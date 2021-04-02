@@ -1,8 +1,9 @@
 package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
-import ee.taltech.procurementSystemBackend.model.Announcement;
-import ee.taltech.procurementSystemBackend.model.Dto.AnnouncementDto;
+import ee.taltech.procurementSystemBackend.models.mapper.AnnouncementMapper;
+import ee.taltech.procurementSystemBackend.models.model.Announcement;
+import ee.taltech.procurementSystemBackend.models.Dto.AnnouncementDto;
 import ee.taltech.procurementSystemBackend.repository.AnnouncementRepository;
 import ee.taltech.procurementSystemBackend.utils.AnnouncementUtils;
 import org.springframework.stereotype.Service;
@@ -10,13 +11,13 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 
 @Service
-public class AnnouncementService extends ServiceBase<Announcement>{
+public class AnnouncementService extends ServiceBase<Announcement, AnnouncementDto>{
 
     private final AnnouncementRepository announcementRepository;
     private final AnnouncementUtils announcementUtils;
 
     public AnnouncementService(AnnouncementRepository repository, AnnouncementRepository announcementRepository, AnnouncementUtils announcementUtils) {
-        super(repository);
+        super(repository, AnnouncementMapper.INSTANCE);
         this.announcementRepository = announcementRepository;
         this.announcementUtils = announcementUtils;
     }

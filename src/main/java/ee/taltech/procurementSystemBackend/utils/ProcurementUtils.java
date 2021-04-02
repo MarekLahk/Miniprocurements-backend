@@ -1,7 +1,7 @@
 package ee.taltech.procurementSystemBackend.utils;
 
-import ee.taltech.procurementSystemBackend.model.Dto.MiniProcurementDto;
-import ee.taltech.procurementSystemBackend.model.Miniprocurement;
+import ee.taltech.procurementSystemBackend.models.Dto.MiniProcurementDto;
+import ee.taltech.procurementSystemBackend.models.model.Miniprocurement;
 import org.springframework.stereotype.Component;
 
 @Component

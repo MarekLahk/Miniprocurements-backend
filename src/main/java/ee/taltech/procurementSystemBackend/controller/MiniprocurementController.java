@@ -1,6 +1,6 @@
 package ee.taltech.procurementSystemBackend.controller;
 
-import ee.taltech.procurementSystemBackend.model.Dto.MiniProcurementDto;
+import ee.taltech.procurementSystemBackend.models.Dto.MiniProcurementDto;
 import ee.taltech.procurementSystemBackend.service.MiniprocurementService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

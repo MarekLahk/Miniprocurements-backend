@@ -1,6 +1,6 @@
 package ee.taltech.procurementSystemBackend.controller;
 
-import ee.taltech.procurementSystemBackend.model.Dto.QuestionDto;
+import ee.taltech.procurementSystemBackend.models.Dto.QuestionDto;
 import ee.taltech.procurementSystemBackend.service.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
