@@ -29,7 +29,5 @@ build:
 deploy:
   stage: deploy
   script:
-    - docker kill smallpro
-    - docker rm smallpro
     - docker build -t small-procurement-system-backend:latest .
     - docker run -d -p 8080:8080 --name smallpro small-procurement-system-backend:latest
