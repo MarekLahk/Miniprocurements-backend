@@ -25,6 +25,7 @@ build:
       - build/libs/*.jar
     expire_in: 1 week
 
+
 #deploy:
 #  stage: deploy
 #  script:
