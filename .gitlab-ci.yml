@@ -25,11 +25,6 @@ build:
       - build/libs/*.jar
     expire_in: 1 week
 
-test:
-  stage: test
-  script:
-    - sudo ./gradlew check
-
 deploy:
   stage: deploy
   script:
