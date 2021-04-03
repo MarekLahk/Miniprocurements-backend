@@ -30,6 +30,7 @@ test:
     - ./gradlew check
 
 deploy:
+  stage: deploy
   script:
     -sudo docker kill smallpro
     -sudo docker rm smallpro
