@@ -16,7 +16,7 @@ cache:
 build:
   stage: build
   script:
-    - ./gradlew assemble
+    - sudo ./gradlew assemble
   artifacts:
     paths:
       - build/libs/*.jar
@@ -25,7 +25,7 @@ build:
 test:
   stage: test
   script:
-    - ./gradlew check
+    - sudo ./gradlew check
 
 deploy:
   stage: deploy
