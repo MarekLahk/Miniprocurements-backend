@@ -21,8 +21,6 @@ build:
     paths:
       - build/libs/*.jar
     expire_in: 1 week
-  only:
-    - master
 
 test:
   stage: test
@@ -32,8 +30,7 @@ test:
 deploy:
   stage: deploy
   script:
-    -sudo docker kill smallpro
-    -sudo docker rm smallpro
-    -sudo docker build -t small-procurement-system-backend:latest .
-    #-sudo docker pull jajaan/small-procurement-system-backend:latest
-    -sudo docker run -d -p 8080:8080 --name smallpro small-procurement-system-backend:latest
+    - sudo docker kill smallpro
+    - sudo docker rm smallpro
+    - sudo docker build -t small-procurement-system-backend:latest .
+    - sudo docker run -d -p 8080:8080 --name smallpro small-procurement-system-backend:latest
