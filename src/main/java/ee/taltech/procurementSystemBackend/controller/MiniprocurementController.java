@@ -6,6 +6,8 @@ import ee.taltech.procurementSystemBackend.models.search.MiniprocurementSearch;
 import ee.taltech.procurementSystemBackend.service.MiniprocurementService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("api/procurement")
@@ -19,12 +21,12 @@ public class MiniprocurementController extends ControllerBase<Miniprocurement, M
     }
 
     @PostMapping
-    public MiniProcurementDto addProcurement(@RequestBody MiniProcurementDto dto) {
+    public MiniProcurementDto addProcurement(@Valid @RequestBody MiniProcurementDto dto) {
         return miniprocurementService.addProcurement(dto);
     }
 
     @PutMapping("{id}")
-    public MiniProcurementDto updateProcurement(@PathVariable Integer id, @RequestBody MiniProcurementDto dto) {
+    public MiniProcurementDto updateProcurement(@Valid @PathVariable Integer id, @RequestBody MiniProcurementDto dto) {
         return miniprocurementService.updateProcurement(id, dto);
     }
 

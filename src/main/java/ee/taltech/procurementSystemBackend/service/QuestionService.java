@@ -10,6 +10,8 @@ import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.utils.QuestionUtils;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+
 
 @Service
 public class QuestionService extends ServiceBase<Question, QuestionDto> {
@@ -32,6 +34,7 @@ public class QuestionService extends ServiceBase<Question, QuestionDto> {
                     dto.getProcurementId()));
         }
         Question question = questionUtils.convertFromDtoToQuestion(dto);
+        question.setTimeAsked(new Timestamp(System.currentTimeMillis()));
         return questionUtils.convertFromQuestionToDto(
                 questionRepository.save(question)
         );

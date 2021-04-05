@@ -6,6 +6,8 @@ import ee.taltech.procurementSystemBackend.models.search.ReplySearch;
 import ee.taltech.procurementSystemBackend.service.ReplyService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("api/reply")
 public class ReplyController extends ControllerBase<Reply, ReplyDto, ReplySearch> {
@@ -17,9 +19,8 @@ public class ReplyController extends ControllerBase<Reply, ReplyDto, ReplySearch
         this.replyService = replyService;
     }
 
-
     @PostMapping
-    public ReplyDto addReply(@RequestBody ReplyDto dto) {
+    public ReplyDto addReply(@Valid @RequestBody ReplyDto dto) {
         return replyService.addReply(dto);
     }
 

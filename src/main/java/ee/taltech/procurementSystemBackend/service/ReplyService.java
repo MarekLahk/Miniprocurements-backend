@@ -10,6 +10,8 @@ import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.utils.ReplyUtils;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+
 @Service
 public class ReplyService extends ServiceBase<Reply, ReplyDto> {
 
@@ -32,6 +34,7 @@ public class ReplyService extends ServiceBase<Reply, ReplyDto> {
                     dto.getQuestionId(), dto.getProcurementId()));
         }
         Reply reply = replyUtils.convertFromDtoToReply(dto);
+        reply.setTimeReplied(new Timestamp(System.currentTimeMillis()));
         return replyUtils.convertFromReplyToDto(
                 replyRepository.save(reply)
         );

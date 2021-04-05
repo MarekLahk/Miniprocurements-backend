@@ -6,6 +6,7 @@ import ee.taltech.procurementSystemBackend.models.search.QuestionSearch;
 import ee.taltech.procurementSystemBackend.service.QuestionService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class QuestionController extends ControllerBase<Question, QuestionDto, Qu
     }
 
     @PostMapping
-    public QuestionDto addQuestion(@RequestBody QuestionDto dto) {
+    public QuestionDto addQuestion(@Valid @RequestBody QuestionDto dto) {
         return questionService.addQuestion(dto);
     }
 
