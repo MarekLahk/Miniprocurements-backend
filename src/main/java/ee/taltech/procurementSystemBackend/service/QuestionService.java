@@ -1,50 +1,40 @@
 package ee.taltech.procurementSystemBackend.service;
 
-import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
+import ee.taltech.procurementSystemBackend.exception.QuestionException;
 import ee.taltech.procurementSystemBackend.models.Dto.QuestionDto;
+import ee.taltech.procurementSystemBackend.models.mapper.QuestionMapper;
 import ee.taltech.procurementSystemBackend.models.model.Question;
+import ee.taltech.procurementSystemBackend.repository.MiniprocurementRepository;
 import ee.taltech.procurementSystemBackend.repository.QuestionRepository;
+import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.utils.QuestionUtils;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.sql.Timestamp;
 
 
 @Service
-@AllArgsConstructor
-public class QuestionService {
+public class QuestionService extends ServiceBase<Question, QuestionDto> {
 
     private final QuestionRepository questionRepository;
     private final QuestionUtils questionUtils;
+    private final MiniprocurementRepository procurementRepository;
 
-    public QuestionDto getQuestionByQuestionId(Integer id) {
-        Optional<Question> questionOptional = questionRepository.findById(id);
-        if (questionOptional.isEmpty()) {
-            throw new RequestedObjectNotFoundException(
-                    String.format("Question with id [%d] does not exist", id));
-        }
-        Question question = questionOptional.get();
-        return questionUtils.convertFromQuestionToDto(question);
+    public QuestionService(RepositoryInterface<Question> repository, QuestionRepository questionRepository, QuestionUtils questionUtils, MiniprocurementRepository procurementRepository) {
+        super(repository, QuestionMapper.INSTANCE);
+        this.questionRepository = questionRepository;
+        this.questionUtils = questionUtils;
+        this.procurementRepository = procurementRepository;
     }
-
-    public List<QuestionDto> getAllQuestions() {
-        return questionRepository.findAll().stream()
-                .map(questionUtils::convertFromQuestionToDto)
-                .collect(Collectors.toList());
-    }
-
-    public List<QuestionDto> findAllByProcurementId(Integer procurementId) {
-        return questionRepository.findAllByProcurementId(procurementId).stream()
-                .map(questionUtils::convertFromQuestionToDto)
-                .collect(Collectors.toList());
-    }
-
 
     public QuestionDto addQuestion(QuestionDto dto) {
+        if (procurementRepository.findById(dto.getProcurementId()).isEmpty()) {
+            throw new QuestionException(String.format(
+                    "Procurement with id [%d] does not exist",
+                    dto.getProcurementId()));
+        }
         Question question = questionUtils.convertFromDtoToQuestion(dto);
+        question.setTimeAsked(new Timestamp(System.currentTimeMillis()));
         return questionUtils.convertFromQuestionToDto(
                 questionRepository.save(question)
         );

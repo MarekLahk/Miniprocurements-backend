@@ -1,17 +1,21 @@
 package ee.taltech.procurementSystemBackend.models.model;
 
+import com.googlecode.jmapper.annotations.JGlobalMap;
+import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "Miniprocurement")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Miniprocurement {
+@JGlobalMap
+public class Miniprocurement extends ModelBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -10,7 +10,6 @@ public class AnnouncementSearch extends SearchObject<Announcement> {
     private Integer procurementID;
     private Integer employeeID;
 
-
     public AnnouncementSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer procurementID, Integer employeeID) {
         super(limit, page, sort, dir);
         this.procurementID = procurementID;
@@ -28,7 +27,6 @@ public class AnnouncementSearch extends SearchObject<Announcement> {
         if (employeeID != null) {
             searchSpec.addSpec(Specifications.specEquals("employeeId", this.employeeID));
         }
-
 
         return searchSpec;
     }

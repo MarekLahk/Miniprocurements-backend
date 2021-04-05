@@ -1,7 +1,6 @@
 package ee.taltech.procurementSystemBackend.models.model;
 
 import com.googlecode.jmapper.annotations.JGlobalMap;
-import ee.taltech.procurementSystemBackend.models.Dto.AnnouncementDto;
 import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.*;
 
@@ -32,12 +31,4 @@ public class Announcement extends ModelBase {
     @Basic
     @Column(name = "date_added", nullable = false)
     private Timestamp dateAdded;
-
-    public Announcement(AnnouncementDto announcementDto) {
-        this.announcementId = announcementDto.getAnnouncementId();
-        this.procurementId = announcementDto.getProcurementId();
-        this.employeeId = announcementDto.getEmployeeId();
-        this.announcement = announcementDto.getAnnouncement();
-        this.dateAdded = announcementDto.getDateAdded();
-    }
 }

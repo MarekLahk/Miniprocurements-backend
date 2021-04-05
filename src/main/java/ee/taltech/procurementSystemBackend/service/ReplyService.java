@@ -1,54 +1,40 @@
 package ee.taltech.procurementSystemBackend.service;
 
-import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
+import ee.taltech.procurementSystemBackend.exception.ReplyException;
 import ee.taltech.procurementSystemBackend.models.Dto.ReplyDto;
+import ee.taltech.procurementSystemBackend.models.mapper.ReplyMapper;
 import ee.taltech.procurementSystemBackend.models.model.Reply;
+import ee.taltech.procurementSystemBackend.repository.QuestionRepository;
 import ee.taltech.procurementSystemBackend.repository.ReplyRepository;
+import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.utils.ReplyUtils;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.sql.Timestamp;
 
 @Service
-@AllArgsConstructor
-public class ReplyService {
+public class ReplyService extends ServiceBase<Reply, ReplyDto> {
 
     private final ReplyRepository replyRepository;
     private final ReplyUtils replyUtils;
+    private final QuestionRepository questionRepository;
 
-    public ReplyDto getReplyByReplyId(Integer id) {
-        Optional<Reply> replyOptional = replyRepository.findById(id);
-        if (replyOptional.isEmpty()) {
-            throw new RequestedObjectNotFoundException(
-                    String.format("Reply with id [%d] does not exist", id));
-        }
-        Reply reply = replyOptional.get();
-        return replyUtils.convertFromReplyToDto(reply);
-    }
-
-    public List<ReplyDto> getAllReplies() {
-        return replyRepository.findAll().stream()
-                .map(replyUtils::convertFromReplyToDto)
-                .collect(Collectors.toList());
-    }
-
-    public List<ReplyDto> getRepliesByQuestion(Integer questionId) {
-        return replyRepository.findAllByQuestionId(questionId).stream()
-                .map(replyUtils::convertFromReplyToDto)
-                .collect(Collectors.toList());
-    }
-
-    public List<ReplyDto> getRepliesByProcurement(Integer procurementId) {
-        return replyRepository.findAllByProcurementId(procurementId).stream()
-                .map(replyUtils::convertFromReplyToDto)
-                .collect(Collectors.toList());
+    public ReplyService(RepositoryInterface<Reply> repository, ReplyRepository replyRepository, ReplyUtils replyUtils, QuestionRepository questionRepository) {
+        super(repository, ReplyMapper.INSTANCE);
+        this.replyRepository = replyRepository;
+        this.replyUtils = replyUtils;
+        this.questionRepository = questionRepository;
     }
 
     public ReplyDto addReply(ReplyDto dto) {
+        if (questionRepository.findByQuestionIdAndProcurementId(
+                dto.getQuestionId(), dto.getProcurementId()).isEmpty()) {
+            throw new ReplyException(String.format(
+                    "Question with id [%d] and procurement id [%d] does not exist",
+                    dto.getQuestionId(), dto.getProcurementId()));
+        }
         Reply reply = replyUtils.convertFromDtoToReply(dto);
+        reply.setTimeReplied(new Timestamp(System.currentTimeMillis()));
         return replyUtils.convertFromReplyToDto(
                 replyRepository.save(reply)
         );

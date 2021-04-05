@@ -6,10 +6,11 @@ import ee.taltech.procurementSystemBackend.models.search.AnnouncementSearch;
 import ee.taltech.procurementSystemBackend.service.AnnouncementService;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+import javax.validation.Valid;
 
+@RestController
 @RequestMapping("api/announcement")
-public class AnnouncementController extends ControllerBase<Announcement, AnnouncementDto, AnnouncementSearch>{
+public class AnnouncementController extends ControllerBase<Announcement, AnnouncementDto, AnnouncementSearch> {
 
     private final AnnouncementService announcementService;
 
@@ -18,9 +19,8 @@ public class AnnouncementController extends ControllerBase<Announcement, Announc
         this.announcementService = announcementService;
     }
 
-
     @PostMapping
-    public AnnouncementDto addAnnouncement(@RequestBody AnnouncementDto dto) {
+    public AnnouncementDto addAnnouncement(@Valid @RequestBody AnnouncementDto dto) {
         return announcementService.addAnnouncement(dto);
     }
 

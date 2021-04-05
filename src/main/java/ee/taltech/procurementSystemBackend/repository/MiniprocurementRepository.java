@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MiniprocurementRepository extends JpaRepository<Miniprocurement, Integer> {
+public interface MiniprocurementRepository extends RepositoryInterface<Miniprocurement> {
 
-    List<Miniprocurement> findMiniprocurementByAddedBy(Integer addedBy);
 }

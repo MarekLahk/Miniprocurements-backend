@@ -1,5 +1,6 @@
 package ee.taltech.procurementSystemBackend.service;
 
+import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
 import ee.taltech.procurementSystemBackend.models.DtoBase;
 import ee.taltech.procurementSystemBackend.models.MapperInterface;
 import ee.taltech.procurementSystemBackend.models.ModelBase;
@@ -26,6 +27,7 @@ public abstract class ServiceBase<ModelT extends ModelBase, DtoT extends DtoBase
         if (model != null) return Optional.of(mapper.toDto(model));
         return Optional.empty();
     }
+
     public List<DtoT> toDtoList(List<ModelT> modelList) {
         return modelList.stream().map(mapper::toDto).collect(Collectors.toList());
     }
@@ -46,7 +48,12 @@ public abstract class ServiceBase<ModelT extends ModelBase, DtoT extends DtoBase
 
     public Optional<DtoT> getById(Integer id) {
         Optional<ModelT> result = repository.findById(id);
-        return toDtoOptional(result.orElse(null));
+        if (result.isEmpty()) throw new RequestedObjectNotFoundException(
+                String.format(
+                        "Requested object with id [%d] does not exist",
+                        id)
+        );
+        return toDtoOptional(result.get());
     }
 
 }
