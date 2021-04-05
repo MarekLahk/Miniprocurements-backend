@@ -1,17 +1,16 @@
 package ee.taltech.procurementSystemBackend.models.Dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import ee.taltech.procurementSystemBackend.models.DtoBase;
+import lombok.*;
 
 import java.sql.Timestamp;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MiniProcurementDto {
+public class MiniProcurementDto extends DtoBase  {
 
     private Integer procurementId;
     private String procurementName;
