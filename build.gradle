@@ -24,21 +24,30 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+
 	implementation group: 'com.microsoft.azure', name: 'azure-active-directory-spring-boot-starter', version: '3.0.0'
+
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'com.googlecode.jmapper-framework:jmapper-core:1.6.1.CR2'
+
+	implementation 'io.swagger.core.v3:swagger-core'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.5.4'
+
 	compileOnly 'org.projectlombok:lombok'
+
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	runtimeOnly 'mysql:mysql-connector-java'
-	annotationProcessor 'org.projectlombok:lombok'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
 	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	compile 'com.fasterxml.jackson.core:jackson-annotations:latest.release'
-	annotationProcessor 'org.hibernate:hibernate-jpamodelgen:latest.release'
-	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 
+	annotationProcessor 'org.hibernate:hibernate-jpamodelgen:latest.release'
+	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
 }
 
