@@ -7,9 +7,8 @@ import ee.taltech.procurementSystemBackend.service.AnnouncementService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-
 @RequestMapping("api/announcement")
-public class AnnouncementController extends ControllerBase<Announcement, AnnouncementDto, AnnouncementSearch>{
+public class AnnouncementController extends ControllerBase<Announcement, AnnouncementDto, AnnouncementSearch> {
 
     private final AnnouncementService announcementService;
 

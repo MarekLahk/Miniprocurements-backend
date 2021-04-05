@@ -7,8 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface QuestionRepository extends JpaRepository<Question, Integer> {
-
-    List<Question> findAllByProcurementId(Integer id);
-
+public interface QuestionRepository extends RepositoryInterface<Question> {
 }

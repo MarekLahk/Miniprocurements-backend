@@ -50,7 +50,7 @@ public abstract class ServiceBase<ModelT extends ModelBase, DtoT extends DtoBase
         Optional<ModelT> result = repository.findById(id);
         if (result.isEmpty()) throw new RequestedObjectNotFoundException(
                 String.format(
-                        "Object with id [%d] does not exist",
+                        "Requested object with id [%d] does not exist",
                         id)
         );
         return toDtoOptional(result.get());
