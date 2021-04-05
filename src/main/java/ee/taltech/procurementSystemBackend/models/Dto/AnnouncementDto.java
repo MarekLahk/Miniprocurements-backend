@@ -20,13 +20,4 @@ public class AnnouncementDto extends DtoBase {
     private Integer employeeId;
     private String announcement;
     private Timestamp dateAdded;
-
-    public AnnouncementDto(Announcement announcement) {
-        this.announcementId = announcement.getAnnouncementId();
-        this.procurementId = announcement.getProcurementId();
-        this.employeeId = announcement.getEmployeeId();
-        this.announcement = announcement.getAnnouncement();
-        this.dateAdded = announcement.getDateAdded();
-    }
-
 }

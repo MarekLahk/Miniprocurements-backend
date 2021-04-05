@@ -1,20 +1,19 @@
 package ee.taltech.procurementSystemBackend.models.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import ee.taltech.procurementSystemBackend.models.ModelBase;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "Reply")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Reply {
+public class Reply extends ModelBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

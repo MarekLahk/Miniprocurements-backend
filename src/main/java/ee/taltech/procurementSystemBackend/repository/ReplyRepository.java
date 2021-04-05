@@ -7,10 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReplyRepository extends JpaRepository<Reply, Integer> {
-
-    List<Reply> findAllByProcurementId(Integer id);
-
-    List<Reply> findAllByQuestionId(Integer id);
-
+public interface ReplyRepository extends RepositoryInterface<Reply> {
 }

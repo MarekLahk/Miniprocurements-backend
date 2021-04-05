@@ -28,7 +28,6 @@ public class AnnouncementSearch extends SearchObject<Announcement> {
             searchSpec.addSpec(Specifications.specEquals("employeeId", this.employeeID));
         }
 
-
         return searchSpec;
     }
 }
