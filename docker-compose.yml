@@ -3,6 +3,7 @@ services:
     message-server:
         container_name: message-server
         build:
+            context: .
             dockerfile: Dockerfile
         ports:
             - 8080:8080
