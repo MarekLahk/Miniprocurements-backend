@@ -28,6 +28,6 @@ build:
 
 deploy:
   stage: deploy
-  script:
-    - docker build -t small-procurement-system-backend:latest .
-    - docker run -d -p 8080:8080 --name smallpro small-procurement-system-backend:latest
+script:
+    - docker-compose down
+    - docker-compose up -d
