@@ -28,6 +28,6 @@ build:
 
 deploy:
   stage: deploy
-script:
+  script:
     - docker-compose down
     - docker-compose up -d
