@@ -1,1 +1,7 @@
-
+version: '3.9'  
+services:
+    message-server:
+        container_name: message-server
+        build:
+        ports:
+            - 8080:8080
