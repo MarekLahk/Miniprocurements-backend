@@ -1,4 +1,4 @@
-package ee.taltech.procurementSystemBackend.SMTP;
+package ee.taltech.procurementSystemBackend.email;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
