@@ -2,6 +2,7 @@ version: '3'
 services:
     message-server:
         container_name: message-server
-        image: development
+        build:
+            dockerfile: Dockerfile
         ports:
             - 8080:8080
