@@ -1,0 +1,33 @@
+image: gradle:alpine
+
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  - echo `pwd`
+  #  - echo "$CI_BUILD_NAME, $CI_BUILD_REF_NAME $CI_BUILD_STAGE" # debug
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+  - chmod +x ./gradlew
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  script:
+    - ./gradlew assemble
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 week
+
+
+deploy:
+  stage: deploy
+  script:
+    - docker-compose down
+    - docker-compose up -d
