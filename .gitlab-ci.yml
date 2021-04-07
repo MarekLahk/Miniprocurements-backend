@@ -1,12 +1,15 @@
+image: gradle:alpine
+
 stages:
   - build
   - test
   - deploy
 
 before_script:
-  #  - echo `pwd` # debug
+  - echo `pwd`
   #  - echo "$CI_BUILD_NAME, $CI_BUILD_REF_NAME $CI_BUILD_STAGE" # debug
   - export GRADLE_USER_HOME=`pwd`/.gradle
+  - chmod +x ./gradlew
 
 cache:
   paths:
@@ -21,18 +24,10 @@ build:
     paths:
       - build/libs/*.jar
     expire_in: 1 week
-  only:
-    - master
 
-test:
-  stage: test
-  script:
-    - ./gradlew check
 
 deploy:
+  stage: deploy
   script:
-    -sudo docker kill smallpro
-    -sudo docker rm smallpro
-    -sudo docker build -t small-procurement-system-backend:latest .
-    #-sudo docker pull jajaan/small-procurement-system-backend:latest
-    -sudo docker run -d -p 8080:8080 --name smallpro small-procurement-system-backend:latest
+    - docker-compose down
+    - docker-compose up -d
