@@ -16,12 +16,12 @@ public class EmailService {
     private final TemplateEngine templateEngine;
 
     public String generateProcurementInvite() {
-        final Context ctx = new Context(Locale.ENGLISH);
-        ctx.setVariable("name", "recipientName");
-        ctx.setVariable("subscriptionDate", new Date());
-        ctx.setVariable("hobbies", Arrays.asList("Cinema", "Sports", "Music"));
+        final Context ctx = new Context(Locale.FRANCE);
+        ctx.setVariable("recipientName", "recipientName");
+        ctx.setVariable("text", new Date());
+        ctx.setVariable("hobbies", Arrays.asList("Cinema", "Sports", "Music", "Test"));
         ctx.setVariable("imageResourceName", "a"); // so that we can reference it from HTML
 
-        return this.templateEngine.process("email-test.html", ctx);
+        return this.templateEngine.process("email-test", ctx);
     }
 }
