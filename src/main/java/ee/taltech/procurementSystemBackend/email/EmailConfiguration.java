@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
@@ -20,10 +21,9 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Properties;
-
 @Configuration
-@PropertySource("classpath:mail/emailconfig.properties")
-public class EmailConfiguration implements ApplicationContextAware, EnvironmentAware {
+@PropertySource("classpath:/mail/emailconfig.properties")
+public class EmailConfiguration implements EnvironmentAware, ApplicationContextAware {
 
     public static final String EMAIL_TEMPLATE_ENCODING = "UTF-8";
 
@@ -40,22 +40,26 @@ public class EmailConfiguration implements ApplicationContextAware, EnvironmentA
     private Environment environment;
 
 
+    @Override
+    public void setEnvironment( final Environment environment) {
+        this.environment = environment;
+    }
 
     @Override
     public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
-
-    @Override
-    public void setEnvironment(final Environment environment) {
-        this.environment = environment;
-    }
+//
+//    @Override
+//    public void setEnvironment(final Environment environment) {
+//        this.environment = environment;
+//    }
 
 
     /*
      * SPRING + JAVAMAIL: JavaMailSender instance, configured via .properties files.
      */
-//    @Bean
+    @Bean
     public JavaMailSender mailSender() throws IOException {
 
         final JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -78,18 +82,13 @@ public class EmailConfiguration implements ApplicationContextAware, EnvironmentA
     @Bean
     public ResourceBundleMessageSource emailMessageSource() {
         final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("mail/MailMessages");
+        messageSource.setBasenames("mail/Localization");
         return messageSource;
     }
 
-//    @Bean
-//    public SpringTemplateEngine springTemplateEngine() {
-//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-//        templateEngine.addTemplateResolver(htmlTemplateResolver());
-//        return templateEngine;
-//    }
 
     @Bean
+    @Primary
     public TemplateEngine emailTemplateEngine() {
         final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         // Resolver for TEXT emails

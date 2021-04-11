@@ -24,4 +24,8 @@ public class EmailService {
 
         return this.templateEngine.process("email-test", ctx);
     }
+
+    public void sendProcurementEmail() {
+
+    }
 }

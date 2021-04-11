@@ -1,21 +1,7 @@
 
 USE miniprocurements;
-CREATE TABLE TemplateTypes(
-                              template_type_id SMALLINT AUTO_INCREMENT,
-                              template_type VARCHAR(50) NOT NULL UNIQUE,
-                              CONSTRAINT pk_template_type_id PRIMARY KEY (template_type_id)
-);
 
-CREATE TABLE Templates(
-                          template_id MEDIUMINT NOT NULL AUTO_INCREMENT UNIQUE,
-                          template_type SMALLINT NOT NULL,
-                          template_name VARCHAR(50) NOT NULL UNIQUE,
-                          template TEXT NOT NULL,
-                          CONSTRAINT pk_template_id PRIMARY KEY (template_id),
-                          CONSTRAINT fk_template_type FOREIGN KEY (template_type)
-                              REFERENCES TemplateTypes(template_type_id)
-                              ON UPDATE CASCADE
-);
+
 
 CREATE TABLE BidStatus(
                           status_id SMALLINT AUTO_INCREMENT,
@@ -79,7 +65,7 @@ CREATE TABLE ContractPartners(
 );
 
 
-CREATE TABLE Miniprocurement(
+CREATE TABLE Procurement(
                                 procurement_id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
                                 procurement_name VARCHAR(50) NOT NULL,
                                 amount INT,
@@ -108,7 +94,7 @@ CREATE TABLE Procurement_Winners(
                                     judgement_time DATETIME DEFAULT NOW(),
                                     constraint pk_procurement_winner PRIMARY KEY (procurement_id),
                                     CONSTRAINT procurement_id FOREIGN KEY (procurement_id)
-                                        REFERENCES Miniprocurement(procurement_id),
+                                        REFERENCES Procurement(procurement_id),
                                     CONSTRAINT fk_procurement_winner_id FOREIGN KEY (winner_id)
                                         REFERENCES Partner(partner_id),
                                     CONSTRAINT fk_procurement_judge_id FOREIGN KEY (judge_id)
@@ -125,7 +111,7 @@ CREATE TABLE Miniprocurement_Partners(
                                          CONSTRAINT fk_procurement_link_partner_id FOREIGN KEY (partner_id)
                                              REFERENCES Partner(partner_id),
                                          CONSTRAINT fk_procurement_link_procurement_id FOREIGN KEY (procurement_id)
-                                             REFERENCES Miniprocurement(procurement_id)
+                                             REFERENCES Procurement(procurement_id)
 );
 
 
@@ -146,7 +132,7 @@ CREATE TABLE Announcement(
                                  ON UPDATE CASCADE
                                  ON DELETE NO ACTION,
                              CONSTRAINT fk_announcement_procurement_id FOREIGN KEY (procurement_id)
-                                 REFERENCES Miniprocurement(procurement_id)
+                                 REFERENCES Procurement(procurement_id)
                                  ON UPDATE CASCADE
                                  ON DELETE NO ACTION
 );
@@ -165,7 +151,7 @@ CREATE TABLE Bid(
                         ON UPDATE CASCADE
                         ON DELETE NO ACTION,
                     CONSTRAINT fk_bid_procurement FOREIGN KEY (procurement_id)
-                        REFERENCES Miniprocurement(procurement_id)
+                        REFERENCES Procurement(procurement_id)
                         ON UPDATE CASCADE
                         ON DELETE NO ACTION,
                     CONSTRAINT fk_bidder FOREIGN KEY (bidder)
@@ -179,7 +165,7 @@ CREATE TABLE Procurer(
                          employee_id MEDIUMINT NOT NULL,
                          CONSTRAINT pk_procurement_id PRIMARY KEY (procurement_id),
                          CONSTRAINT fk_procurement_id FOREIGN KEY (procurement_id)
-                             REFERENCES Miniprocurement(procurement_id)
+                             REFERENCES Procurement(procurement_id)
                              ON UPDATE CASCADE
                              ON DELETE NO ACTION,
                          CONSTRAINT fk_employee_id FOREIGN KEY (employee_id)
@@ -197,7 +183,7 @@ CREATE TABLE Question(
                          time_asked DATETIME NOT NULL DEFAULT NOW(),
                          CONSTRAINT pk_question_id PRIMARY KEY (question_id),
                          CONSTRAINT fk_q_procurement_id FOREIGN KEY (procurement_id)
-                             REFERENCES Miniprocurement(procurement_id)
+                             REFERENCES Procurement(procurement_id)
                              ON UPDATE CASCADE
                              ON DELETE NO ACTION
 );
@@ -219,7 +205,7 @@ CREATE TABLE Reply(
                           ON UPDATE CASCADE
                           ON DELETE NO ACTION,
                       CONSTRAINT fk_r_procurement_id FOREIGN KEY (procurement_id)
-                          REFERENCES Miniprocurement(procurement_id)
+                          REFERENCES Procurement(procurement_id)
                           ON UPDATE CASCADE
                           ON DELETE NO ACTION
 );
@@ -235,7 +221,7 @@ CREATE TABLE Document(
                          date_added DATETIME NOT NULL DEFAULT NOW(),
                          CONSTRAINT pk_document_id PRIMARY KEY (document_id),
                          CONSTRAINT fk_document_procurement_id FOREIGN KEY (procurement_id)
-                             REFERENCES Miniprocurement(procurement_id)
+                             REFERENCES Procurement(procurement_id)
                              ON UPDATE CASCADE
                              ON DELETE NO ACTION,
                          CONSTRAINT fk_document_person_id FOREIGN KEY (person_id)
@@ -266,5 +252,38 @@ CREATE TABLE Person_Roles(
                                  REFERENCES Role(role_id)
                                  ON UPDATE CASCADE
                                  ON DELETE NO ACTION
+);
+
+CREATE TABLE Sent_Email (
+
+                            email_id MEDIUMINT AUTO_INCREMENT NOT NULL,
+                            is_sent BOOLEAN default(0),
+                            procurement_id MEDIUMINT,
+                            reply_id MEDIUMINT,
+                            announcement_id MEDIUMINT,
+                            recipient_id MEDIUMINT NOT NULL,
+                            sender_id MEDIUMINT NOT NULL,
+                            CONSTRAINT pk_email_sent_status PRIMARY KEY (email_id),
+                            CONSTRAINT fk_email_procurement_id FOREIGN KEY (procurement_id)
+                               REFERENCES Procurement(procurement_id)
+                                ON UPDATE CASCADE
+                                ON DELETE NO ACTION,
+                            CONSTRAINT fk_email_reply_id FOREIGN KEY (reply_id)
+                               REFERENCES Reply(replier_id)
+                                ON UPDATE CASCADE
+                                ON DELETE NO ACTION,
+                            CONSTRAINT fk_email_announcement_id FOREIGN KEY (announcement_id)
+                               REFERENCES Announcement(procurement_id)
+                                ON UPDATE CASCADE
+                                ON DELETE NO ACTION,
+                            CONSTRAINT fk_email_recipient_id FOREIGN KEY (recipient_id)
+                               REFERENCES Person(person_id)
+                                ON UPDATE CASCADE
+                                ON DELETE NO ACTION,
+                            CONSTRAINT fk_email_sender_id FOREIGN KEY (sender_id)
+                               REFERENCES Employee(employee_id)
+                                ON UPDATE CASCADE
+                                ON DELETE NO ACTION
+
 );
 
