@@ -1,7 +1,7 @@
 package ee.taltech.procurementSystemBackend.models.search.person;
 
-import ee.taltech.procurementSystemBackend.models.model.person.Person;
 import ee.taltech.procurementSystemBackend.models.SearchObject;
+import ee.taltech.procurementSystemBackend.models.model.person.Person;
 import ee.taltech.procurementSystemBackend.models.search.SearchSpecPack;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import java.time.LocalDateTime;
 
 import static ee.taltech.procurementSystemBackend.repository.person.Specifications.*;
+import static ee.taltech.procurementSystemBackend.utils.Statics.formatter;
 
 
 @EqualsAndHashCode(callSuper = true)

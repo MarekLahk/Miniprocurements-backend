@@ -1,12 +1,9 @@
 package ee.taltech.procurementSystemBackend.email;
 
-import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
-public class EmailBase {
+public interface EmailBase {
 
-    private final TemplateEngine templateEngine;
+    Context buildContext();
 
-    public EmailBase(TemplateEngine templateEngine) {
-        this.templateEngine = templateEngine;
-    }
 }

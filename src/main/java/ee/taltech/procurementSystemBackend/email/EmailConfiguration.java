@@ -20,6 +20,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Properties;
 @Configuration
 @PropertySource("classpath:/mail/emailconfig.properties")
@@ -34,6 +35,7 @@ public class EmailConfiguration implements EnvironmentAware, ApplicationContextA
     private static final String PROTOCOL = "mail.server.protocol";
     private static final String USERNAME = "mail.server.username";
     private static final String PASSWORD = "mail.server.password";
+    private static final String LOCALIZATION = "mail.server.localization";
 
 
     private ApplicationContext applicationContext;
@@ -49,12 +51,6 @@ public class EmailConfiguration implements EnvironmentAware, ApplicationContextA
     public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
-//
-//    @Override
-//    public void setEnvironment(final Environment environment) {
-//        this.environment = environment;
-//    }
-
 
     /*
      * SPRING + JAVAMAIL: JavaMailSender instance, configured via .properties files.
@@ -79,13 +75,14 @@ public class EmailConfiguration implements EnvironmentAware, ApplicationContextA
         return mailSender;
 
     }
+
     @Bean
     public ResourceBundleMessageSource emailMessageSource() {
+        String[] localization  = Objects.requireNonNull(this.environment.getProperty(LOCALIZATION)).trim().split(",");
         final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasenames("mail/Localization");
+        messageSource.setBasenames(localization);
         return messageSource;
     }
-
 
     @Bean
     @Primary
@@ -112,17 +109,5 @@ public class EmailConfiguration implements EnvironmentAware, ApplicationContextA
         templateResolver.setCacheable(false);
         return templateResolver;
     }
-
-
-//    private ITemplateResolver stringTemplateResolver() {
-//        System.out.println("Here1");
-//        final StringTemplateResolver templateResolver = new StringTemplateResolver();
-//        templateResolver.setOrder(2);
-//        // No resolvable pattern, will simply process as a String template everything not previously matched
-//        templateResolver.setTemplateMode("HTML5");
-//        templateResolver.setCacheable(false);
-//        return templateResolver;
-//    }
-
 
 }

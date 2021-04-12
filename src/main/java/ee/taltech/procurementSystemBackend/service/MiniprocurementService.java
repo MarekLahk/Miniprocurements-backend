@@ -9,7 +9,6 @@ import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.utils.ProcurementUtils;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.Optional;
 
 @Service
@@ -26,7 +25,7 @@ public class MiniprocurementService extends ServiceBase<Miniprocurement, MiniPro
 
     public MiniProcurementDto addProcurement(MiniProcurementDto dto) {
         Miniprocurement procurement = procurementUtils.convertFromDtoToProcurement(dto);
-        procurement.setTimeAdded(new Timestamp(System.currentTimeMillis()));
+//        procurement.setTimeAdded(new Timestamp(System.currentTimeMillis()));
         return procurementUtils.convertFromProcurementToDto(
                 miniprocurementRepository.save(procurement)
         );
