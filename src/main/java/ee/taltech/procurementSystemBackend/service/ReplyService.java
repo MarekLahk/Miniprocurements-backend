@@ -7,7 +7,6 @@ import ee.taltech.procurementSystemBackend.models.model.Reply;
 import ee.taltech.procurementSystemBackend.repository.QuestionRepository;
 import ee.taltech.procurementSystemBackend.repository.ReplyRepository;
 import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
-import ee.taltech.procurementSystemBackend.utils.ReplyUtils;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -16,13 +15,11 @@ import java.sql.Timestamp;
 public class ReplyService extends ServiceBase<Reply, ReplyDto> {
 
     private final ReplyRepository replyRepository;
-    private final ReplyUtils replyUtils;
     private final QuestionRepository questionRepository;
 
-    public ReplyService(RepositoryInterface<Reply> repository, ReplyRepository replyRepository, ReplyUtils replyUtils, QuestionRepository questionRepository) {
+    public ReplyService(RepositoryInterface<Reply> repository, ReplyRepository replyRepository, QuestionRepository questionRepository) {
         super(repository, ReplyMapper.INSTANCE);
         this.replyRepository = replyRepository;
-        this.replyUtils = replyUtils;
         this.questionRepository = questionRepository;
     }
 
@@ -33,11 +30,11 @@ public class ReplyService extends ServiceBase<Reply, ReplyDto> {
                     "Question with id [%d] and procurement id [%d] does not exist",
                     dto.getQuestionId(), dto.getProcurementId()));
         }
-        Reply reply = replyUtils.convertFromDtoToReply(dto);
+        Reply reply = toModelOptional(dto)
+                .orElseThrow(() -> new ReplyException("No reply dto provided"));
         reply.setTimeReplied(new Timestamp(System.currentTimeMillis()));
-        return replyUtils.convertFromReplyToDto(
-                replyRepository.save(reply)
-        );
+        return toDtoOptional(replyRepository.save(reply))
+                .orElseThrow(() -> new ReplyException("Could not save reply"));
     }
 
     @Deprecated

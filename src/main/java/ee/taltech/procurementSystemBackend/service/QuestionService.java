@@ -7,7 +7,6 @@ import ee.taltech.procurementSystemBackend.models.model.Question;
 import ee.taltech.procurementSystemBackend.repository.MiniprocurementRepository;
 import ee.taltech.procurementSystemBackend.repository.QuestionRepository;
 import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
-import ee.taltech.procurementSystemBackend.utils.QuestionUtils;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -17,13 +16,11 @@ import java.sql.Timestamp;
 public class QuestionService extends ServiceBase<Question, QuestionDto> {
 
     private final QuestionRepository questionRepository;
-    private final QuestionUtils questionUtils;
     private final MiniprocurementRepository procurementRepository;
 
-    public QuestionService(RepositoryInterface<Question> repository, QuestionRepository questionRepository, QuestionUtils questionUtils, MiniprocurementRepository procurementRepository) {
+    public QuestionService(RepositoryInterface<Question> repository, QuestionRepository questionRepository, MiniprocurementRepository procurementRepository) {
         super(repository, QuestionMapper.INSTANCE);
         this.questionRepository = questionRepository;
-        this.questionUtils = questionUtils;
         this.procurementRepository = procurementRepository;
     }
 
@@ -33,11 +30,11 @@ public class QuestionService extends ServiceBase<Question, QuestionDto> {
                     "Procurement with id [%d] does not exist",
                     dto.getProcurementId()));
         }
-        Question question = questionUtils.convertFromDtoToQuestion(dto);
+        Question question = toModelOptional(dto)
+                .orElseThrow(() -> new QuestionException("No question dto provided"));
         question.setTimeAsked(new Timestamp(System.currentTimeMillis()));
-        return questionUtils.convertFromQuestionToDto(
-                questionRepository.save(question)
-        );
+        return toDtoOptional(questionRepository.save(question))
+                .orElseThrow(() -> new QuestionException("Could not save question"));
     }
 
     @Deprecated

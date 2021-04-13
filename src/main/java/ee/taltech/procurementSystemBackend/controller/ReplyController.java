@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("api/reply")
+@RequestMapping("api/replies")
 public class ReplyController extends ControllerBase<Reply, ReplyDto, ReplySearch> {
 
     private final ReplyService replyService;

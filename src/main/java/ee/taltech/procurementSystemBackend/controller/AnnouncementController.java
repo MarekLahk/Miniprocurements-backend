@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("api/announcement")
+@RequestMapping("api/announcements")
 public class AnnouncementController extends ControllerBase<Announcement, AnnouncementDto, AnnouncementSearch> {
 
     private final AnnouncementService announcementService;

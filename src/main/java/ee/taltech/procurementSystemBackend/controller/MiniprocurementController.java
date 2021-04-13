@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 
 @RestController
-@RequestMapping("api/procurement")
+@RequestMapping("api/procurements")
 public class MiniprocurementController extends ControllerBase<Miniprocurement, MiniProcurementDto, MiniprocurementSearch>{
 
     private final MiniprocurementService miniprocurementService;

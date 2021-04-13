@@ -1,12 +1,12 @@
 package ee.taltech.procurementSystemBackend.service;
 
+import ee.taltech.procurementSystemBackend.exception.MiniprocurementException;
 import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
 import ee.taltech.procurementSystemBackend.models.Dto.MiniProcurementDto;
 import ee.taltech.procurementSystemBackend.models.mapper.MiniprocurementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Miniprocurement;
 import ee.taltech.procurementSystemBackend.repository.MiniprocurementRepository;
 import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
-import ee.taltech.procurementSystemBackend.utils.ProcurementUtils;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -16,20 +16,18 @@ import java.util.Optional;
 public class MiniprocurementService extends ServiceBase<Miniprocurement, MiniProcurementDto> {
 
     private final MiniprocurementRepository miniprocurementRepository;
-    private final ProcurementUtils procurementUtils;
 
-    public MiniprocurementService(RepositoryInterface<Miniprocurement> repository, MiniprocurementRepository miniprocurementRepository, ProcurementUtils procurementUtils) {
+    public MiniprocurementService(RepositoryInterface<Miniprocurement> repository, MiniprocurementRepository miniprocurementRepository) {
         super(repository, MiniprocurementMapper.INSTANCE);
         this.miniprocurementRepository = miniprocurementRepository;
-        this.procurementUtils = procurementUtils;
     }
 
     public MiniProcurementDto addProcurement(MiniProcurementDto dto) {
-        Miniprocurement procurement = procurementUtils.convertFromDtoToProcurement(dto);
+        Miniprocurement procurement = toModelOptional(dto)
+                .orElseThrow(() -> new MiniprocurementException("No procurement dto provided"));
         procurement.setTimeAdded(new Timestamp(System.currentTimeMillis()));
-        return procurementUtils.convertFromProcurementToDto(
-                miniprocurementRepository.save(procurement)
-        );
+        return toDtoOptional(miniprocurementRepository.save(procurement))
+                .orElseThrow(() -> new MiniprocurementException("Could not save procurement"));
     }
 
     public MiniProcurementDto updateProcurement(Integer id, MiniProcurementDto dto) {
@@ -38,12 +36,12 @@ public class MiniprocurementService extends ServiceBase<Miniprocurement, MiniPro
             throw new RequestedObjectNotFoundException(
                     String.format("Procurement with id [%d] does not exist", id));
         }
-        Miniprocurement procurement = procurementUtils.convertFromDtoToProcurement(dto);
+        Miniprocurement procurement = toModelOptional(dto)
+                .orElseThrow(() -> new MiniprocurementException("No procurement dto provided"));
         procurement.setProcurementId(id);
         procurement.setTimeAdded(dto.getTimeAdded());
-        return procurementUtils.convertFromProcurementToDto(
-                miniprocurementRepository.save(procurement)
-        );
+        return toDtoOptional(miniprocurementRepository.save(procurement))
+                .orElseThrow(() -> new MiniprocurementException("Could not update procurement"));
     }
 
     @Deprecated

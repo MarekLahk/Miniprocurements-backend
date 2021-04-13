@@ -1,11 +1,11 @@
 package ee.taltech.procurementSystemBackend.service;
 
+import ee.taltech.procurementSystemBackend.exception.AnnouncementException;
 import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
 import ee.taltech.procurementSystemBackend.models.Dto.AnnouncementDto;
 import ee.taltech.procurementSystemBackend.models.mapper.AnnouncementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Announcement;
 import ee.taltech.procurementSystemBackend.repository.AnnouncementRepository;
-import ee.taltech.procurementSystemBackend.utils.AnnouncementUtils;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -15,21 +15,19 @@ import java.sql.Timestamp;
 public class AnnouncementService extends ServiceBase<Announcement, AnnouncementDto>{
 
     private final AnnouncementRepository announcementRepository;
-    private final AnnouncementUtils announcementUtils;
 
-    public AnnouncementService(AnnouncementRepository repository, AnnouncementRepository announcementRepository, AnnouncementUtils announcementUtils) {
+    public AnnouncementService(AnnouncementRepository repository, AnnouncementRepository announcementRepository) {
         super(repository, AnnouncementMapper.INSTANCE);
         this.announcementRepository = announcementRepository;
-        this.announcementUtils = announcementUtils;
     }
 
 
     public AnnouncementDto addAnnouncement(AnnouncementDto dto) {
-        Announcement announcement = announcementUtils.createAnnouncementFromDto(dto);
+        Announcement announcement = toModelOptional(dto)
+                .orElseThrow(() -> new AnnouncementException("No announcement dto provided"));
         announcement.setDateAdded(new Timestamp(System.currentTimeMillis()));
-        return announcementUtils.createDtoFromAnnouncement(
-                announcementRepository.save(announcement)
-        );
+        return toDtoOptional(announcementRepository.save(announcement))
+                .orElseThrow(() -> new AnnouncementException("Could not save announcement"));
     }
 
     public AnnouncementDto updateAnnouncement(Integer id, AnnouncementDto dto) {
@@ -37,11 +35,11 @@ public class AnnouncementService extends ServiceBase<Announcement, AnnouncementD
             throw new RequestedObjectNotFoundException(
                     String.format("Announcement with id [%d] does not exist", id));
         }
-        Announcement announcement = announcementUtils.createAnnouncementFromDto(dto);
+        Announcement announcement = toModelOptional(dto)
+                .orElseThrow(() -> new AnnouncementException("No announcement dto provided"));
         announcement.setAnnouncementId(id);
-        return announcementUtils.createDtoFromAnnouncement(
-                announcementRepository.save(announcement)
-        );
+        return toDtoOptional(announcementRepository.save(announcement))
+                .orElseThrow(() -> new AnnouncementException("Could not update announcement"));
     }
 
     public void deleteAnnouncement(Integer id) {

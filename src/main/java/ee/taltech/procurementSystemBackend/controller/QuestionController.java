@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/question")
+@RequestMapping("api/questions")
 public class QuestionController extends ControllerBase<Question, QuestionDto, QuestionSearch> {
 
     private final QuestionService questionService;
