@@ -52,4 +52,5 @@ public class Miniprocurement extends ModelBase {
     @Column(name = "time_finished")
     private Timestamp timeFinished;
 
+
 }

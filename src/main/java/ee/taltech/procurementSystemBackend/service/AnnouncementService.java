@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 
 
 @Service
-public class AnnouncementService extends ServiceBase<Announcement, AnnouncementDto>{
+public class AnnouncementService extends ServiceBase<Announcement, AnnouncementDto> {
 
     private final AnnouncementRepository announcementRepository;
 
