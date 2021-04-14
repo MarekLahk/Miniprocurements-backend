@@ -260,7 +260,7 @@ CREATE TABLE Person_Roles(
 CREATE TABLE Email (
 
     email_id MEDIUMINT AUTO_INCREMENT NOT NULL,
-    is_sent BOOLEAN default(0),
+    sent_date DATETIME DEFAULT NULL,
     procurement_id MEDIUMINT,
     reply_id MEDIUMINT,
     announcement_id MEDIUMINT,
