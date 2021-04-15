@@ -23,7 +23,8 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Properties;
 @Configuration
-@PropertySource("classpath:/mail/emailconfig.properties")
+//@PropertySource("classpath:/mail/emailconfig.properties")
+@PropertySource("classpath:/mail/${spring.mail.config.path}.properties")
 public class EmailConfiguration implements EnvironmentAware, ApplicationContextAware {
 
     public static final String EMAIL_TEMPLATE_ENCODING = "UTF-8";

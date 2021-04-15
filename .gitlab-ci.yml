@@ -20,6 +20,7 @@ build:
   stage: build
   script:
     - ./gradlew assemble
+    - docker build --build-arg JAR_FILE=build/libs/*.jar -t miniprocurements/backend .
   artifacts:
     paths:
       - build/libs/*.jar
