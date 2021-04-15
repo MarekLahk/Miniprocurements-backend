@@ -16,7 +16,7 @@ cache:
     - .gradle/wrapper
     - .gradle/caches
 
-build:
+build backend:
   stage: build
   script:
     - ./gradlew assemble
@@ -31,4 +31,4 @@ deploy:
   stage: deploy
   script:
     - docker-compose down
-    - docker-compose up
+    - docker-compose up -d
