@@ -1,5 +1,5 @@
 FROM openjdk:11.0.4
-RUN addgroup --system spring && adduser --system spring --gid spring
+RUN addgroup --system spring && adduser --system spring --group spring
 USER spring:spring
 ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} app.jar
