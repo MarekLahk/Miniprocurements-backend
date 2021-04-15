@@ -6,7 +6,7 @@ servers:
   - url: 'http://localhost:8080'
     description: Generated server url
 paths:
-  '/api/procurement/{id}':
+  '/api/procurements/{id}':
     get:
       tags:
         - miniprocurement-controller
@@ -64,7 +64,7 @@ paths:
         '200':
           description: OK
       deprecated: true
-  '/api/announcement/{id}':
+  '/api/announcements/{id}':
     get:
       tags:
         - announcement-controller
@@ -122,7 +122,7 @@ paths:
         '200':
           description: OK
       deprecated: true
-  /api/reply:
+  /api/replies:
     get:
       tags:
         - reply-controller
@@ -159,7 +159,7 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/ReplyDto'
-  /api/question:
+  /api/questions:
     get:
       tags:
         - question-controller
@@ -196,7 +196,7 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/QuestionDto'
-  /api/procurement:
+  /api/procurements:
     get:
       tags:
         - miniprocurement-controller
@@ -233,7 +233,7 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/MiniProcurementDto'
-  /api/announcement:
+  /api/announcements:
     get:
       tags:
         - announcement-controller
@@ -294,7 +294,7 @@ paths:
             '*/*':
               schema:
                 type: string
-  '/api/reply/{id}':
+  '/api/replies/{id}':
     get:
       tags:
         - reply-controller
@@ -328,7 +328,7 @@ paths:
         '200':
           description: OK
       deprecated: true
-  '/api/question/{id}':
+  '/api/questions/{id}':
     get:
       tags:
         - question-controller
@@ -479,6 +479,18 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/EmployeeDto'
+  /api/email:
+    get:
+      tags:
+        - email-test-controller
+      operationId: sendMail
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
 components:
   schemas:
     MiniProcurementDto:
@@ -592,11 +604,11 @@ components:
           type: string
         locality:
           type: string
-        formatted:
+        postalCode:
           type: string
         streetAddress:
           type: string
-        postalCode:
+        formatted:
           type: string
     DefaultOidcUser:
       type: object
@@ -619,34 +631,34 @@ components:
             type: object
         name:
           type: string
-        subject:
-          type: string
-        nonce:
-          type: string
         issuer:
           type: string
           format: url
+        nonce:
+          type: string
+        subject:
+          type: string
+        authorizationCodeHash:
+          type: string
+        authenticationContextClass:
+          type: string
         authenticationMethods:
           type: array
           items:
             type: string
-        authenticationContextClass:
-          type: string
-        authorizationCodeHash:
-          type: string
-        expiresAt:
-          type: string
-          format: date-time
         authenticatedAt:
           type: string
           format: date-time
+        accessTokenHash:
+          type: string
+        authorizedParty:
+          type: string
         issuedAt:
           type: string
           format: date-time
-        authorizedParty:
+        expiresAt:
           type: string
-        accessTokenHash:
-          type: string
+          format: date-time
         audience:
           type: array
           items:
@@ -669,27 +681,27 @@ components:
           type: boolean
         middleName:
           type: string
+        profile:
+          type: string
+        picture:
+          type: string
         website:
           type: string
-        gender:
+        nickName:
           type: string
         emailVerified:
           type: boolean
         familyName:
           type: string
-        picture:
-          type: string
-        nickName:
-          type: string
-        birthdate:
-          type: string
-        profile:
-          type: string
-        phoneNumber:
-          type: string
         updatedAt:
           type: string
           format: date-time
+        phoneNumber:
+          type: string
+        gender:
+          type: string
+        birthdate:
+          type: string
     GrantedAuthority:
       type: object
       properties:
@@ -710,27 +722,27 @@ components:
           type: object
           additionalProperties:
             type: object
-        subject:
-          type: string
-        nonce:
-          type: string
         issuer:
           type: string
           format: url
+        nonce:
+          type: string
+        subject:
+          type: string
+        authorizationCodeHash:
+          type: string
+        authenticationContextClass:
+          type: string
         authenticationMethods:
           type: array
           items:
             type: string
-        authenticationContextClass:
-          type: string
-        authorizationCodeHash:
-          type: string
         authenticatedAt:
           type: string
           format: date-time
-        authorizedParty:
-          type: string
         accessTokenHash:
+          type: string
+        authorizedParty:
           type: string
         audience:
           type: array
@@ -754,27 +766,27 @@ components:
           type: boolean
         middleName:
           type: string
+        profile:
+          type: string
+        picture:
+          type: string
         website:
           type: string
-        gender:
+        nickName:
           type: string
         emailVerified:
           type: boolean
         familyName:
           type: string
-        picture:
-          type: string
-        nickName:
-          type: string
-        birthdate:
-          type: string
-        profile:
-          type: string
-        phoneNumber:
-          type: string
         updatedAt:
           type: string
           format: date-time
+        phoneNumber:
+          type: string
+        gender:
+          type: string
+        birthdate:
+          type: string
     OidcUserInfo:
       type: object
       properties:
@@ -790,9 +802,9 @@ components:
           type: string
         zoneInfo:
           type: string
-        subject:
-          type: string
         givenName:
+          type: string
+        subject:
           type: string
         preferredUsername:
           type: string
@@ -802,27 +814,27 @@ components:
           type: boolean
         middleName:
           type: string
+        profile:
+          type: string
+        picture:
+          type: string
         website:
           type: string
-        gender:
+        nickName:
           type: string
         emailVerified:
           type: boolean
         familyName:
           type: string
-        picture:
-          type: string
-        nickName:
-          type: string
-        birthdate:
-          type: string
-        profile:
-          type: string
-        phoneNumber:
-          type: string
         updatedAt:
           type: string
           format: date-time
+        phoneNumber:
+          type: string
+        gender:
+          type: string
+        birthdate:
+          type: string
     Pageable:
       type: object
       properties:
@@ -837,9 +849,9 @@ components:
         pageSize:
           type: integer
           format: int32
-        unpaged:
-          type: boolean
         paged:
+          type: boolean
+        unpaged:
           type: boolean
     ReplySearch:
       type: object
