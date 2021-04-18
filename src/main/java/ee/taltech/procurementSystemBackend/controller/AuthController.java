@@ -21,7 +21,7 @@ public class AuthController {
     @GetMapping("login")
     //@PreAuthorize("hasRole('ROLE_group1')")
     public String login(Authentication authentication) {
-        authService.addNewEmployeeIfNeeded(authentication);
+        //authService.addNewEmployeeIfNeeded(authentication);
         return "<script>window.location.href = 'http://localhost:3000/';</script>";
     }
 

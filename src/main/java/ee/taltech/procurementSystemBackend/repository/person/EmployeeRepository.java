@@ -12,8 +12,9 @@ import java.util.Optional;
 public interface EmployeeRepository extends PersonRepositoryInterface<Employee> {
 
     //Optional<Employee> findByEMail(String email);
-    @Modifying
-    @Query(value = "insert into employee (employee_id) VALUES (:id)", nativeQuery = true)
-    @Transactional
-    void addEmployee(Integer id);
+
+//    @Modifying
+//    @Query(value = "insert into employee (employee_id) VALUES (:id)", nativeQuery = true)
+//    @Transactional
+//    void addEmployee(Integer id);
 }

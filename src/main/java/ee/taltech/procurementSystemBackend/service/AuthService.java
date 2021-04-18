@@ -19,18 +19,18 @@ public class AuthService {
     private final EmployeeRepository employeeRepository;
 
     public void addNewEmployeeIfNeeded(Authentication authentication) {
-        DefaultOidcUser principal = (DefaultOidcUser) authentication.getPrincipal();
-        String username = principal.getPreferredUsername();
-        String fullName = principal.getFullName();
-        if (personRepository.findByPersonEmail(username).isEmpty()) {
-            Person person = new Person();
-            person.setEMail(username);
-            person.setPersonName(fullName);
-            person.setTimeOfRegister(LocalDateTime.now());
-            Person per = personRepository.save(person);
-            System.out.println(per.getEMail());
-            employeeRepository.addEmployee(per.getPersonID());
-        }
+//        DefaultOidcUser principal = (DefaultOidcUser) authentication.getPrincipal();
+//        String username = principal.getPreferredUsername();
+//        String fullName = principal.getFullName();
+//        if (personRepository.findByPersonEmail(username).isEmpty()) {
+//            Person person = new Person();
+//            person.setEMail(username);
+//            person.setPersonName(fullName);
+//            person.setTimeOfRegister(LocalDateTime.now());
+//            Person per = personRepository.save(person);
+//            System.out.println(per.getEMail());
+//            employeeRepository.addEmployee(per.getPersonID());
+//        }
     }
 
     public String group1(Authentication authentication) {
