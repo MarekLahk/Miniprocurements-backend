@@ -70,4 +70,14 @@ public class ApiExceptionHandler {
                 ZonedDateTime.now());
         return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = AuthException.class)
+    public ResponseEntity<Object> handleAuthException(
+            RequestedObjectNotFoundException e) {
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                HttpStatus.FORBIDDEN,
+                ZonedDateTime.now());
+        return new ResponseEntity<>(apiException, HttpStatus.FORBIDDEN);
+    }
 }

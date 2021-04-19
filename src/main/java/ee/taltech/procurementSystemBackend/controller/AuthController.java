@@ -1,5 +1,6 @@
 package ee.taltech.procurementSystemBackend.controller;
 
+import ee.taltech.procurementSystemBackend.models.Dto.EmployeeResponse;
 import ee.taltech.procurementSystemBackend.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,20 +22,26 @@ public class AuthController {
     @GetMapping("login")
     //@PreAuthorize("hasRole('ROLE_group1')")
     public String login(Authentication authentication) {
-        //authService.addNewEmployeeIfNeeded(authentication);
+        authService.addNewEmployeeIfNeeded(authentication);
         return "<script>window.location.href = 'http://localhost:3000/';</script>";
     }
 
-
+    @Deprecated
     @GetMapping("group1")
     //@PreAuthorize("hasRole('ROLE_group1')")
     public String group1(Authentication authentication) {
         return authService.group1(authentication);
     }
 
+    @Deprecated
     @GetMapping("details")
     //@PreAuthorize("hasRole('ROLE_group1')")
     public DefaultOidcUser user(Authentication authentication) {
         return (DefaultOidcUser) authentication.getPrincipal();
+    }
+
+    @GetMapping("employee")
+    public EmployeeResponse getEmployeeResponse(Authentication authentication) {
+        return authService.getEmployeeResponse(authentication);
     }
 }

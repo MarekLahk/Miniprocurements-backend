@@ -4,6 +4,7 @@ import ee.taltech.procurementSystemBackend.models.Dto.MiniProcurementDto;
 import ee.taltech.procurementSystemBackend.models.model.Miniprocurement;
 import ee.taltech.procurementSystemBackend.models.search.MiniprocurementSearch;
 import ee.taltech.procurementSystemBackend.service.MiniprocurementService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,8 +27,10 @@ public class MiniprocurementController extends ControllerBase<Miniprocurement, M
     }
 
     @PutMapping("{id}")
-    public MiniProcurementDto updateProcurement(@Valid @PathVariable Integer id, @RequestBody MiniProcurementDto dto) {
-        return miniprocurementService.updateProcurement(id, dto);
+    public MiniProcurementDto updateProcurement(@Valid @PathVariable Integer id,
+                                                @RequestBody MiniProcurementDto dto,
+                                                Authentication authentication) {
+        return miniprocurementService.updateProcurement(id, dto, authentication);
     }
 
     @Deprecated
