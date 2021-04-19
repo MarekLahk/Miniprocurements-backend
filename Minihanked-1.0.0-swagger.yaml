@@ -472,6 +472,12 @@ paths:
       tags:
         - auth-controller
       operationId: login
+      parameters:
+        - name: redirect
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: OK
@@ -630,9 +636,9 @@ components:
         pageSize:
           type: integer
           format: int32
-        unpaged:
-          type: boolean
         paged:
+          type: boolean
+        unpaged:
           type: boolean
     ReplySearch:
       type: object
@@ -911,11 +917,11 @@ components:
           type: string
         locality:
           type: string
-        formatted:
-          type: string
         streetAddress:
           type: string
         postalCode:
+          type: string
+        formatted:
           type: string
     DefaultOidcUser:
       type: object
@@ -940,75 +946,75 @@ components:
           type: string
         subject:
           type: string
-        nonce:
-          type: string
         issuer:
           type: string
           format: url
-        authenticatedAt:
+        nonce:
           type: string
-          format: date-time
-        accessTokenHash:
+        authenticationContextClass:
           type: string
-        expiresAt:
-          type: string
-          format: date-time
-        audience:
-          type: array
-          items:
-            type: string
-        issuedAt:
-          type: string
-          format: date-time
-        authorizedParty:
+        authorizationCodeHash:
           type: string
         authenticationMethods:
           type: array
           items:
             type: string
-        authorizationCodeHash:
+        audience:
+          type: array
+          items:
+            type: string
+        accessTokenHash:
           type: string
-        authenticationContextClass:
+        authenticatedAt:
+          type: string
+          format: date-time
+        issuedAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+        authorizedParty:
           type: string
         address:
           $ref: '#/components/schemas/AddressStandardClaim'
         locale:
           type: string
-        fullName:
-          type: string
         zoneInfo:
+          type: string
+        fullName:
           type: string
         givenName:
           type: string
         preferredUsername:
           type: string
+        phoneNumberVerified:
+          type: boolean
+        nickName:
+          type: string
+        familyName:
+          type: string
         profile:
           type: string
         middleName:
           type: string
-        email:
-          type: string
-        emailVerified:
-          type: boolean
-        birthdate:
-          type: string
-        phoneNumber:
-          type: string
         picture:
           type: string
-        gender:
-          type: string
-        familyName:
-          type: string
-        nickName:
-          type: string
         website:
+          type: string
+        email:
           type: string
         updatedAt:
           type: string
           format: date-time
-        phoneNumberVerified:
+        gender:
+          type: string
+        emailVerified:
           type: boolean
+        phoneNumber:
+          type: string
+        birthdate:
+          type: string
     GrantedAuthority:
       type: object
       properties:
@@ -1031,69 +1037,69 @@ components:
             type: object
         subject:
           type: string
-        nonce:
-          type: string
         issuer:
           type: string
           format: url
-        authenticatedAt:
+        nonce:
           type: string
-          format: date-time
-        accessTokenHash:
+        authenticationContextClass:
           type: string
-        audience:
-          type: array
-          items:
-            type: string
-        authorizedParty:
+        authorizationCodeHash:
           type: string
         authenticationMethods:
           type: array
           items:
             type: string
-        authorizationCodeHash:
+        audience:
+          type: array
+          items:
+            type: string
+        accessTokenHash:
           type: string
-        authenticationContextClass:
+        authenticatedAt:
+          type: string
+          format: date-time
+        authorizedParty:
           type: string
         address:
           $ref: '#/components/schemas/AddressStandardClaim'
         locale:
           type: string
-        fullName:
-          type: string
         zoneInfo:
+          type: string
+        fullName:
           type: string
         givenName:
           type: string
         preferredUsername:
           type: string
+        phoneNumberVerified:
+          type: boolean
+        nickName:
+          type: string
+        familyName:
+          type: string
         profile:
           type: string
         middleName:
           type: string
-        email:
-          type: string
-        emailVerified:
-          type: boolean
-        birthdate:
-          type: string
-        phoneNumber:
-          type: string
         picture:
           type: string
-        gender:
-          type: string
-        familyName:
-          type: string
-        nickName:
-          type: string
         website:
+          type: string
+        email:
           type: string
         updatedAt:
           type: string
           format: date-time
-        phoneNumberVerified:
+        gender:
+          type: string
+        emailVerified:
           type: boolean
+        phoneNumber:
+          type: string
+        birthdate:
+          type: string
     OidcUserInfo:
       type: object
       properties:
@@ -1103,45 +1109,45 @@ components:
             type: object
         address:
           $ref: '#/components/schemas/AddressStandardClaim'
-        locale:
+        subject:
           type: string
-        fullName:
+        locale:
           type: string
         zoneInfo:
           type: string
-        subject:
+        fullName:
           type: string
         givenName:
           type: string
         preferredUsername:
           type: string
+        phoneNumberVerified:
+          type: boolean
+        nickName:
+          type: string
+        familyName:
+          type: string
         profile:
           type: string
         middleName:
           type: string
-        email:
-          type: string
-        emailVerified:
-          type: boolean
-        birthdate:
-          type: string
-        phoneNumber:
-          type: string
         picture:
           type: string
-        gender:
-          type: string
-        familyName:
-          type: string
-        nickName:
-          type: string
         website:
+          type: string
+        email:
           type: string
         updatedAt:
           type: string
           format: date-time
-        phoneNumberVerified:
+        gender:
+          type: string
+        emailVerified:
           type: boolean
+        phoneNumber:
+          type: string
+        birthdate:
+          type: string
     AnnouncementSearch:
       type: object
       properties:

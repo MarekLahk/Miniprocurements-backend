@@ -2,16 +2,14 @@ package ee.taltech.procurementSystemBackend.controller;
 
 import ee.taltech.procurementSystemBackend.models.Dto.EmployeeResponse;
 import ee.taltech.procurementSystemBackend.service.AuthService;
+import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -25,10 +23,12 @@ public class AuthController {
 
     @GetMapping("login")
     //@PreAuthorize("hasRole('ROLE_group1')")
-    public ResponseEntity<Void> login(Authentication authentication) {
+    public ResponseEntity<Void> login(Authentication authentication,
+                                      @RequestParam(value = "redirect", required = false) String queryString) {
         authService.addNewEmployeeIfNeeded(authentication);
         //return "<script>window.location.href = 'http://localhost:3000/';</script>";
-        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("http://localhost:3000/")).build();
+        return ResponseEntity.status(HttpStatus.FOUND).location(
+                URI.create(authService.getRedirectUrl(queryString))).build();
     }
 
     @Deprecated

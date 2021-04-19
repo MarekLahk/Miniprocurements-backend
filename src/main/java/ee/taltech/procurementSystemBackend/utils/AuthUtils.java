@@ -1,5 +1,6 @@
 package ee.taltech.procurementSystemBackend.utils;
 
+import ee.taltech.procurementSystemBackend.configuration.WebAuthConfig;
 import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
 import ee.taltech.procurementSystemBackend.models.Dto.EmployeeResponse;
 import ee.taltech.procurementSystemBackend.models.model.person.Person;
@@ -14,6 +15,19 @@ import org.springframework.stereotype.Component;
 public class AuthUtils {
 
     private final PersonRepository personRepository;
+    private final WebAuthConfig webAuthConfig;
+
+    public String getRedirectUrl(String queryString) {
+        String url = webAuthConfig.getRedirectUrl();
+        if (queryString != null) {
+            String query = queryString;
+            if (queryString.startsWith("/")) {
+                query = queryString.substring(1);
+            }
+            url += query;
+        }
+        return url;
+    }
 
     public Person getPersonToPerformOperations(Authentication authentication) {
         String email = getUsernameAndFullNameFormAuthentication(authentication)[0];

@@ -42,4 +42,8 @@ public class AuthService {
     public EmployeeResponse getEmployeeResponse(Authentication authentication) {
         return authUtils.getEmployeeResponse(authentication);
     }
+
+    public String getRedirectUrl(String queryString) {
+        return authUtils.getRedirectUrl(queryString);
+    }
 }
