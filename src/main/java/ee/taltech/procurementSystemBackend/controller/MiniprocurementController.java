@@ -22,8 +22,9 @@ public class MiniprocurementController extends ControllerBase<Miniprocurement, M
     }
 
     @PostMapping
-    public MiniProcurementDto addProcurement(@Valid @RequestBody MiniProcurementDto dto) {
-        return miniprocurementService.addProcurement(dto);
+    public MiniProcurementDto addProcurement(@Valid @RequestBody MiniProcurementDto dto,
+                                             Authentication authentication) {
+        return miniprocurementService.addProcurement(dto, authentication);
     }
 
     @PutMapping("{id}")

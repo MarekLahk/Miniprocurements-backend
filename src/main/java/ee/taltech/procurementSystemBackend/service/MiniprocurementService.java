@@ -10,8 +10,8 @@ import ee.taltech.procurementSystemBackend.models.model.person.Person;
 import ee.taltech.procurementSystemBackend.repository.MiniprocurementRepository;
 import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.repository.person.PersonRepository;
+import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -22,18 +22,23 @@ public class MiniprocurementService extends ServiceBase<Miniprocurement, MiniPro
 
     private final MiniprocurementRepository miniprocurementRepository;
     private final PersonRepository personRepository;
+    private final AuthUtils authUtils;
 
     public MiniprocurementService(RepositoryInterface<Miniprocurement> repository,
                                   MiniprocurementRepository miniprocurementRepository,
-                                  PersonRepository personRepository) {
+                                  PersonRepository personRepository,
+                                  AuthUtils authUtils) {
         super(repository, MiniprocurementMapper.INSTANCE);
         this.miniprocurementRepository = miniprocurementRepository;
         this.personRepository = personRepository;
+        this.authUtils = authUtils;
     }
 
-    public MiniProcurementDto addProcurement(MiniProcurementDto dto) {
+    public MiniProcurementDto addProcurement(MiniProcurementDto dto, Authentication authentication) {
         Miniprocurement procurement = toModelOptional(dto)
                 .orElseThrow(() -> new MiniprocurementException("No procurement dto provided"));
+        Integer creatorId = authUtils.getPersonToPerformOperations(authentication).getPersonID();
+        procurement.setAddedBy(creatorId);
         procurement.setTimeAdded(new Timestamp(System.currentTimeMillis()));
         return toDtoOptional(miniprocurementRepository.save(procurement))
                 .orElseThrow(() -> new MiniprocurementException("Could not save procurement"));
@@ -43,10 +48,7 @@ public class MiniprocurementService extends ServiceBase<Miniprocurement, MiniPro
                                                 MiniProcurementDto dto,
                                                 Authentication authentication) {
         Optional<Miniprocurement> optionalProcurement = miniprocurementRepository.findById(id);
-        DefaultOidcUser principal = (DefaultOidcUser) authentication.getPrincipal();
-        String username = principal.getPreferredUsername();
-        Person person = personRepository.findByPersonEmail(username)
-                .orElseThrow(() -> new RequestedObjectNotFoundException("Such person does not exist"));
+        Person person = authUtils.getPersonToPerformOperations(authentication);
 
         if (miniprocurementRepository.findByProcurementIdAndAddedBy(id, person.getPersonID()).isEmpty()) {
             throw new AuthException("This person does not have permission to update this procurement");
@@ -56,13 +58,14 @@ public class MiniprocurementService extends ServiceBase<Miniprocurement, MiniPro
             throw new RequestedObjectNotFoundException(
                     String.format("Procurement with id [%d] does not exist", id));
         }
+        Integer addedBy = optionalProcurement.get().getAddedBy();
         Miniprocurement procurement = toModelOptional(dto)
                 .orElseThrow(() -> new MiniprocurementException("No procurement dto provided"));
 
-
-
         procurement.setProcurementId(id);
+        procurement.setAddedBy(person.getPersonID());
         procurement.setTimeAdded(dto.getTimeAdded());
+        procurement.setAddedBy(addedBy);
         return toDtoOptional(miniprocurementRepository.save(procurement))
                 .orElseThrow(() -> new MiniprocurementException("Could not update procurement"));
     }

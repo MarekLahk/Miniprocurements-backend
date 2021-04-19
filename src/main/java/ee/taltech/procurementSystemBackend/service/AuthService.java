@@ -5,6 +5,7 @@ import ee.taltech.procurementSystemBackend.models.model.person.Employee;
 import ee.taltech.procurementSystemBackend.models.model.person.Person;
 import ee.taltech.procurementSystemBackend.repository.person.EmployeeRepository;
 import ee.taltech.procurementSystemBackend.repository.person.PersonRepository;
+import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
@@ -18,31 +19,27 @@ public class AuthService {
 
     private final PersonRepository personRepository;
     private final EmployeeRepository employeeRepository;
+    private final AuthUtils authUtils;
 
     public void addNewEmployeeIfNeeded(Authentication authentication) {
-        DefaultOidcUser principal = (DefaultOidcUser) authentication.getPrincipal();
-        String username = principal.getPreferredUsername();
-        String fullName = principal.getFullName();
-        if (personRepository.findByPersonEmail(username).isEmpty()) {
+        String[] usernameAndFullName = authUtils
+                .getUsernameAndFullNameFormAuthentication(authentication);
+        if (personRepository.findByPersonEmail(usernameAndFullName[0]).isEmpty()) {
             Employee employee = new Employee();
-            employee.setEMail(username);
-            employee.setPersonName(fullName);
+            employee.setEMail(usernameAndFullName[0]);
+            employee.setPersonName(usernameAndFullName[1]);
             employee.setTimeOfRegister(LocalDateTime.now());
             employeeRepository.save(employee);
         }
     }
 
     public String group1(Authentication authentication) {
-        DefaultOidcUser principal = (DefaultOidcUser) authentication.getPrincipal();
-        String username = principal.getPreferredUsername();
-        String fullName = principal.getFullName();
-        return "Hello " + username + " your name is " + fullName;
+        String[] usernameAndFullName = authUtils
+                .getUsernameAndFullNameFormAuthentication(authentication);
+        return "Hello " + usernameAndFullName[0] + " your name is " + usernameAndFullName[1];
     }
 
     public EmployeeResponse getEmployeeResponse(Authentication authentication) {
-        DefaultOidcUser principal = (DefaultOidcUser) authentication.getPrincipal();
-        String username = principal.getPreferredUsername();
-        String fullName = principal.getFullName();
-        return new EmployeeResponse(username, fullName);
+        return authUtils.getEmployeeResponse(authentication);
     }
 }
