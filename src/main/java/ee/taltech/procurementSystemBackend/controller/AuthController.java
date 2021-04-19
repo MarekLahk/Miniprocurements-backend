@@ -3,6 +3,8 @@ package ee.taltech.procurementSystemBackend.controller;
 import ee.taltech.procurementSystemBackend.models.Dto.EmployeeResponse;
 import ee.taltech.procurementSystemBackend.service.AuthService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -21,9 +25,10 @@ public class AuthController {
 
     @GetMapping("login")
     //@PreAuthorize("hasRole('ROLE_group1')")
-    public String login(Authentication authentication) {
+    public ResponseEntity<Void> login(Authentication authentication) {
         authService.addNewEmployeeIfNeeded(authentication);
-        return "<script>window.location.href = 'http://localhost:3000/';</script>";
+        //return "<script>window.location.href = 'http://localhost:3000/';</script>";
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("http://localhost:3000/")).build();
     }
 
     @Deprecated
