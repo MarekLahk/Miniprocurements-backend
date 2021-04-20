@@ -4,6 +4,7 @@ import ee.taltech.procurementSystemBackend.models.model.Announcement;
 import ee.taltech.procurementSystemBackend.models.Dto.AnnouncementDto;
 import ee.taltech.procurementSystemBackend.models.search.AnnouncementSearch;
 import ee.taltech.procurementSystemBackend.service.AnnouncementService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,13 +21,16 @@ public class AnnouncementController extends ControllerBase<Announcement, Announc
     }
 
     @PostMapping
-    public AnnouncementDto addAnnouncement(@Valid @RequestBody AnnouncementDto dto) {
-        return announcementService.addAnnouncement(dto);
+    public AnnouncementDto addAnnouncement(@Valid @RequestBody AnnouncementDto dto,
+                                           Authentication authentication) {
+        return announcementService.addAnnouncement(dto, authentication);
     }
 
     @PutMapping("{id}")
-    public AnnouncementDto updateAnnouncement(@PathVariable Integer id, @RequestBody AnnouncementDto dto) {
-        return announcementService.updateAnnouncement(id, dto);
+    public AnnouncementDto updateAnnouncement(@PathVariable Integer id,
+                                              @RequestBody AnnouncementDto dto,
+                                              Authentication authentication) {
+        return announcementService.updateAnnouncement(id, dto, authentication);
     }
 
     @Deprecated
