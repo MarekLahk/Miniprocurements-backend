@@ -11,6 +11,8 @@ public interface PersonRepository extends PersonRepositoryInterface<Person> {
 
     //Optional<Person> findByEMail(String email);
 
+    Optional<Person> findByeMail(String email);
+
     @Query("SELECT p FROM Person p WHERE p.eMail = :email")
     Optional<Person> findByPersonEmail(String email);
 }

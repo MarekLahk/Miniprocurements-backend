@@ -12,6 +12,7 @@ import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.repository.person.PersonRepository;
 import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;

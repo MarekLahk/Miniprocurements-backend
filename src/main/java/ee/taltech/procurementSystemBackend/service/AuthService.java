@@ -24,7 +24,7 @@ public class AuthService {
     public void addNewEmployeeIfNeeded(Authentication authentication) {
         String[] usernameAndFullName = authUtils
                 .getUsernameAndFullNameFormAuthentication(authentication);
-        if (personRepository.findByPersonEmail(usernameAndFullName[0]).isEmpty()) {
+        if (personRepository.findByeMail(usernameAndFullName[0]).isEmpty()) {
             Employee employee = new Employee();
             employee.setEMail(usernameAndFullName[0]);
             employee.setPersonName(usernameAndFullName[1]);
