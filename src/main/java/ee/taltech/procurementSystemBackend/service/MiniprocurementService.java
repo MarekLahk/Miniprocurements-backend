@@ -12,7 +12,6 @@ import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.repository.person.PersonRepository;
 import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -22,16 +21,13 @@ import java.util.Optional;
 public class MiniprocurementService extends ServiceBase<Miniprocurement, MiniProcurementDto> {
 
     private final MiniprocurementRepository miniprocurementRepository;
-    private final PersonRepository personRepository;
     private final AuthUtils authUtils;
 
     public MiniprocurementService(RepositoryInterface<Miniprocurement> repository,
                                   MiniprocurementRepository miniprocurementRepository,
-                                  PersonRepository personRepository,
                                   AuthUtils authUtils) {
         super(repository, MiniprocurementMapper.INSTANCE);
         this.miniprocurementRepository = miniprocurementRepository;
-        this.personRepository = personRepository;
         this.authUtils = authUtils;
     }
 
@@ -40,7 +36,9 @@ public class MiniprocurementService extends ServiceBase<Miniprocurement, MiniPro
                 .orElseThrow(() -> new MiniprocurementException("No procurement dto provided"));
         Integer creatorId = authUtils.getPersonToPerformOperations(authentication).getPersonID();
         procurement.setAddedBy(creatorId);
+        procurement.setStatus((short) 1);
         procurement.setTimeAdded(new Timestamp(System.currentTimeMillis()));
+        procurement.setHasContract(dto.getContractId() != null);
         return toDtoOptional(miniprocurementRepository.save(procurement))
                 .orElseThrow(() -> new MiniprocurementException("Could not save procurement"));
     }
@@ -67,6 +65,7 @@ public class MiniprocurementService extends ServiceBase<Miniprocurement, MiniPro
         procurement.setAddedBy(person.getPersonID());
         procurement.setTimeAdded(dto.getTimeAdded());
         procurement.setAddedBy(addedBy);
+        procurement.setHasContract(dto.getContractId() != null);
         return toDtoOptional(miniprocurementRepository.save(procurement))
                 .orElseThrow(() -> new MiniprocurementException("Could not update procurement"));
     }
