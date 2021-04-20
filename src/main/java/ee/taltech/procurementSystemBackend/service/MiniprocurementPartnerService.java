@@ -3,11 +3,9 @@ package ee.taltech.procurementSystemBackend.service;
 import ee.taltech.procurementSystemBackend.exception.MiniprocurementPartnerException;
 import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
 import ee.taltech.procurementSystemBackend.models.Dto.MiniprocurementPartnerDto;
-import ee.taltech.procurementSystemBackend.models.MapperInterface;
 import ee.taltech.procurementSystemBackend.models.mapper.MiniprocurementPartnerMapper;
 import ee.taltech.procurementSystemBackend.models.model.MiniprocurementPartner;
 import ee.taltech.procurementSystemBackend.repository.MiniprocurementPartnerRepository;
-import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,16 +13,10 @@ public class MiniprocurementPartnerService extends ServiceBase<MiniprocurementPa
 
     private final MiniprocurementPartnerRepository miniprocurementPartnerRepository;
 
-    public MiniprocurementPartnerService(MiniprocurementPartnerRepository repository, MiniprocurementPartnerRepository miniprocurementPartnerRepository) {
-        super(repository, MiniprocurementPartnerMapper.INSTANCE);
+    public MiniprocurementPartnerService(MiniprocurementPartnerRepository miniprocurementPartnerRepository) {
+        super(miniprocurementPartnerRepository, MiniprocurementPartnerMapper.INSTANCE);
         this.miniprocurementPartnerRepository = miniprocurementPartnerRepository;
     }
-
-    public MiniprocurementPartnerService(RepositoryInterface<MiniprocurementPartner> repository, MapperInterface<MiniprocurementPartner, MiniprocurementPartnerDto> mapper, MiniprocurementPartnerRepository miniprocurementPartnerRepository) {
-        super(repository, mapper);
-        this.miniprocurementPartnerRepository = miniprocurementPartnerRepository;
-    }
-
 
     public MiniprocurementPartnerDto addMiniprocurementPartner(MiniprocurementPartnerDto dto) {
         MiniprocurementPartner miniprocurementPartner = toModelOptional(dto)
