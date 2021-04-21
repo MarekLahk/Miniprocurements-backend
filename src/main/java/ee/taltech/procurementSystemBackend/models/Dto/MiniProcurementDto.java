@@ -24,7 +24,6 @@ public class MiniProcurementDto extends DtoBase  {
     private String requirements;
     private Integer contractId;
     private Timestamp timeAdded;
-    @NotNull(message = "Added by cannot be null")
     private Integer addedBy;
     @NotNull(message = "Deadline cannot be null")
     private Timestamp deadline;
