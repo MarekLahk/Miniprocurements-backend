@@ -7,13 +7,13 @@ import org.springframework.data.domain.Sort;
 
 public class MiniprocurementPartnerSearch extends SearchObject<MiniprocurementPartner> {
 
-    private Integer procurementID;
-    private Integer employeeID;
+    private String miniprocurementPartnerEmail;
+    private String miniprocurementPartnerName;
 
-    public MiniprocurementPartnerSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer procurementID, Integer employeeID) {
+    public MiniprocurementPartnerSearch(Integer limit, Integer page, String sort, Sort.Direction dir, String miniprocurementPartnerEmail, String miniprocurementPartnerName) {
         super(limit, page, sort, dir);
-        this.procurementID = procurementID;
-        this.employeeID = employeeID;
+        this.miniprocurementPartnerEmail = miniprocurementPartnerEmail;
+        this.miniprocurementPartnerName = miniprocurementPartnerName;
     }
 
 
@@ -21,11 +21,11 @@ public class MiniprocurementPartnerSearch extends SearchObject<MiniprocurementPa
     public SearchSpecPack<MiniprocurementPartner> getSearchSpec() {
 
         SearchSpecPack<MiniprocurementPartner> searchSpec = super.getSearchSpec();
-        if (procurementID != null) {
-            searchSpec.addSpec(Specifications.specEquals("procurementId", this.procurementID));
+        if (miniprocurementPartnerName != null) {
+            searchSpec.addSpec(Specifications.specEquals("miniprocurementPartnerName", this.miniprocurementPartnerName));
         }
-        if (employeeID != null) {
-            searchSpec.addSpec(Specifications.specEquals("employeeId", this.employeeID));
+        if (miniprocurementPartnerEmail != null) {
+            searchSpec.addSpec(Specifications.specEquals("miniprocurementPartnerEmail", this.miniprocurementPartnerEmail));
         }
 
         return searchSpec;

@@ -16,11 +16,8 @@ import java.sql.Timestamp;
 public class MiniprocurementPartnerDto extends DtoBase {
 
     private Integer miniprocurementPartnerId;
-    @NotNull(message = "Procurement id cannot be null.")
-    private Integer procurementId;
-    @NotNull(message = "Employee id cannot be null.")
-    private Integer employeeId;
     @NotBlank(message = "MiniprocurementPartner cannot be blank")
-    private String miniprocurementPartner;
-    private Timestamp dateAdded;
+    private String miniprocurementPartnerName;
+    @NotBlank(message = "Name cannot be null.")
+    private String miniprocurementPartnerEmail;
 }

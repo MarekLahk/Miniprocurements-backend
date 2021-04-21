@@ -9,7 +9,7 @@ import ee.taltech.procurementSystemBackend.repository.MiniprocurementPartnerRepo
 import org.springframework.stereotype.Service;
 
 @Service
-public class MiniprocurementPartnerService extends ServiceBase<MiniprocurementPartner, MiniprocurementPartnerDto> { //TODO: ERROR HERE
+public class MiniprocurementPartnerService extends ServiceBase<MiniprocurementPartner, MiniprocurementPartnerDto> {
 
     private final MiniprocurementPartnerRepository miniprocurementPartnerRepository;
 
