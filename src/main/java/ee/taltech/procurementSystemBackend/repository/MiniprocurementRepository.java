@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface MiniprocurementRepository extends RepositoryInterface<Miniprocurement> {
 
     Optional<Miniprocurement> findByProcurementIdAndAddedBy(Integer procurementId, Integer addedBy);
+
+    Integer countByContractId(Integer contractId);
 }

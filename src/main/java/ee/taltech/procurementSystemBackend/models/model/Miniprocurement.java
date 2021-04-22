@@ -37,13 +37,19 @@ public class Miniprocurement extends ModelBase {
     @Column(name = "contract_id")
     private Integer contractId;
     @Basic
+    @Column(name = "contract_sub_id")
+    private Integer contractSubId;
+    @Basic
+    @Column(name = "has_contract")
+    private Boolean hasContract;
+    @Basic
     @Column(name = "time_added", nullable = false)
     private Timestamp timeAdded;
     @Basic
     @Column(name = "added_by", nullable = false)
     private Integer addedBy;
     @Basic
-    @Column(name = "deadline", nullable = false)
+    @Column(name = "deadline")
     private Timestamp deadline;
     @Basic
     @Column(name = "status", nullable = false)

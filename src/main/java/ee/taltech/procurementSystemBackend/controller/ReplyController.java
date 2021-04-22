@@ -4,6 +4,7 @@ import ee.taltech.procurementSystemBackend.models.Dto.ReplyDto;
 import ee.taltech.procurementSystemBackend.models.model.Reply;
 import ee.taltech.procurementSystemBackend.models.search.ReplySearch;
 import ee.taltech.procurementSystemBackend.service.ReplyService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,8 +21,8 @@ public class ReplyController extends ControllerBase<Reply, ReplyDto, ReplySearch
     }
 
     @PostMapping
-    public ReplyDto addReply(@Valid @RequestBody ReplyDto dto) {
-        return replyService.addReply(dto);
+    public ReplyDto addReply(@Valid @RequestBody ReplyDto dto, Authentication authentication) {
+        return replyService.addReply(dto, authentication);
     }
 
     @Deprecated

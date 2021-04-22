@@ -28,10 +28,17 @@ public class MiniprocurementController extends ControllerBase<Miniprocurement, M
     }
 
     @PutMapping("{id}")
-    public MiniProcurementDto updateProcurement(@Valid @PathVariable Integer id,
-                                                @RequestBody MiniProcurementDto dto,
+    public MiniProcurementDto updateProcurement(@PathVariable Integer id,
+                                                @Valid @RequestBody MiniProcurementDto dto,
                                                 Authentication authentication) {
         return miniprocurementService.updateProcurement(id, dto, authentication);
+    }
+
+    @PatchMapping("{id}")
+    public MiniProcurementDto patchProcurementStatus(@PathVariable Integer id,
+                                                     @RequestBody MiniProcurementDto dto,
+                                                     Authentication authentication) {
+        return miniprocurementService.patchProcurementStatus(id, dto, authentication);
     }
 
     @Deprecated

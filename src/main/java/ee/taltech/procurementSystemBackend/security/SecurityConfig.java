@@ -27,7 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/*").hasRole("group1")
-//                .antMatchers("/api/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
