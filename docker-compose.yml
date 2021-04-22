@@ -1,9 +1,9 @@
 version: '3'  
 services:
-    message-server:
-        container_name: smallpro
-        build:
-            context: .
-            dockerfile: Dockerfile
+    springbootapp:
+        image: miniprocurements/backend:latest
+        container_name: miniprocurements
+        expose:
+            - 8080
         ports:
             - 8080:8080

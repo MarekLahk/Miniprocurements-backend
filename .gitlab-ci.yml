@@ -16,10 +16,11 @@ cache:
     - .gradle/wrapper
     - .gradle/caches
 
-build:
+build backend:
   stage: build
   script:
     - ./gradlew assemble
+    - docker build --build-arg JAR_FILE=build/libs/*.jar -t miniprocurements/backend .
   artifacts:
     paths:
       - build/libs/*.jar
@@ -28,6 +29,9 @@ build:
 
 deploy:
   stage: deploy
+  only:
+    refs:
+      - master
   script:
     - docker-compose down
     - docker-compose up -d
