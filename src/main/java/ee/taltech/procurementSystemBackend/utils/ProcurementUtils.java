@@ -40,8 +40,14 @@ public class ProcurementUtils {
         if (procurement.getDescription() == null) {
             throw new MiniprocurementException("Description must be present on status patch");
         }
+        if (procurement.getDescription() != null && procurement.getDescription().length() == 0) {
+            throw new MiniprocurementException("Description must not be blank");
+        }
         if (procurement.getRequirements() == null) {
             throw new MiniprocurementException("Requirements must be present on status patch");
+        }
+        if (procurement.getRequirements() != null && procurement.getRequirements().length() == 0) {
+            throw new MiniprocurementException("Requirements must not be blank");
         }
         if (procurement.getDeadline() == null) {
             throw new MiniprocurementException("Deadline must be present on status patch");
