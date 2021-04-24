@@ -6,6 +6,7 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -16,7 +17,7 @@ import java.sql.Timestamp;
 public class MiniprocurementPartnerDto extends DtoBase {
     private Integer miniprocurementPartnerId;
 
-    private Integer miniprocurementPartnerLinkId;
+    private UUID miniprocurementPartnerLinkId;
 
     @NotNull(message = "miniprocurementPartnerProcurementId cannot be null")
     private Integer miniprocurementPartnerProcurementId;

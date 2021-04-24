@@ -4,6 +4,7 @@ import ee.taltech.procurementSystemBackend.models.model.MiniprocurementPartner;
 import ee.taltech.procurementSystemBackend.models.Dto.MiniprocurementPartnerDto;
 import ee.taltech.procurementSystemBackend.models.search.MiniprocurementPartnerSearch;
 import ee.taltech.procurementSystemBackend.service.MiniprocurementPartnerService;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,7 +18,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/miniprocurementPartners")
-@Tag(name = "miniprocurementPartners", description = "Link 0 or 1 miniprocurement and 0 or more partners")
+@Tag(name = "miniprocurementPartners", description = "Link 0 or 1 miniprocurement and 0 or more partners", externalDocs = @ExternalDocumentation(url = "https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/issues/22", description = "Gitlab issue about creation of this API."))
 public class MiniprocurementPartnerController extends ControllerBase<MiniprocurementPartner, MiniprocurementPartnerDto, MiniprocurementPartnerSearch> {
 
     private final MiniprocurementPartnerService miniprocurementPartnerService;
