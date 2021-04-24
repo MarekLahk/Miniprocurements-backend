@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class Person extends ModelBase {
 
     @Id()
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")
     Integer personID;
 

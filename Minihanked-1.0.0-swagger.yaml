@@ -340,30 +340,6 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/AnnouncementDto'
-  /userdetails:
-    get:
-      tags:
-        - security-test-controller
-      operationId: user
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/DefaultOidcUser'
-  /group1:
-    get:
-      tags:
-        - security-test-controller
-      operationId: group1
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: string
   '/api/replies/{id}':
     get:
       tags:
@@ -561,11 +537,62 @@ paths:
             '*/*':
               schema:
                 type: string
+  /api/auth/login:
+    get:
+      tags:
+        - auth-controller
+      operationId: login
+      parameters:
+        - name: redirect
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /api/auth/group1:
+    get:
+      tags:
+        - auth-controller
+      operationId: group1
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+      deprecated: true
+  /api/auth/employee:
+    get:
+      tags:
+        - auth-controller
+      operationId: getEmployeeResponse
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmployeeResponse'
+  /api/auth/details:
+    get:
+      tags:
+        - auth-controller
+      operationId: user
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultOidcUser'
+      deprecated: true
 components:
   schemas:
     MiniProcurementDto:
       required:
-        - addedBy
         - deadline
         - procurementName
       type: object
@@ -665,246 +692,6 @@ components:
         timeAsked:
           type: string
           format: date-time
-    AddressStandardClaim:
-      type: object
-      properties:
-        country:
-          type: string
-        region:
-          type: string
-        locality:
-          type: string
-        postalCode:
-          type: string
-        streetAddress:
-          type: string
-        formatted:
-          type: string
-    DefaultOidcUser:
-      type: object
-      properties:
-        authorities:
-          type: array
-          items:
-            $ref: '#/components/schemas/GrantedAuthority'
-        attributes:
-          type: object
-          additionalProperties:
-            type: object
-        idToken:
-          $ref: '#/components/schemas/OidcIdToken'
-        userInfo:
-          $ref: '#/components/schemas/OidcUserInfo'
-        claims:
-          type: object
-          additionalProperties:
-            type: object
-        name:
-          type: string
-        issuer:
-          type: string
-          format: url
-        nonce:
-          type: string
-        subject:
-          type: string
-        authorizationCodeHash:
-          type: string
-        authenticationContextClass:
-          type: string
-        authenticationMethods:
-          type: array
-          items:
-            type: string
-        authenticatedAt:
-          type: string
-          format: date-time
-        accessTokenHash:
-          type: string
-        authorizedParty:
-          type: string
-        issuedAt:
-          type: string
-          format: date-time
-        expiresAt:
-          type: string
-          format: date-time
-        audience:
-          type: array
-          items:
-            type: string
-        address:
-          $ref: '#/components/schemas/AddressStandardClaim'
-        locale:
-          type: string
-        fullName:
-          type: string
-        zoneInfo:
-          type: string
-        givenName:
-          type: string
-        preferredUsername:
-          type: string
-        email:
-          type: string
-        phoneNumberVerified:
-          type: boolean
-        middleName:
-          type: string
-        profile:
-          type: string
-        picture:
-          type: string
-        website:
-          type: string
-        nickName:
-          type: string
-        emailVerified:
-          type: boolean
-        familyName:
-          type: string
-        updatedAt:
-          type: string
-          format: date-time
-        phoneNumber:
-          type: string
-        gender:
-          type: string
-        birthdate:
-          type: string
-    GrantedAuthority:
-      type: object
-      properties:
-        authority:
-          type: string
-    OidcIdToken:
-      type: object
-      properties:
-        tokenValue:
-          type: string
-        issuedAt:
-          type: string
-          format: date-time
-        expiresAt:
-          type: string
-          format: date-time
-        claims:
-          type: object
-          additionalProperties:
-            type: object
-        issuer:
-          type: string
-          format: url
-        nonce:
-          type: string
-        subject:
-          type: string
-        authorizationCodeHash:
-          type: string
-        authenticationContextClass:
-          type: string
-        authenticationMethods:
-          type: array
-          items:
-            type: string
-        authenticatedAt:
-          type: string
-          format: date-time
-        accessTokenHash:
-          type: string
-        authorizedParty:
-          type: string
-        audience:
-          type: array
-          items:
-            type: string
-        address:
-          $ref: '#/components/schemas/AddressStandardClaim'
-        locale:
-          type: string
-        fullName:
-          type: string
-        zoneInfo:
-          type: string
-        givenName:
-          type: string
-        preferredUsername:
-          type: string
-        email:
-          type: string
-        phoneNumberVerified:
-          type: boolean
-        middleName:
-          type: string
-        profile:
-          type: string
-        picture:
-          type: string
-        website:
-          type: string
-        nickName:
-          type: string
-        emailVerified:
-          type: boolean
-        familyName:
-          type: string
-        updatedAt:
-          type: string
-          format: date-time
-        phoneNumber:
-          type: string
-        gender:
-          type: string
-        birthdate:
-          type: string
-    OidcUserInfo:
-      type: object
-      properties:
-        claims:
-          type: object
-          additionalProperties:
-            type: object
-        address:
-          $ref: '#/components/schemas/AddressStandardClaim'
-        locale:
-          type: string
-        fullName:
-          type: string
-        zoneInfo:
-          type: string
-        givenName:
-          type: string
-        subject:
-          type: string
-        preferredUsername:
-          type: string
-        email:
-          type: string
-        phoneNumberVerified:
-          type: boolean
-        middleName:
-          type: string
-        profile:
-          type: string
-        picture:
-          type: string
-        website:
-          type: string
-        nickName:
-          type: string
-        emailVerified:
-          type: boolean
-        familyName:
-          type: string
-        updatedAt:
-          type: string
-          format: date-time
-        phoneNumber:
-          type: string
-        gender:
-          type: string
-        birthdate:
-          type: string
     Pageable:
       type: object
       properties:
@@ -1198,6 +985,256 @@ components:
         partnerInfo:
           type: string
         email:
+          type: string
+    EmployeeResponse:
+      type: object
+      properties:
+        employeeId:
+          type: integer
+          format: int32
+        username:
+          type: string
+        fullName:
+          type: string
+    AddressStandardClaim:
+      type: object
+      properties:
+        country:
+          type: string
+        region:
+          type: string
+        locality:
+          type: string
+        streetAddress:
+          type: string
+        postalCode:
+          type: string
+        formatted:
+          type: string
+    DefaultOidcUser:
+      type: object
+      properties:
+        authorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/GrantedAuthority'
+        attributes:
+          type: object
+          additionalProperties:
+            type: object
+        idToken:
+          $ref: '#/components/schemas/OidcIdToken'
+        userInfo:
+          $ref: '#/components/schemas/OidcUserInfo'
+        claims:
+          type: object
+          additionalProperties:
+            type: object
+        name:
+          type: string
+        subject:
+          type: string
+        issuer:
+          type: string
+          format: url
+        nonce:
+          type: string
+        authenticationContextClass:
+          type: string
+        authorizationCodeHash:
+          type: string
+        authenticationMethods:
+          type: array
+          items:
+            type: string
+        audience:
+          type: array
+          items:
+            type: string
+        accessTokenHash:
+          type: string
+        authenticatedAt:
+          type: string
+          format: date-time
+        issuedAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+        authorizedParty:
+          type: string
+        address:
+          $ref: '#/components/schemas/AddressStandardClaim'
+        locale:
+          type: string
+        zoneInfo:
+          type: string
+        fullName:
+          type: string
+        givenName:
+          type: string
+        preferredUsername:
+          type: string
+        phoneNumberVerified:
+          type: boolean
+        nickName:
+          type: string
+        familyName:
+          type: string
+        profile:
+          type: string
+        middleName:
+          type: string
+        picture:
+          type: string
+        website:
+          type: string
+        email:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        gender:
+          type: string
+        emailVerified:
+          type: boolean
+        phoneNumber:
+          type: string
+        birthdate:
+          type: string
+    GrantedAuthority:
+      type: object
+      properties:
+        authority:
+          type: string
+    OidcIdToken:
+      type: object
+      properties:
+        tokenValue:
+          type: string
+        issuedAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+        claims:
+          type: object
+          additionalProperties:
+            type: object
+        subject:
+          type: string
+        issuer:
+          type: string
+          format: url
+        nonce:
+          type: string
+        authenticationContextClass:
+          type: string
+        authorizationCodeHash:
+          type: string
+        authenticationMethods:
+          type: array
+          items:
+            type: string
+        audience:
+          type: array
+          items:
+            type: string
+        accessTokenHash:
+          type: string
+        authenticatedAt:
+          type: string
+          format: date-time
+        authorizedParty:
+          type: string
+        address:
+          $ref: '#/components/schemas/AddressStandardClaim'
+        locale:
+          type: string
+        zoneInfo:
+          type: string
+        fullName:
+          type: string
+        givenName:
+          type: string
+        preferredUsername:
+          type: string
+        phoneNumberVerified:
+          type: boolean
+        nickName:
+          type: string
+        familyName:
+          type: string
+        profile:
+          type: string
+        middleName:
+          type: string
+        picture:
+          type: string
+        website:
+          type: string
+        email:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        gender:
+          type: string
+        emailVerified:
+          type: boolean
+        phoneNumber:
+          type: string
+        birthdate:
+          type: string
+    OidcUserInfo:
+      type: object
+      properties:
+        claims:
+          type: object
+          additionalProperties:
+            type: object
+        address:
+          $ref: '#/components/schemas/AddressStandardClaim'
+        subject:
+          type: string
+        locale:
+          type: string
+        zoneInfo:
+          type: string
+        fullName:
+          type: string
+        givenName:
+          type: string
+        preferredUsername:
+          type: string
+        phoneNumberVerified:
+          type: boolean
+        nickName:
+          type: string
+        familyName:
+          type: string
+        profile:
+          type: string
+        middleName:
+          type: string
+        picture:
+          type: string
+        website:
+          type: string
+        email:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        gender:
+          type: string
+        emailVerified:
+          type: boolean
+        phoneNumber:
+          type: string
+        birthdate:
           type: string
     AnnouncementSearch:
       type: object
