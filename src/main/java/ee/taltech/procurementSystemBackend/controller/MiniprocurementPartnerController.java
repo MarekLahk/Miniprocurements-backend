@@ -30,7 +30,8 @@ public class MiniprocurementPartnerController extends ControllerBase<Miniprocure
 
     @Operation(summary = "Add a new procurement-partner link", description = "Add a new miniprocurement partner to miniprocurement link.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = MiniprocurementPartnerDto.class))))
+            @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = MiniprocurementPartnerDto.class)))),
+            @ApiResponse(responseCode = "500", description = "internal server error, procurement or partner might not exist or a link like this may already exist")
     })
     @PostMapping(produces = {"application/json"})
     public MiniprocurementPartnerDto addMiniprocurementPartner(@Valid @RequestBody MiniprocurementPartnerDto dto) {

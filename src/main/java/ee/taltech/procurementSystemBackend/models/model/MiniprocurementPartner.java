@@ -5,6 +5,7 @@ import com.googlecode.jmapper.annotations.JGlobalMap;
 import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -19,8 +20,8 @@ public class MiniprocurementPartner extends ModelBase {
     @Column(name = "id", nullable = false)
     private Integer miniprocurementPartnerId;
     @Basic
-    @Column(name = "link_id", nullable = false)
-    private Integer miniprocurementPartnerLinkId;
+    @Column(name = "link_id")
+    private UUID miniprocurementPartnerLinkId;
     @Basic
     @Column(name = "procurement_id", nullable = false, length = -1)
     private Integer miniprocurementPartnerProcurementId;
