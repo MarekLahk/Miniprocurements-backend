@@ -4,7 +4,15 @@ info:
   version: v0
 servers:
   - url: 'http://localhost:8080'
-    description: Generated server url
+    description: Local development
+  - url: 'https://minihanked.variksoo.ee/'
+    description: CI/CD Live /w domain and HTTPS
+
+tags:
+  - name: miniprocurement-partner-controller
+    description: Tie together Procurements and Partners in a 0 or 1 procurements to 0 to many partners.
+    externalDocs:
+      url: https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/issues/22
 paths:
   '/api/procurements/{id}':
     get:
@@ -53,6 +61,68 @@ paths:
       tags:
         - miniprocurement-controller
       operationId: deleteProcurement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+      deprecated: true
+
+  '/api/miniprocurementPartners/{id}':
+    summary: Tie together Procurements and Partners in a 0 or 1 procurements to 0 to many partners.
+    description: This was created by Kristjan Variksoo.
+    get:
+      "summary": "Find miniprocurement and partner links by ID"
+      tags:
+        - miniprocurement-partner-controller
+      operationId: getById_2
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MiniprocurementPartnerDtoDto'
+    put:
+      tags:
+        - miniprocurement-partner-controller
+      operationId: updateProcurement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MiniprocurementPartnerDtoDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MiniprocurementPartnerDtoDto'
+    delete:
+      tags:
+        - miniprocurement-partner-controller
+      operationId: deleteProcurementPartner
       parameters:
         - name: id
           in: path
@@ -826,6 +896,24 @@ components:
           $ref: '#/components/schemas/Pageable'
     SpecificationPartner:
       type: object
+    MiniprocurementPartnerDto:
+      type: object
+      properties:
+        miniprocurementPartnerId:
+          type: integer
+          format: int64
+        miniprocurementPartnerLinkId:
+          type: integer
+          format: int64
+        miniprocurementPartnerProcurementId:
+          type: integer
+          format: int64
+        miniprocurementPartnerPartnerId:
+          type: integer
+          format: int64
+        miniprocurementPartnerLinkFirstAccessed:
+          type: string
+          format: date-time
     PartnerDto:
       type: object
       properties:

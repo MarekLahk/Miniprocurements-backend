@@ -105,22 +105,24 @@ CREATE TABLE Procurement_Winners(
                                         REFERENCES Employee(employee_id)
 );
 
-CREATE TABLE Miniprocurement_Partners(
-                                         link_id BINARY(16) NOT NULL,
-                                         procurement_id MEDIUMINT NOT NULL,
-                                         partner_id MEDIUMINT NOT NULL,
-                                         time_added DATETIME NOT NULL DEFAULT NOW(),
-                                         link_first_accessed DATETIME DEFAULT NULL,
-                                         CONSTRAINT pk_link_id PRIMARY KEY (link_id),
-                                         CONSTRAINT fk_procurement_link_partner_id FOREIGN KEY (partner_id)
-                                             REFERENCES Partner(partner_id),
-                                         CONSTRAINT fk_procurement_link_procurement_id FOREIGN KEY (procurement_id)
-                                             REFERENCES Miniprocurement(procurement_id)
+CREATE TABLE MiniprocurementPartner(
+    id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
+    link_id BINARY(16) NOT NULL UNIQUE,
+    procurement_id MEDIUMINT NOT NULL,
+    partner_id MEDIUMINT NOT NULL,
+    time_added DATETIME NOT NULL DEFAULT NOW(),
+    link_first_accessed DATETIME DEFAULT NULL,
+    CONSTRAINT uq_partner_procurement UNIQUE(procurement_id, partner_id),
+    CONSTRAINT pk_link_id PRIMARY KEY (link_id),
+    CONSTRAINT fk_procurement_link_partner_id FOREIGN KEY (partner_id)
+        REFERENCES Partner(partner_id),
+    CONSTRAINT fk_procurement_link_procurement_id FOREIGN KEY (procurement_id)
+        REFERENCES Miniprocurement(procurement_id)
 );
 
 
 CREATE TRIGGER before_insert_Miniprocurement_Partners
-    BEFORE INSERT ON Miniprocurement_Partners
+    BEFORE INSERT ON Miniprocurementpartner
     FOR EACH ROW SET NEW.link_id = UUID_TO_BIN(uuid());
 
 
