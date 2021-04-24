@@ -21,6 +21,7 @@ public class MiniprocurementPartnerService extends ServiceBase<MiniprocurementPa
     public MiniprocurementPartnerDto addMiniprocurementPartner(MiniprocurementPartnerDto dto) {
         MiniprocurementPartner miniprocurementPartner = toModelOptional(dto)
                 .orElseThrow(() -> new MiniprocurementPartnerException("No MiniprocurementPartner dto provided"));
+
         return toDtoOptional(miniprocurementPartnerRepository.save(miniprocurementPartner))
                 .orElseThrow(() -> new MiniprocurementPartnerException("Could not save MiniprocurementPartner"));
     }

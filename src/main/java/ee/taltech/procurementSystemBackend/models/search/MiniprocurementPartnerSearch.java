@@ -14,9 +14,11 @@ public class MiniprocurementPartnerSearch extends SearchObject<MiniprocurementPa
     private Integer miniprocurementPartnerPartnerId;
     private String miniprocurementPartnerTimeAdded;
     private String miniprocurementPartnerLinkFirstAccessed;
+    private Integer miniprocurementPartnerId;
 
-    public MiniprocurementPartnerSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer miniprocurementPartnerLinkId, Integer miniprocurementPartnerProcurementId, Integer miniprocurementPartnerPartnerId, String miniprocurementPartnerTimeAdded, String miniprocurementPartnerLinkFirstAccessed) {
+    public MiniprocurementPartnerSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer miniprocurementPartnerId, Integer miniprocurementPartnerLinkId, Integer miniprocurementPartnerProcurementId, Integer miniprocurementPartnerPartnerId, String miniprocurementPartnerTimeAdded, String miniprocurementPartnerLinkFirstAccessed) {
         super(limit, page, sort, dir);
+        this.miniprocurementPartnerId = miniprocurementPartnerId;
         this.miniprocurementPartnerLinkId = miniprocurementPartnerLinkId;
         this.miniprocurementPartnerProcurementId = miniprocurementPartnerProcurementId;
         this.miniprocurementPartnerPartnerId = miniprocurementPartnerPartnerId;
@@ -38,7 +40,9 @@ public class MiniprocurementPartnerSearch extends SearchObject<MiniprocurementPa
         if (miniprocurementPartnerPartnerId != null) {
             searchSpec.addSpec(Specifications.specEquals("miniprocurementPartnerPartnerId", this.miniprocurementPartnerPartnerId));
         }
-
+        if (miniprocurementPartnerId != null) {
+            searchSpec.addSpec(Specifications.specEquals("miniprocurementPartnerId", this.miniprocurementPartnerId));
+        }
         return searchSpec;
     }
 }

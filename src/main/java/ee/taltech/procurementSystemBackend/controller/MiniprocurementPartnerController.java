@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -31,7 +32,13 @@ public class MiniprocurementPartnerController extends ControllerBase<Miniprocure
     @Operation(summary = "Add a new procurement-partner link", description = "Add a new miniprocurement partner to miniprocurement link.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = MiniprocurementPartnerDto.class)))),
-            @ApiResponse(responseCode = "500", description = "internal server error, procurement or partner might not exist or a link like this may already exist")
+            @ApiResponse(responseCode = "500", description = "internal server error, procurement or partner might not exist or a link like this may already exist", content = @Content(examples = @ExampleObject(value = "{\n" +
+                    "    \"timestamp\": \"2021-04-24T09:24:56.958+00:00\",\n" +
+                    "    \"status\": 500,\n" +
+                    "    \"error\": \"Internal Server Error\",\n" +
+                    "    \"message\": \"\",\n" +
+                    "    \"path\": \"/api/miniprocurementPartners\"\n" +
+                    "}")))
     })
     @PostMapping(produces = {"application/json"})
     public MiniprocurementPartnerDto addMiniprocurementPartner(@Valid @RequestBody MiniprocurementPartnerDto dto) {
@@ -43,7 +50,8 @@ public class MiniprocurementPartnerController extends ControllerBase<Miniprocure
         return miniprocurementPartnerService.updateMiniprocurementPartner(id, dto);
     }
 
-    @Deprecated
+    //TODO: Add checks on deleting a partner
+    @Operation(summary = "Delete a procurement-partner link. This should only be done if related procurement is in draft. Currently this is not checked.")
     @DeleteMapping("{id}")
     public void deleteMiniprocurementPartner(@PathVariable Integer id) {
         miniprocurementPartnerService.deleteMiniprocurementPartner(id);
