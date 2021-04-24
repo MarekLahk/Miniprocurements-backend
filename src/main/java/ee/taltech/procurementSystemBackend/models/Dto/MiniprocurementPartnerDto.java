@@ -14,10 +14,17 @@ import java.sql.Timestamp;
 @Builder
 @JGlobalMap
 public class MiniprocurementPartnerDto extends DtoBase {
-
     private Integer miniprocurementPartnerId;
-    @NotBlank(message = "MiniprocurementPartner cannot be blank")
-    private String miniprocurementPartnerName;
-    @NotBlank(message = "Name cannot be null.")
-    private String miniprocurementPartnerEmail;
+
+    private Integer miniprocurementPartnerLinkId;
+
+    @NotNull(message = "miniprocurementPartnerProcurementId cannot be null")
+    private Integer miniprocurementPartnerProcurementId;
+
+    @NotNull(message = "miniprocurementPartnerPartnerId cannot be null")
+    private Integer miniprocurementPartnerPartnerId;
+
+//    private String miniprocurementPartnerTimeAdded;
+
+    private String miniprocurementPartnerLinkFirstAccessed;
 }
