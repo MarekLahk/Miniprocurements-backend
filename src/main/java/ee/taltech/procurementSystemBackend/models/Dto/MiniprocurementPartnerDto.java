@@ -26,16 +26,16 @@ public class MiniprocurementPartnerDto extends DtoBase {
     @Schema(title="UUID of the link", example = "")
     private UUID miniprocurementPartnerLinkId;
 
-    @Schema(title="ID of the procurement in the link", example = "2")
+    @Schema(title="ID of the procurement in the link", example = "3")
     @NotNull(message = "miniprocurementPartnerProcurementId cannot be null")
     private Integer miniprocurementPartnerProcurementId;
 
-    @Schema(title="ID of the partner in the link", example = "3")
+    @Schema(title="ID of the partner in the link", example = "2")
     @NotNull(message = "miniprocurementPartnerPartnerId cannot be null")
     private Integer miniprocurementPartnerPartnerId;
 
 //  private String miniprocurementPartnerTimeAdded;
 
-    @Schema(title="Time link was first link")
+    @Schema(title="Time link was first link", example = "")
     private String miniprocurementPartnerLinkFirstAccessed;
 }

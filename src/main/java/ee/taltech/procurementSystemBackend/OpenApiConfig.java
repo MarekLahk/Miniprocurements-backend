@@ -19,7 +19,7 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .components(new Components())
-                .servers(List.of(new Server().description("CI/CD production").url("https://minihanked.variksoo.ee"), new Server().description("Local API").url("https://localhost:8080")))
+                .servers(List.of(new Server().description("CI/CD production").url("https://minihanked.variksoo.ee"), new Server().description("Local API").url("http://localhost:8080")))
                 .info(new Info().title("Taltech Miniprocurement BE").description(
                         "This is spring-doc generated API documentation using annotation in the source code for Taltech miniprocurement system created by Taltech students as part of Tarkvaratehnika subject in spring 2021."));
     }
