@@ -26,6 +26,7 @@ public class MiniprocurementPartnerService extends ServiceBase<MiniprocurementPa
                 .orElseThrow(() -> new MiniprocurementPartnerException("Could not save MiniprocurementPartner"));
     }
 
+    //LINK ID needs to be given with request TODO: document this fact
     public MiniprocurementPartnerDto updateMiniprocurementPartner(Integer id, MiniprocurementPartnerDto dto) {
         if (miniprocurementPartnerRepository.findById(id).isEmpty()) {
             throw new RequestedObjectNotFoundException(
@@ -33,6 +34,7 @@ public class MiniprocurementPartnerService extends ServiceBase<MiniprocurementPa
         }
         MiniprocurementPartner miniprocurementPartner = toModelOptional(dto)
                 .orElseThrow(() -> new MiniprocurementPartnerException("No MiniprocurementPartner dto provided"));
+        miniprocurementPartner.setMiniprocurementPartnerId(id);
         return toDtoOptional(miniprocurementPartnerRepository.save(miniprocurementPartner))
                 .orElseThrow(() -> new MiniprocurementPartnerException("Could not update MiniprocurementPartner"));
     }
