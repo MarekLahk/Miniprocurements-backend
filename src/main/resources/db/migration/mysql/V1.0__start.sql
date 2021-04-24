@@ -107,7 +107,7 @@ CREATE TABLE Procurement_Winners(
 
 CREATE TABLE MiniprocurementPartner(
     id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-    link_id BINARY(16) NOT NULL,
+    link_id BINARY(16) NOT NULL UNIQUE,
     procurement_id MEDIUMINT NOT NULL,
     partner_id MEDIUMINT NOT NULL,
     time_added DATETIME NOT NULL DEFAULT NOW(),
