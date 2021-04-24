@@ -105,7 +105,7 @@ CREATE TABLE Procurement_Winners(
                                         REFERENCES Employee(employee_id)
 );
 
-CREATE TABLE MiniprocurementPartner(
+CREATE TABLE MiniprocurementPartner (
     id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
     link_id BINARY(16) NOT NULL UNIQUE,
     procurement_id MEDIUMINT NOT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE MiniprocurementPartner(
 
 
 CREATE TRIGGER before_insert_Miniprocurement_Partners
-    BEFORE INSERT ON Miniprocurementpartner
+    BEFORE INSERT ON MiniprocurementPartner
     FOR EACH ROW SET NEW.link_id = UUID_TO_BIN(uuid());
 
 
