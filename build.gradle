@@ -28,6 +28,7 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 
 	implementation group: 'com.microsoft.azure', name: 'azure-active-directory-spring-boot-starter', version: '3.0.0'
+	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: '5.4.6'
 
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'com.googlecode.jmapper-framework:jmapper-core:1.6.1.CR2'
