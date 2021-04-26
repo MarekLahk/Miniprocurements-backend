@@ -2,19 +2,20 @@ package ee.taltech.procurementSystemBackend.models.Dto;
 
 import java.sql.Timestamp;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import ee.taltech.procurementSystemBackend.models.DtoBase;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BidDto {
+public class BidDto extends DtoBase {
     private Integer bidId;
+    private Integer bidder;
     private Long bidValue;
     private String description;
     private Timestamp timeOfRegister;
     private Integer bidStatus;
+    private Integer procurementId;
 }

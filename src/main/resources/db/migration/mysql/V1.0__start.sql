@@ -146,7 +146,7 @@ CREATE TABLE Announcement(
 CREATE TABLE Bid(
                     bid_id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
                     bidder MEDIUMINT NOT NULL,
-                    bid_value BIGINT NOT NULL,
+                    bid_value BIGINT,
                     bid_status SMALLINT NOT NULL,
                     description TEXT,
                     procurement_id MEDIUMINT NOT NULL,

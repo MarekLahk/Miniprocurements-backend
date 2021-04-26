@@ -80,4 +80,14 @@ public class ApiExceptionHandler {
                 ZonedDateTime.now());
         return new ResponseEntity<>(apiException, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(value = BidException.class)
+    public ResponseEntity<Object> handleBidException(
+            RequestedObjectNotFoundException e) {
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST,
+                ZonedDateTime.now());
+        return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
+    }
 }
