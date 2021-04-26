@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -15,8 +16,8 @@ public class Bid extends ModelBase {
     @Column(name = "bid_id", nullable = false)
     private Integer bidId;
     @Basic
-    @Column(name = "bidder", nullable = false)
-    private Integer bidder;
+    @Column(name = "bidder_link_id", nullable = false)
+    private UUID bidderLinkId;
     @Basic
     @Column(name = "bid_value", nullable = false)
     private Long bidValue;

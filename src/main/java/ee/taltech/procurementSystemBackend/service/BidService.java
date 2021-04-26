@@ -1,6 +1,7 @@
 package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.BidException;
+import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
 import ee.taltech.procurementSystemBackend.models.mapper.BidMapper;
 import ee.taltech.procurementSystemBackend.models.model.Bid;
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
@@ -33,27 +34,27 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         Bid bid = toModelOptional(bidDto)
                 .orElseThrow(() -> new BidException("No bid provided"));
 
-        bid.setBidder(partner.getMiniprocurementPartnerPartnerId());
+        //bid.setBidder(partner.getMiniprocurementPartnerPartnerId());
         bid.setBidStatus(1);
         bid.setTimeOfRegister(new Timestamp(System.currentTimeMillis()));
 
         return toDtoOptional(bidRepository.save(bid)).get();
     }
 
-//    public BidDto updateBid(Integer id, BidDto bidDto) {
-//        if (bidRepository.findById(id).isEmpty()) {
-//            throw new RequestedObjectNotFoundException(
-//                    String.format("Bid with id [%d] does not exist", id));
-//        }
-//        Bid bid = toModelOptional(bidDto)
-//                .orElseThrow(()-> new BidException(
-//                        String.format("Bid with id [%d] was not found", id)
-//                ));
-//        bid.setBidId(id);
-//        return toDtoOptional(bidRepository.save(bid)).orElseThrow(
-//                ()->new BidException("Bid was not saved")
-//        );
-//    }
+    public BidDto updateBid(Integer id, BidDto bidDto) {
+        if (bidRepository.findById(id).isEmpty()) {
+            throw new RequestedObjectNotFoundException(
+                    String.format("Bid with id [%d] does not exist", id));
+        }
+        Bid bid = toModelOptional(bidDto)
+                .orElseThrow(()-> new BidException(
+                        String.format("Bid with id [%d] was not found", id)
+                ));
+        bid.setBidId(id);
+        return toDtoOptional(bidRepository.save(bid)).orElseThrow(
+                ()->new BidException("Bid was not saved")
+        );
+    }
 
     public void deleteBidById(Integer id) {
         bidRepository.deleteById(id);

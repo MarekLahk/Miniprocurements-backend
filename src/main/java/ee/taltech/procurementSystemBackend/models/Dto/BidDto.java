@@ -1,6 +1,7 @@
 package ee.taltech.procurementSystemBackend.models.Dto;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import ee.taltech.procurementSystemBackend.models.DtoBase;
 import lombok.*;
@@ -12,7 +13,7 @@ import lombok.*;
 @Builder
 public class BidDto extends DtoBase {
     private Integer bidId;
-    private Integer bidder;
+    private UUID bidderLinkId;
     private Long bidValue;
     private String description;
     private Timestamp timeOfRegister;

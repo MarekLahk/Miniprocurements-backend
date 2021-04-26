@@ -20,17 +20,17 @@ public class BidController extends ControllerBase<Bid, BidDto, BidSearch>{
         this.bidService = bidService;
     }
 
-    @PostMapping
-    public BidDto addBid(@RequestBody BidDto bidDto,
-                         @RequestParam UUID partnerUuid) {
+    @PostMapping("{partnerUuid}")
+    public BidDto addBid(@PathVariable UUID partnerUuid,
+                         @RequestBody BidDto bidDto) {
         return bidService.addBid(bidDto, partnerUuid);
     }
 
-//    @PutMapping("{id}")
-//    public BidDto updateBid(@PathVariable Integer id,
-//                            @RequestBody BidDto bidDto) {
-//        return bidService.updateBid(id, bidDto);
-//    }
+    @PutMapping("{partnerUuid}")
+    public BidDto updateBid(@PathVariable Integer partnerUuid,
+                            @RequestBody BidDto bidDto) {
+        return bidService.updateBid(partnerUuid, bidDto);
+    }
 
     @Deprecated
     @DeleteMapping("delete/{id}")
