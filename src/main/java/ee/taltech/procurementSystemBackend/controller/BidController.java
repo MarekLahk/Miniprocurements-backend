@@ -23,13 +23,19 @@ public class BidController extends ControllerBase<Bid, BidDto, BidSearch>{
     @PostMapping("{partnerUuid}")
     public BidDto addBid(@PathVariable UUID partnerUuid,
                          @RequestBody BidDto bidDto) {
-        return bidService.addBid(bidDto, partnerUuid);
+        return bidService.addBid(partnerUuid, bidDto);
     }
 
     @PutMapping("{partnerUuid}")
-    public BidDto updateBid(@PathVariable Integer partnerUuid,
+    public BidDto updateBid(@PathVariable UUID partnerUuid,
                             @RequestBody BidDto bidDto) {
         return bidService.updateBid(partnerUuid, bidDto);
+    }
+
+    @PatchMapping("{partnerUuid}")
+    public BidDto patchBidStatus(@PathVariable UUID partnerUuid,
+                                 @RequestBody BidDto bidDto) {
+        return bidService.patchBidStatus(partnerUuid, bidDto);
     }
 
     @Deprecated

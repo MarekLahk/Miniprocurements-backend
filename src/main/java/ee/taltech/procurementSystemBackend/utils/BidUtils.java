@@ -16,29 +16,42 @@ public class BidUtils {
     private final BidRepository bidRepository;
 
     public void checkBidBeforeAdding(UUID bidderLinkId) {
-        if (!bidRepository.findByBidderLinkIdAndBidStatus(
-                bidderLinkId, 1).isEmpty()) {
-            throw new BidException("There can be only one waiting bid per procurement partner.");
+        if (bidRepository.findFirstByBidderLinkIdAndBidStatus(
+                bidderLinkId, 1).isPresent()) {
+            throw new BidException("There can be maximally one waiting bid per procurement partner.");
         }
     }
 
     public Bid getBidToUpdate(UUID bidderLinkId) {
-        List<Bid> bidToUpdate = bidRepository.findByBidderLinkIdAndBidStatus(
-                bidderLinkId, 1);
-        if (bidToUpdate.isEmpty()) {
-            throw new BidException("No bid to update");
-        }
-        return bidToUpdate.get(0);
+        return bidRepository.findFirstByBidderLinkIdAndBidStatus(
+                bidderLinkId, 1)
+                .orElseThrow(() -> new BidException("No bid to update"));
     }
 
-    public void checkBidBeforeSetToActive(Bid bid) {
-
+    public void checkBidBeforeSetToActive(Bid bid, UUID bidderLinkId) {
+        if (bidRepository.findFirstByBidderLinkIdAndBidStatus(
+                bidderLinkId, 2).isPresent()) {
+            throw new BidException("There can be maximally one active bid per procurement partner.");
+        }
         if (bid.getBidValue() == null) {
             throw new BidException("Bid value cannot be null when setting to active");
+        }
+        if (bid.getBidValue() < 0) {
+            throw new BidException("Bid value must be higher than 0 when setting to active");
         }
         // TODO: 4/26/2021 document or description must be provided
         if (bid.getDescription() == null) {
             throw new BidException("Bid description cannot be null when setting to active");
+        }
+        if (bid.getDescription().isBlank()) {
+            throw new BidException("Bid description cannot be blank when setting to active");
+        }
+    }
+
+    public void checkBidBeforeSetToWaiting(Bid bid, UUID bidderLinkId) {
+        if (bidRepository.findFirstByBidderLinkIdAndBidStatus(
+                bidderLinkId, 1).isPresent()) {
+            throw new BidException("There can be only one active bid per procurement partner.");
         }
     }
 }
