@@ -1,7 +1,6 @@
 package ee.taltech.procurementSystemBackend.utils;
 
 import ee.taltech.procurementSystemBackend.exception.MiniprocurementException;
-import ee.taltech.procurementSystemBackend.models.model.Miniprocurement;
 import ee.taltech.procurementSystemBackend.repository.MiniprocurementRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,8 @@ public class ProcurementUtilsTest {
 
     @Test
     void checksDeadlineIsNotInPastShouldThrowException() {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        LocalDateTime nowMinusDay = LocalDateTime.now().minusDays(1);
+        Timestamp timestamp = Timestamp.valueOf(nowMinusDay);
         assertThatThrownBy(() -> procurementUtils.checkProcurementDeadlineIsNotInPast(timestamp))
                 .isInstanceOf(MiniprocurementException.class)
                 .hasMessageContaining("Deadline cannot be before now.");

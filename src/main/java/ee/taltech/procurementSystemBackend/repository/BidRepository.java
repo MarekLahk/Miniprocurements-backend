@@ -2,7 +2,6 @@ package ee.taltech.procurementSystemBackend.repository;
 import ee.taltech.procurementSystemBackend.models.model.Bid;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 

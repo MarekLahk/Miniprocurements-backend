@@ -43,7 +43,7 @@ public class BidUtils {
         if (bid.getBidValue() == null) {
             throw new BidException("Bid value cannot be null when setting to active");
         }
-        if (bid.getBidValue() < 0) {
+        if (bid.getBidValue() <= 0) {
             throw new BidException("Bid value must be higher than 0 when setting to active");
         }
         // TODO: 4/26/2021 document or description must be provided
@@ -73,7 +73,7 @@ public class BidUtils {
 
     public void checkIfBidIsActive(Bid bid) {
         if (bid.getBidStatus() == 2) {
-            throw new BidException("Active bid status cannot be updated");
+            throw new BidException("Active bid cannot be updated");
         }
     }
 
