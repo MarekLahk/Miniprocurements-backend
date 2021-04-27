@@ -1,7 +1,6 @@
 package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.BidException;
-import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
 import ee.taltech.procurementSystemBackend.models.mapper.BidMapper;
 import ee.taltech.procurementSystemBackend.models.model.Bid;
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
@@ -24,7 +23,8 @@ public class BidService extends ServiceBase<Bid, BidDto> {
     private final BidUtils bidUtils;
 
     public BidService(BidRepository bidRepository,
-                      MiniprocurementPartnerRepository miniprocurementPartnerRepository, BidUtils bidUtils) {
+                      MiniprocurementPartnerRepository miniprocurementPartnerRepository,
+                      BidUtils bidUtils) {
         super(bidRepository, BidMapper.INSTANCE);
         this.bidRepository = bidRepository;
         this.miniprocurementPartnerRepository = miniprocurementPartnerRepository;
