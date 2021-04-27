@@ -32,6 +32,7 @@ deploy:
   only:
     refs:
       - master
+      - login-test
   script:
     - docker-compose down
     - docker-compose up -d
