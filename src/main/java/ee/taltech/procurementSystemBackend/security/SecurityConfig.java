@@ -26,7 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().httpStrictTransportSecurity().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/bids/*").permitAll()
                 .antMatchers("/api/*").hasRole("group1")
                 .anyRequest().authenticated()
                 .and()
@@ -41,7 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/swagger-ui.html",
                         "/swagger-ui/**",
-                        "/v3/api-docs/**");
+                        "/v3/api-docs/**",
+                        "/api/public/bids/*");
     }
 }
 

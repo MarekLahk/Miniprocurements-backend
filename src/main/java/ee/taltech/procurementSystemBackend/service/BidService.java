@@ -12,6 +12,7 @@ import ee.taltech.procurementSystemBackend.utils.BidUtils;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,6 +29,15 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         this.bidRepository = bidRepository;
         this.miniprocurementPartnerRepository = miniprocurementPartnerRepository;
         this.bidUtils = bidUtils;
+    }
+
+    public List<BidDto> getCurrentWaitingBid(UUID partnerUuid) {
+        Optional<Bid> bid = bidRepository.findFirstByBidderLinkIdAndBidStatus(partnerUuid, 1);
+        if (bid.isPresent()) {
+            BidDto dto = toDtoOptional(bid.get()).get();
+            return List.of(dto);
+        }
+        return List.of();
     }
 
     public BidDto addBid(UUID partnerUuid, BidDto bidDto) {
@@ -57,34 +67,26 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         bid.setBidderLinkId(partnerUuid);
         bid.setBidStatus(sourceBid.getBidStatus());
         bid.setTimeOfRegister(sourceBid.getTimeOfRegister());
+
         return toDtoOptional(bidRepository.save(bid)).get();
     }
 
-    public void deleteBidById(Integer id) {
-        bidRepository.deleteById(id);
-    }
-
     public BidDto patchBidStatus(UUID partnerUuid, BidDto bidDto) {
-        Integer incomingStatus = Optional.ofNullable(bidDto.getBidStatus())
-                .orElseThrow(() -> new BidException("No status provided in dto"));
         Bid sourceBid = bidUtils.getBidToUpdate(partnerUuid, bidDto);
-
-        bidUtils.checkIncomingStatus(incomingStatus);
         bidUtils.checkIfBidIsInactive(sourceBid);
+        bidUtils.checkBidBeforeSetToActive(sourceBid);
 
-        if (incomingStatus == 1) {
-            bidUtils.checkBidBeforeSetToWaiting(sourceBid, partnerUuid);
-            sourceBid.setBidStatus(1);
-            return toDtoOptional(bidRepository.save(sourceBid)).get();
-        } else if (incomingStatus == 2) {
-            bidUtils.checkBidBeforeSetToActive(sourceBid, partnerUuid);
-            sourceBid.setBidStatus(2);
-            sourceBid.setTimeOfRegister(new Timestamp(System.currentTimeMillis()));
-            return toDtoOptional(bidRepository.save(sourceBid)).get();
-        } else {
-            sourceBid.setBidStatus(3);
-            return toDtoOptional(bidRepository.save(sourceBid)).get();
+        Optional<Bid> currentActiveOptional = bidUtils.getCurrentActiveBid(partnerUuid);
+        if (currentActiveOptional.isPresent()) {
+            Bid currentActive = currentActiveOptional.get();
+            currentActive.setBidStatus(3);
+            bidRepository.save(currentActive);
         }
+
+        sourceBid.setBidStatus(2);
+        sourceBid.setTimeOfRegister(new Timestamp(System.currentTimeMillis()));
+        return toDtoOptional(bidRepository.save(sourceBid)).get();
+
     }
 }
 

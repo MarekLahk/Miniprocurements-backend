@@ -7,7 +7,6 @@ import ee.taltech.procurementSystemBackend.repository.BidRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,13 +31,9 @@ public class BidUtils {
                 .orElseThrow(() -> new BidException("No bid to update"));
     }
 
-    public void checkBidBeforeSetToActive(Bid bid, UUID bidderLinkId) {
+    public void checkBidBeforeSetToActive(Bid bid) {
         if (bid.getBidStatus() == 2) {
             throw new BidException("Bid is already active");
-        }
-        if (bidRepository.findFirstByBidderLinkIdAndBidStatus(
-                bidderLinkId, 2).isPresent()) {
-            throw new BidException("There can be maximally one active bid per procurement partner.");
         }
         if (bid.getBidValue() == null) {
             throw new BidException("Bid value cannot be null when setting to active");
@@ -55,14 +50,9 @@ public class BidUtils {
         }
     }
 
-    public void checkBidBeforeSetToWaiting(Bid bid, UUID bidderLinkId) {
-        if (bid.getBidStatus() == 1) {
-            throw new BidException("Bid is already waiting");
-        }
-        if (bidRepository.findFirstByBidderLinkIdAndBidStatus(
-                bidderLinkId, 1).isPresent()) {
-            throw new BidException("There can be only one waiting bid per procurement partner.");
-        }
+    public Optional<Bid> getCurrentActiveBid(UUID bidderLinkId) {
+        return bidRepository.findFirstByBidderLinkIdAndBidStatus(
+                bidderLinkId, 2);
     }
 
     public void checkIfBidIsInactive(Bid bid) {
@@ -74,13 +64,6 @@ public class BidUtils {
     public void checkIfBidIsActive(Bid bid) {
         if (bid.getBidStatus() == 2) {
             throw new BidException("Active bid cannot be updated");
-        }
-    }
-
-    public void checkIncomingStatus(Integer status) {
-        List<Integer> allowedStatuses = List.of(1,2,3);
-        if (!allowedStatuses.contains(status)) {
-            throw new BidException("Allowed bid status codes are: [1, 2, 3]");
         }
     }
 }
