@@ -26,12 +26,19 @@ public class BidController extends ControllerBase<Bid, BidDto, BidSearch>{
         return bidService.addBid(partnerUuid, bidDto);
     }
 
+    /**
+     * bidId must be provided in dto.
+     */
     @PutMapping("{partnerUuid}")
     public BidDto updateBid(@PathVariable UUID partnerUuid,
                             @RequestBody BidDto bidDto) {
         return bidService.updateBid(partnerUuid, bidDto);
     }
 
+    /**
+     * Endpoint to patch bid status.
+     * bidId and bidStatus must be provided in dto.
+     */
     @PatchMapping("{partnerUuid}")
     public BidDto patchBidStatus(@PathVariable UUID partnerUuid,
                                  @RequestBody BidDto bidDto) {

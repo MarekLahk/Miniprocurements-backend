@@ -150,7 +150,7 @@ CREATE TABLE Bid(
                     bid_status SMALLINT NOT NULL DEFAULT 1,
                     description TEXT,
                     procurement_id MEDIUMINT NOT NULL,
-                    time_of_register DATETIME NOT NULL DEFAULT NOW(),
+                    time_of_register DATETIME,
                     CONSTRAINT pk_bid_id PRIMARY KEY (bid_id),
                     CONSTRAINT fk_bid_status FOREIGN KEY (bid_status)
                         REFERENCES BidStatus(status_id)

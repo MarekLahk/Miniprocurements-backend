@@ -12,6 +12,7 @@ import ee.taltech.procurementSystemBackend.utils.BidUtils;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -39,18 +40,23 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         bidUtils.checkBidBeforeAdding(partnerUuid);
         bid.setBidderLinkId(partnerUuid);
         bid.setBidStatus(1);
-        bid.setTimeOfRegister(new Timestamp(System.currentTimeMillis()));
-
+        bid.setProcurementId(partner.getMiniprocurementPartnerProcurementId());
         return toDtoOptional(bidRepository.save(bid)).get();
     }
 
     public BidDto updateBid(UUID partnerUuid, BidDto bidDto) {
-        Bid sourceBid = bidUtils.getBidToUpdate(partnerUuid);
         Bid bid = toModelOptional(bidDto)
                 .orElseThrow(() -> new BidException("No bid provided"));
+
+        Bid sourceBid = bidUtils.getBidToUpdate(partnerUuid, bidDto);
+        bidUtils.checkIfBidIsInactive(sourceBid);
+        bidUtils.checkIfBidIsActive(sourceBid);
+
         bid.setBidId(sourceBid.getBidId());
+        bid.setProcurementId(sourceBid.getProcurementId());
         bid.setBidderLinkId(partnerUuid);
-        bid.setBidStatus(1);
+        bid.setBidStatus(sourceBid.getBidStatus());
+        bid.setTimeOfRegister(sourceBid.getTimeOfRegister());
         return toDtoOptional(bidRepository.save(bid)).get();
     }
 
@@ -59,7 +65,26 @@ public class BidService extends ServiceBase<Bid, BidDto> {
     }
 
     public BidDto patchBidStatus(UUID partnerUuid, BidDto bidDto) {
-        return null;
+        Integer incomingStatus = Optional.ofNullable(bidDto.getBidStatus())
+                .orElseThrow(() -> new BidException("No status provided in dto"));
+        Bid sourceBid = bidUtils.getBidToUpdate(partnerUuid, bidDto);
+
+        bidUtils.checkIncomingStatus(incomingStatus);
+        bidUtils.checkIfBidIsInactive(sourceBid);
+
+        if (incomingStatus == 1) {
+            bidUtils.checkBidBeforeSetToWaiting(sourceBid, partnerUuid);
+            sourceBid.setBidStatus(1);
+            return toDtoOptional(bidRepository.save(sourceBid)).get();
+        } else if (incomingStatus == 2) {
+            bidUtils.checkBidBeforeSetToActive(sourceBid, partnerUuid);
+            sourceBid.setBidStatus(2);
+            sourceBid.setTimeOfRegister(new Timestamp(System.currentTimeMillis()));
+            return toDtoOptional(bidRepository.save(sourceBid)).get();
+        } else {
+            sourceBid.setBidStatus(3);
+            return toDtoOptional(bidRepository.save(sourceBid)).get();
+        }
     }
 }
 

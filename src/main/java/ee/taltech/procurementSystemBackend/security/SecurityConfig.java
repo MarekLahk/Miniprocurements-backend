@@ -26,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().httpStrictTransportSecurity().disable()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/api/bids/*").permitAll()
                 .antMatchers("/api/*").hasRole("group1")
                 .anyRequest().authenticated()
                 .and()

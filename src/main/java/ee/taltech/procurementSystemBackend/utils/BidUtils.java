@@ -1,12 +1,14 @@
 package ee.taltech.procurementSystemBackend.utils;
 
 import ee.taltech.procurementSystemBackend.exception.BidException;
+import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
 import ee.taltech.procurementSystemBackend.models.model.Bid;
 import ee.taltech.procurementSystemBackend.repository.BidRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -22,13 +24,18 @@ public class BidUtils {
         }
     }
 
-    public Bid getBidToUpdate(UUID bidderLinkId) {
-        return bidRepository.findFirstByBidderLinkIdAndBidStatus(
-                bidderLinkId, 1)
+    public Bid getBidToUpdate(UUID bidderLinkId, BidDto dto) {
+        Integer bidId = Optional.ofNullable(dto.getBidId())
+                .orElseThrow(() -> new BidException("No bid id id provided in dto"));
+        return bidRepository.findByBidIdAndBidderLinkId(
+                bidId, bidderLinkId)
                 .orElseThrow(() -> new BidException("No bid to update"));
     }
 
     public void checkBidBeforeSetToActive(Bid bid, UUID bidderLinkId) {
+        if (bid.getBidStatus() == 2) {
+            throw new BidException("Bid is already active");
+        }
         if (bidRepository.findFirstByBidderLinkIdAndBidStatus(
                 bidderLinkId, 2).isPresent()) {
             throw new BidException("There can be maximally one active bid per procurement partner.");
@@ -49,9 +56,31 @@ public class BidUtils {
     }
 
     public void checkBidBeforeSetToWaiting(Bid bid, UUID bidderLinkId) {
+        if (bid.getBidStatus() == 1) {
+            throw new BidException("Bid is already waiting");
+        }
         if (bidRepository.findFirstByBidderLinkIdAndBidStatus(
                 bidderLinkId, 1).isPresent()) {
-            throw new BidException("There can be only one active bid per procurement partner.");
+            throw new BidException("There can be only one waiting bid per procurement partner.");
+        }
+    }
+
+    public void checkIfBidIsInactive(Bid bid) {
+        if (bid.getBidStatus() == 3) {
+            throw new BidException("Inactive bid cannot be updated");
+        }
+    }
+
+    public void checkIfBidIsActive(Bid bid) {
+        if (bid.getBidStatus() == 2) {
+            throw new BidException("Active bid status cannot be updated");
+        }
+    }
+
+    public void checkIncomingStatus(Integer status) {
+        List<Integer> allowedStatuses = List.of(1,2,3);
+        if (!allowedStatuses.contains(status)) {
+            throw new BidException("Allowed bid status codes are: [1, 2, 3]");
         }
     }
 }
