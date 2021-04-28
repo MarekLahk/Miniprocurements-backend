@@ -1,6 +1,7 @@
 package ee.taltech.procurementSystemBackend.controller;
 
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
+import ee.taltech.procurementSystemBackend.models.Dto.BiddingResponse;
 import ee.taltech.procurementSystemBackend.service.BidService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class BidPublicController {
     private final BidService bidService;
 
     @GetMapping("{partnerUuid}")
-    public List<BidDto> getCurrentWaitingBid(@PathVariable UUID partnerUuid) {
+    public BiddingResponse getCurrentWaitingBid(@PathVariable UUID partnerUuid) {
         return bidService.getCurrentWaitingBid(partnerUuid);
     }
 

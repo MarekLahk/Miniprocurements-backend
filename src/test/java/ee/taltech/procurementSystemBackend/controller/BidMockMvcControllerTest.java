@@ -2,6 +2,7 @@ package ee.taltech.procurementSystemBackend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
+import ee.taltech.procurementSystemBackend.models.Dto.BiddingResponse;
 import ee.taltech.procurementSystemBackend.service.BidService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class BidMockMvcControllerTest {
 
     @Test
     public void whenRequestBidThenStatusOk() throws Exception {
-        when(bidService.getCurrentWaitingBid(RANDOM_UUID)).thenReturn(List.of(new BidDto()));
+        when(bidService.getCurrentWaitingBid(RANDOM_UUID)).thenReturn(new BiddingResponse());
         mvc.perform(MockMvcRequestBuilders.get(BID_PATH).accept(APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
