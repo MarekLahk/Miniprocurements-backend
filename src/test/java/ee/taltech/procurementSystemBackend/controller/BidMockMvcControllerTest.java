@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -49,5 +50,12 @@ public class BidMockMvcControllerTest {
     public void whenUnauthorizedGetProtectedEndpointThenStatusFound() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get(PROTECTED_PATH).accept(APPLICATION_JSON))
                 .andExpect(status().isFound());
+    }
+
+    @Test
+    @WithMockUser(username = "test", password = "test", roles = "group1")
+    public void whenAuthenticatedGetProtectedEndpointThenStatusFound() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get(PROTECTED_PATH).accept(APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 }
