@@ -1,7 +1,8 @@
 package ee.taltech.procurementSystemBackend.models.model;
 
 import ee.taltech.procurementSystemBackend.models.ModelBase;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -31,4 +32,9 @@ public class Bid extends ModelBase {
     private Integer bidStatus;
     @Column(name = "procurement_id")
     private Integer procurementId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="procurement_id", insertable = false, updatable = false)
+    private Miniprocurement miniprocurement;
+
 }

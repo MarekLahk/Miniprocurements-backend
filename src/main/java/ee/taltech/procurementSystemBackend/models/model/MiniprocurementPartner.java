@@ -29,9 +29,9 @@ public class MiniprocurementPartner extends ModelBase {
     @Basic
     @Column(name = "partner_id", nullable = false, length = -1)
     private Integer miniprocurementPartnerPartnerId;
-    //@Basic
-    //@Column(name = "time_added", nullable = false, length = -1)
-    //private String miniprocurementPartnerTimeAdded;
+    @Basic
+    @Column(name = "time_added", nullable = false, length = -1)
+    private String miniprocurementPartnerTimeAdded;
     @Basic
     @Column(name = "link_first_accessed", nullable = true, length = -1)
     private String miniprocurementPartnerLinkFirstAccessed;

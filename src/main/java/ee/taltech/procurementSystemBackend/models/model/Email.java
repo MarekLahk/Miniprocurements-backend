@@ -36,8 +36,7 @@ public class Email extends ModelBase {
     @Basic
     @Column(name = "recipient_id", nullable = false)
     private Integer recipientId;
-    @Basic
-    @Column(name = "sender_id", nullable = false)
-    private Integer senderId;
+
+
 
 }

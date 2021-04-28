@@ -2,6 +2,7 @@ package ee.taltech.procurementSystemBackend.models.model;
 
 import com.googlecode.jmapper.annotations.JGlobalMap;
 import ee.taltech.procurementSystemBackend.models.ModelBase;
+import ee.taltech.procurementSystemBackend.models.model.person.Employee;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,4 +32,12 @@ public class Announcement extends ModelBase {
     @Basic
     @Column(name = "date_added", nullable = false)
     private Timestamp dateAdded;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id", insertable = false, updatable = false)
+    private Employee employee;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="procurement_id", insertable = false, updatable = false)
+    private Miniprocurement miniprocurement;
 }
