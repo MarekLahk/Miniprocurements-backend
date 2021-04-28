@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Component;
 
+
 @Component
 @AllArgsConstructor
 public class AuthUtils {

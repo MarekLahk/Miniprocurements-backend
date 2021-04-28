@@ -73,11 +73,21 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(value = AuthException.class)
     public ResponseEntity<Object> handleAuthException(
-            RequestedObjectNotFoundException e) {
+            AuthException e) {
         ApiException apiException = new ApiException(
                 e.getMessage(),
                 HttpStatus.FORBIDDEN,
                 ZonedDateTime.now());
         return new ResponseEntity<>(apiException, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(value = BidException.class)
+    public ResponseEntity<Object> handleBidException(
+            BidException e) {
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST,
+                ZonedDateTime.now());
+        return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
     }
 }

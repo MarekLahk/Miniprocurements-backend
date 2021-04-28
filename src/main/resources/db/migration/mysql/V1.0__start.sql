@@ -146,12 +146,12 @@ CREATE TABLE Announcement(
 
 CREATE TABLE Bid(
                     bid_id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-                    bidder MEDIUMINT NOT NULL,
-                    bid_value BIGINT NOT NULL,
-                    bid_status SMALLINT NOT NULL,
+                    bidder_link_id BINARY(16) NOT NULL,
+                    bid_value BIGINT,
+                    bid_status SMALLINT NOT NULL DEFAULT 1,
                     description TEXT,
                     procurement_id MEDIUMINT NOT NULL,
-                    time_of_register DATETIME NOT NULL DEFAULT NOW(),
+                    time_of_register DATETIME,
                     CONSTRAINT pk_bid_id PRIMARY KEY (bid_id),
                     CONSTRAINT fk_bid_status FOREIGN KEY (bid_status)
                         REFERENCES BidStatus(status_id)
@@ -161,8 +161,8 @@ CREATE TABLE Bid(
                         REFERENCES Miniprocurement(procurement_id)
                         ON UPDATE CASCADE
                         ON DELETE NO ACTION,
-                    CONSTRAINT fk_bidder FOREIGN KEY (bidder)
-                        REFERENCES Partner(partner_id)
+                    CONSTRAINT fk_bidder_link_id FOREIGN KEY (bidder_link_id)
+                        REFERENCES MiniprocurementPartner(link_id)
                         ON UPDATE CASCADE
                         ON DELETE NO ACTION
 );
