@@ -26,14 +26,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .headers().httpStrictTransportSecurity().disable()
                 .and()
-                .authorizeRequests().antMatchers("/api/*").permitAll();
-//                .authorizeRequests()
-//                .antMatchers("/api/*").hasRole("group1")
-//                .anyRequest().authenticated()
-//                .and()
-//                .oauth2Login()
-//                .userInfoEndpoint()
-//                .oidcUserService(oidcUserService);
+//                .authorizeRequests().antMatchers("/api/*").permitAll();
+                .authorizeRequests()
+                .antMatchers("/api/*").hasRole("group1")
+                .anyRequest().authenticated()
+                .and()
+                .oauth2Login()
+                .userInfoEndpoint()
+                .oidcUserService(oidcUserService);
     }
 
     @Override
