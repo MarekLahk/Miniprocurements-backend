@@ -20,6 +20,7 @@ import java.util.UUID;
 @JGlobalMap
 @Schema(name = "MiniprocurementPartnerDto", description = "DTO for miniprocurement partner links")
 public class MiniprocurementPartnerDto extends DtoBase {
+
     @Schema(title="ID of the link", example = "")
     private Integer miniprocurementPartnerId;
 
