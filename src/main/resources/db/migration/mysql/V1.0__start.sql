@@ -302,3 +302,5 @@ CREATE TRIGGER a BEFORE INSERT ON Email
         end if;
     end//
 DELIMITER ;
+
+COMMIT;
