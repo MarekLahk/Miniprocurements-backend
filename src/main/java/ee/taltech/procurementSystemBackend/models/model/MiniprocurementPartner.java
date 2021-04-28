@@ -1,20 +1,21 @@
 package ee.taltech.procurementSystemBackend.models.model;
 
-import ee.taltech.procurementSystemBackend.models.ModelBase;
 import com.googlecode.jmapper.annotations.JGlobalMap;
+import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.*;
+
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.UUID;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JGlobalMap
+@Getter
+@Setter
 public class MiniprocurementPartner extends ModelBase {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -28,12 +29,15 @@ public class MiniprocurementPartner extends ModelBase {
     @Basic
     @Column(name = "partner_id", nullable = false, length = -1)
     private Integer miniprocurementPartnerPartnerId;
-    //@Basic
-    //@Column(name = "time_added", nullable = false, length = -1)
-    //private String miniprocurementPartnerTimeAdded;
+    @Basic
+    @Column(name = "time_added", nullable = false, length = -1)
+    private String miniprocurementPartnerTimeAdded;
     @Basic
     @Column(name = "link_first_accessed", nullable = true, length = -1)
     private String miniprocurementPartnerLinkFirstAccessed;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="procurement_id", insertable = false, updatable = false)
+    private Miniprocurement miniprocurement;
 }
 
 

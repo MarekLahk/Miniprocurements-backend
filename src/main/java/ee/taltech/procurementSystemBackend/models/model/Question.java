@@ -27,4 +27,8 @@ public class Question extends ModelBase {
     private String question;
     @Column(name = "time_asked", nullable = false)
     private Timestamp timeAsked;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="procurement_id", insertable = false, updatable = false)
+    private Miniprocurement miniprocurement;
 }
