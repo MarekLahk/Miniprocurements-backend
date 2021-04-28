@@ -11,7 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class BidUtilsStatusPatchSetActiveTest {

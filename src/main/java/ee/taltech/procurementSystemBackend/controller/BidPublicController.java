@@ -3,11 +3,10 @@ package ee.taltech.procurementSystemBackend.controller;
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
 import ee.taltech.procurementSystemBackend.service.BidService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,9 +23,10 @@ public class BidPublicController {
     }
 
     @PostMapping("{partnerUuid}")
-    public BidDto addBid(@PathVariable UUID partnerUuid,
-                         @RequestBody BidDto bidDto) {
-        return bidService.addBid(partnerUuid, bidDto);
+    public ResponseEntity<BidDto> addBid(@PathVariable UUID partnerUuid,
+                                         @RequestBody BidDto bidDto) {
+        BidDto dto = bidService.addBid(partnerUuid, bidDto);
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
     /**
