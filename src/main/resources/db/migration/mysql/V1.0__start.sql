@@ -1,4 +1,5 @@
-
+CREATE DATABASE IF NOT EXISTS miniprocurements;
+COMMIT;
 USE miniprocurements;
 
 
@@ -268,7 +269,6 @@ CREATE TABLE Email (
                        reply_id MEDIUMINT,
                        announcement_id MEDIUMINT,
                        recipient_id MEDIUMINT NOT NULL,
-                       sender_id MEDIUMINT NOT NULL,
                        CONSTRAINT pk_email_sent_status PRIMARY KEY (email_id),
                        CONSTRAINT fk_email_procurement_id FOREIGN KEY (procurement_id)
                            REFERENCES Miniprocurement(procurement_id)
@@ -285,10 +285,20 @@ CREATE TABLE Email (
                        CONSTRAINT fk_email_recipient_id FOREIGN KEY (recipient_id)
                            REFERENCES Person(person_id)
                            ON UPDATE CASCADE
-                           ON DELETE NO ACTION,
-                       CONSTRAINT fk_email_sender_id FOREIGN KEY (sender_id)
-                           REFERENCES Employee(employee_id)
-                           ON UPDATE CASCADE
                            ON DELETE NO ACTION
 
 );
+
+DELIMITER //
+CREATE TRIGGER a BEFORE INSERT ON Email
+    FOR EACH ROW
+    BEGIN
+        IF NOT (((NEW.procurement_id is not null) and (NEW.reply_id is null) and (NEW.announcement_id is null))
+            OR ((NEW.procurement_id is null) and (NEW.reply_id is not null) and (NEW.announcement_id is null))
+            OR ((NEW.procurement_id is null) and (NEW.reply_id is null) and (NEW.announcement_id is not null)))
+        THEN
+
+            SIGNAL SQLSTATE '23000';
+        end if;
+    end//
+DELIMITER ;

@@ -19,19 +19,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.oidcUserService = oidcUserService;
     }
 
+    // TODO: 28/04/2021 Revert changes
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .headers().httpStrictTransportSecurity().disable()
                 .and()
-                .authorizeRequests()
-                .antMatchers("/api/*").hasRole("group1")
-                .anyRequest().authenticated()
-                .and()
-                .oauth2Login()
-                .userInfoEndpoint()
-                .oidcUserService(oidcUserService);
+                .authorizeRequests().antMatchers("/api/*").permitAll();
+//                .authorizeRequests()
+//                .antMatchers("/api/*").hasRole("group1")
+//                .anyRequest().authenticated()
+//                .and()
+//                .oauth2Login()
+//                .userInfoEndpoint()
+//                .oidcUserService(oidcUserService);
     }
 
     @Override

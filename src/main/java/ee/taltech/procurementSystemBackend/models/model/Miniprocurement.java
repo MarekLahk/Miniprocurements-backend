@@ -6,9 +6,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "Miniprocurement")
 @NoArgsConstructor
@@ -57,6 +58,8 @@ public class Miniprocurement extends ModelBase {
     @Basic
     @Column(name = "time_finished")
     private Timestamp timeFinished;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "miniprocurement")
+    private Set<MiniprocurementPartner> miniprocurementPartners;
 
 
 }
