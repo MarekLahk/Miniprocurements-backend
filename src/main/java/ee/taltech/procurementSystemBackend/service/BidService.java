@@ -1,41 +1,36 @@
 package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.BidException;
-import ee.taltech.procurementSystemBackend.models.Dto.BiddingResponse;
-import ee.taltech.procurementSystemBackend.models.Dto.MiniProcurementDto;
+import ee.taltech.procurementSystemBackend.models.Dto.*;
 import ee.taltech.procurementSystemBackend.models.mapper.BidMapper;
 import ee.taltech.procurementSystemBackend.models.mapper.MiniprocurementMapper;
-import ee.taltech.procurementSystemBackend.models.model.Bid;
-import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
-import ee.taltech.procurementSystemBackend.models.model.MiniprocurementPartner;
+import ee.taltech.procurementSystemBackend.models.model.*;
 import ee.taltech.procurementSystemBackend.repository.BidRepository;
 import ee.taltech.procurementSystemBackend.repository.MiniprocurementPartnerRepository;
-import ee.taltech.procurementSystemBackend.repository.MiniprocurementRepository;
+import ee.taltech.procurementSystemBackend.utils.BidResponseUtils;
 import ee.taltech.procurementSystemBackend.utils.BidUtils;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BidService extends ServiceBase<Bid, BidDto> {
 
     private final BidRepository bidRepository;
     private final MiniprocurementPartnerRepository miniprocurementPartnerRepository;
-    private final MiniprocurementRepository miniprocurementRepository;
     private final BidUtils bidUtils;
+    private final BidResponseUtils bidResponseUtils;
     private final MiniprocurementMapper procurementMapper;
 
     public BidService(BidRepository bidRepository,
                       MiniprocurementPartnerRepository miniprocurementPartnerRepository,
-                      MiniprocurementRepository miniprocurementRepository, BidUtils bidUtils) {
+                      BidUtils bidUtils, BidResponseUtils bidResponseUtils) {
         super(bidRepository, BidMapper.INSTANCE);
         this.bidRepository = bidRepository;
         this.miniprocurementPartnerRepository = miniprocurementPartnerRepository;
-        this.miniprocurementRepository = miniprocurementRepository;
         this.bidUtils = bidUtils;
+        this.bidResponseUtils = bidResponseUtils;
         this.procurementMapper = MiniprocurementMapper.INSTANCE;
     }
 
@@ -43,11 +38,19 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         MiniprocurementPartner partner = miniprocurementPartnerRepository
                 .findByMiniprocurementPartnerLinkId(partnerUuid)
                 .orElseThrow(() -> new BidException("No such procurement partner"));
+
+        Miniprocurement procurementModel = partner.getMiniprocurement();
         MiniProcurementDto procurement = procurementMapper.toDto(
-                miniprocurementRepository.findById(partner.getMiniprocurementPartnerProcurementId()).get()
+                procurementModel
         );
+
+        List<QuestionAndRepliesResponse> questionReplyMap =
+                bidResponseUtils.getQuestionsAndReplies(partner.getMiniprocurementPartnerProcurementId());
+
         BiddingResponse biddingResponse = new BiddingResponse();
         biddingResponse.setProcurement(procurement);
+        biddingResponse.setQuestionsAndRelies(questionReplyMap);
+
         Optional<Bid> bid = bidRepository.findFirstByBidderLinkIdAndBidStatus(partnerUuid, 1);
         if (bid.isPresent()) {
             BidDto dto = toDtoOptional(bid.get()).get();
@@ -63,8 +66,7 @@ public class BidService extends ServiceBase<Bid, BidDto> {
                 .findByMiniprocurementPartnerLinkId(partnerUuid)
                 .orElseThrow(() -> new BidException("Invalid uuid"));
 
-        if (miniprocurementRepository.findById(
-                partner.getMiniprocurementPartnerProcurementId()).get().getStatus() != 2) {
+        if (partner.getMiniprocurement().getStatus() != 2) {
             throw new BidException("Cannot add bid to non active procurement");
         }
 

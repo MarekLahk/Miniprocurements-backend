@@ -11,9 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BiddingResponse {
+public class QuestionAndRepliesResponse {
 
-    private List<BidDto> bid;
-    private MiniProcurementDto procurement;
-    private List<QuestionAndRepliesResponse> questionsAndRelies;
+    QuestionDto question;
+    List<ReplyDto> replies;
 }

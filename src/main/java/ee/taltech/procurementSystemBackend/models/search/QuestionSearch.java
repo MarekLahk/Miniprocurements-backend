@@ -5,14 +5,16 @@ import ee.taltech.procurementSystemBackend.models.model.Question;
 import ee.taltech.procurementSystemBackend.repository.person.Specifications;
 import org.springframework.data.domain.Sort;
 
+import java.util.UUID;
+
 public class QuestionSearch extends SearchObject<Question> {
 
-    private String askerId;
+    private UUID bidderLinkId;
     private Integer procurementId;
 
-    public QuestionSearch(Integer limit, Integer page, String sort, Sort.Direction dir, String askerId, Integer procurementId) {
+    public QuestionSearch(Integer limit, Integer page, String sort, Sort.Direction dir, UUID bidderLinkId, Integer procurementId) {
         super(limit, page, sort, dir);
-        this.askerId = askerId;
+        this.bidderLinkId = bidderLinkId;
         this.procurementId = procurementId;
     }
 
@@ -20,8 +22,8 @@ public class QuestionSearch extends SearchObject<Question> {
     public SearchSpecPack<Question> getSearchSpec() {
 
         SearchSpecPack<Question> searchSpec = super.getSearchSpec();
-        if (askerId != null) {
-            searchSpec.addSpec(Specifications.specEquals("askerId", this.askerId));
+        if (bidderLinkId != null) {
+            searchSpec.addSpec(Specifications.specEquals("bidderLinkId", this.bidderLinkId));
         }
         if (procurementId != null) {
             searchSpec.addSpec(Specifications.specEquals("procurementId", this.procurementId));

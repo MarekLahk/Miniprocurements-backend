@@ -8,4 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ReplyRepository extends RepositoryInterface<Reply> {
+
+    List<Reply> findAllByQuestionId(Integer id);
 }

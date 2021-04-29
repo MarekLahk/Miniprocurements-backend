@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/questions")
@@ -18,11 +19,6 @@ public class QuestionController extends ControllerBase<Question, QuestionDto, Qu
     public QuestionController(QuestionService questionService) {
         super(questionService, Question.class, QuestionDto.class);
         this.questionService = questionService;
-    }
-
-    @PostMapping
-    public QuestionDto addQuestion(@Valid @RequestBody QuestionDto dto) {
-        return questionService.addQuestion(dto);
     }
 
     @Deprecated

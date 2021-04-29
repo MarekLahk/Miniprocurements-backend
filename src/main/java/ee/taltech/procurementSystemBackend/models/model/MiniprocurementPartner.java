@@ -5,6 +5,7 @@ import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
@@ -31,7 +32,7 @@ public class MiniprocurementPartner extends ModelBase {
     private Integer miniprocurementPartnerPartnerId;
     @Basic
     @Column(name = "time_added", nullable = false, length = -1)
-    private String miniprocurementPartnerTimeAdded;
+    private Timestamp miniprocurementPartnerTimeAdded;
     @Basic
     @Column(name = "link_first_accessed", nullable = true, length = -1)
     private String miniprocurementPartnerLinkFirstAccessed;
