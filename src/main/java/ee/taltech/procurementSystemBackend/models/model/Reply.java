@@ -29,4 +29,8 @@ public class Reply extends ModelBase {
     private String reply;
     @Column(name = "time_replied", nullable = false)
     private Timestamp timeReplied;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="question_id", insertable = false, updatable = false)
+    private Question question;
 }

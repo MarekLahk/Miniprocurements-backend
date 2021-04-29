@@ -184,11 +184,13 @@ CREATE TABLE Procurer(
 
 CREATE TABLE Question(
                          question_id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-                         asker_id VARCHAR(50) NOT NULL,
+                         bidder_link_id BINARY(16) NOT NULL,
                          procurement_id MEDIUMINT NOT NULL,
-                         question TEXT NOT NULL,
+                         question_text TEXT NOT NULL,
                          time_asked DATETIME NOT NULL DEFAULT NOW(),
                          CONSTRAINT pk_question_id PRIMARY KEY (question_id),
+                         CONSTRAINT  fk_question_bidder_link_id FOREIGN KEY (bidder_link_id)
+                             REFERENCES MiniprocurementPartner(link_id),
                          CONSTRAINT fk_q_procurement_id FOREIGN KEY (procurement_id)
                              REFERENCES Miniprocurement(procurement_id)
                              ON UPDATE CASCADE

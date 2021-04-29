@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
+import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -19,11 +21,11 @@ public class Question extends ModelBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id", nullable = false)
     private Integer questionId;
-    @Column(name = "asker_id", nullable = false)
-    private String askerId;
+    @Column(name = "bidder_link_id", nullable = false)
+    private UUID bidderLinkId;
     @Column(name = "procurement_id", nullable = false)
     private Integer procurementId;
-    @Column(name = "question", nullable = false)
+    @Column(name = "question_text", nullable = false)
     private String question;
     @Column(name = "time_asked", nullable = false)
     private Timestamp timeAsked;
@@ -31,4 +33,8 @@ public class Question extends ModelBase {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="procurement_id", insertable = false, updatable = false)
     private Miniprocurement miniprocurement;
+
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", targetEntity = Reply.class)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
+    private Set<Reply> replies;
 }
