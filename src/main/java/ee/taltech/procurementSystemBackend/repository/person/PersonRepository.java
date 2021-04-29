@@ -13,6 +13,8 @@ public interface PersonRepository extends PersonRepositoryInterface<Person> {
 
     Optional<Person> findByeMail(String email);
 
+    Optional<Person> findByeMailAndPersonIDNot(String email, Integer id);
+
     @Query("SELECT p FROM Person p WHERE p.eMail = :email")
     Optional<Person> findByPersonEmail(String email);
 }

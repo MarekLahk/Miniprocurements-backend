@@ -90,4 +90,14 @@ public class ApiExceptionHandler {
                 ZonedDateTime.now());
         return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = PersonException.class)
+    public ResponseEntity<Object> handlePersonException(
+            PersonException e) {
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST,
+                ZonedDateTime.now());
+        return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
+    }
 }
