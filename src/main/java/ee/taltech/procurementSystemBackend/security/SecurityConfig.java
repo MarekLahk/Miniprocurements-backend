@@ -19,12 +19,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.oidcUserService = oidcUserService;
     }
 
+    // TODO: 28/04/2021 Revert changes
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .headers().httpStrictTransportSecurity().disable()
                 .and()
+//                .authorizeRequests().antMatchers("/api/*").permitAll();
                 .authorizeRequests()
                 .antMatchers("/api/*").hasRole("group1")
                 .anyRequest().authenticated()
@@ -40,7 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/swagger-ui.html",
                         "/swagger-ui/**",
-                        "/v3/api-docs/**");
+                        "/v3/api-docs/**",
+                        "/api/public/bids/*",
+                        "/api/public/questions/*");
     }
 }
 

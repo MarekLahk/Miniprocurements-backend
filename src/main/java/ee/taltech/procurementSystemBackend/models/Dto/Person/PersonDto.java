@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.*;
@@ -22,6 +23,7 @@ public class PersonDto extends DtoBase {
 
     private Integer personID;
     private String personName;
+    @NotBlank(message = "Email cannot be blank")
     private String eMail;
     private LocalDateTime timeOfRegister;
     @JsonInclude(Include.NON_NULL)

@@ -91,7 +91,7 @@ public class MiniprocurementService extends ServiceBase<Miniprocurement, MiniPro
         Miniprocurement procurement = optionalProcurement.get();
         procurement.setStatus(dto.getStatus());
         procurementUtils.checkProcurementBeforeStatusPatch(procurement);
-        return toDtoOptional(procurement).get();
+        return toDtoOptional(miniprocurementRepository.save(procurement)).get();
     }
 
     @Deprecated

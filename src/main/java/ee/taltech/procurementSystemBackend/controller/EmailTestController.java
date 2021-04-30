@@ -1,8 +1,11 @@
 package ee.taltech.procurementSystemBackend.controller;
 
+import ee.taltech.procurementSystemBackend.repository.MiniprocurementRepository;
 import ee.taltech.procurementSystemBackend.service.EmailService;
+import ee.taltech.procurementSystemBackend.service.MiniprocurementService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,8 +17,13 @@ import javax.mail.MessagingException;
 public class EmailTestController {
 
     private final EmailService emailService;
-//    private final JavaMailSender mailSender;
-//    private final TemplateEngine templateEngine;
+    private final MiniprocurementService procurementService;
+    private final MiniprocurementRepository miniprocurementRepository;
+
+    @PostMapping
+    public void test() {
+        System.out.println(miniprocurementRepository.findById(1).get().getMiniprocurementPartners().size());
+    }
 
     @GetMapping
     public String sendMail(
@@ -64,8 +72,7 @@ public class EmailTestController {
 //
 //        // Send mail
 //        this.mailSender.send(mimeMessage);
-
-        emailService.sendProcurementEmail();
+        emailService.sendProcurementEmail(miniprocurementRepository.findById(1).get());
         return "Success";
     }
 }

@@ -6,6 +6,7 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -15,9 +16,7 @@ import java.sql.Timestamp;
 public class QuestionDto extends DtoBase {
 
     private Integer questionId;
-    @NotNull(message = "Asker id cannot be null.")
-    private String askerId;
-    @NotNull(message = "Procurement id cannot be null.")
+    private UUID bidderLinkId;
     private Integer procurementId;
     @NotBlank(message = "Question cannot be null or blank.")
     private String question;

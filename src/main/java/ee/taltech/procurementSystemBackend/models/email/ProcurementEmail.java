@@ -1,4 +1,4 @@
-package ee.taltech.procurementSystemBackend.email;
+package ee.taltech.procurementSystemBackend.models.email;
 
 import ee.taltech.procurementSystemBackend.utils.Statics;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.Locale;
 @NoArgsConstructor
 @Data
 @Component
-public class ProcurementEmail implements EmailBase{
+public class ProcurementEmail implements EmailBase {
 
     private String procurementTitle;
     private String procurementNumber;

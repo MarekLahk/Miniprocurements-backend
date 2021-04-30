@@ -1,4 +1,5 @@
-
+CREATE DATABASE IF NOT EXISTS miniprocurements;
+COMMIT;
 USE miniprocurements;
 
 
@@ -145,12 +146,12 @@ CREATE TABLE Announcement(
 
 CREATE TABLE Bid(
                     bid_id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-                    bidder MEDIUMINT NOT NULL,
-                    bid_value BIGINT NOT NULL,
-                    bid_status SMALLINT NOT NULL,
+                    bidder_link_id BINARY(16) NOT NULL,
+                    bid_value BIGINT,
+                    bid_status SMALLINT NOT NULL DEFAULT 1,
                     description TEXT,
                     procurement_id MEDIUMINT NOT NULL,
-                    time_of_register DATETIME NOT NULL DEFAULT NOW(),
+                    time_of_register DATETIME,
                     CONSTRAINT pk_bid_id PRIMARY KEY (bid_id),
                     CONSTRAINT fk_bid_status FOREIGN KEY (bid_status)
                         REFERENCES BidStatus(status_id)
@@ -160,8 +161,8 @@ CREATE TABLE Bid(
                         REFERENCES Miniprocurement(procurement_id)
                         ON UPDATE CASCADE
                         ON DELETE NO ACTION,
-                    CONSTRAINT fk_bidder FOREIGN KEY (bidder)
-                        REFERENCES Partner(partner_id)
+                    CONSTRAINT fk_bidder_link_id FOREIGN KEY (bidder_link_id)
+                        REFERENCES MiniprocurementPartner(link_id)
                         ON UPDATE CASCADE
                         ON DELETE NO ACTION
 );
@@ -183,11 +184,13 @@ CREATE TABLE Procurer(
 
 CREATE TABLE Question(
                          question_id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-                         asker_id VARCHAR(50) NOT NULL,
+                         bidder_link_id BINARY(16) NOT NULL,
                          procurement_id MEDIUMINT NOT NULL,
-                         question TEXT NOT NULL,
+                         question_text TEXT NOT NULL,
                          time_asked DATETIME NOT NULL DEFAULT NOW(),
                          CONSTRAINT pk_question_id PRIMARY KEY (question_id),
+                         CONSTRAINT  fk_question_bidder_link_id FOREIGN KEY (bidder_link_id)
+                             REFERENCES MiniprocurementPartner(link_id),
                          CONSTRAINT fk_q_procurement_id FOREIGN KEY (procurement_id)
                              REFERENCES Miniprocurement(procurement_id)
                              ON UPDATE CASCADE
@@ -268,7 +271,6 @@ CREATE TABLE Email (
                        reply_id MEDIUMINT,
                        announcement_id MEDIUMINT,
                        recipient_id MEDIUMINT NOT NULL,
-                       sender_id MEDIUMINT NOT NULL,
                        CONSTRAINT pk_email_sent_status PRIMARY KEY (email_id),
                        CONSTRAINT fk_email_procurement_id FOREIGN KEY (procurement_id)
                            REFERENCES Miniprocurement(procurement_id)
@@ -285,10 +287,22 @@ CREATE TABLE Email (
                        CONSTRAINT fk_email_recipient_id FOREIGN KEY (recipient_id)
                            REFERENCES Person(person_id)
                            ON UPDATE CASCADE
-                           ON DELETE NO ACTION,
-                       CONSTRAINT fk_email_sender_id FOREIGN KEY (sender_id)
-                           REFERENCES Employee(employee_id)
-                           ON UPDATE CASCADE
                            ON DELETE NO ACTION
 
 );
+
+DELIMITER //
+CREATE TRIGGER a BEFORE INSERT ON Email
+    FOR EACH ROW
+    BEGIN
+        IF NOT (((NEW.procurement_id is not null) and (NEW.reply_id is null) and (NEW.announcement_id is null))
+            OR ((NEW.procurement_id is null) and (NEW.reply_id is not null) and (NEW.announcement_id is null))
+            OR ((NEW.procurement_id is null) and (NEW.reply_id is null) and (NEW.announcement_id is not null)))
+        THEN
+
+            SIGNAL SQLSTATE '23000';
+        end if;
+    end//
+DELIMITER ;
+
+COMMIT;

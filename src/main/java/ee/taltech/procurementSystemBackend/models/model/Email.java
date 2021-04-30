@@ -1,19 +1,29 @@
 package ee.taltech.procurementSystemBackend.models.model;
 
+import com.googlecode.jmapper.annotations.JGlobalMap;
+import ee.taltech.procurementSystemBackend.models.ModelBase;
+import lombok.*;
+
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
-public class Email {
 
-    //Todo Finish class
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@JGlobalMap
+public class Email extends ModelBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "email_id", nullable = false)
     private Integer emailId;
     @Basic
-    @Column(name = "is_sent", nullable = false)
-    private Integer isSent;
+    @Column(name = "sent_date")
+    private LocalDateTime sentDate;
     @Basic
     @Column(name = "procurement_id")
     private Integer procurementId;
@@ -21,7 +31,12 @@ public class Email {
     @Column(name = "reply_id")
     private String replyId;
     @Basic
-    @Column(name = "date_added", nullable = false)
-    private Timestamp dateAdded;
+    @Column(name = "announcement_id")
+    private String announcementId;
+    @Basic
+    @Column(name = "recipient_id", nullable = false)
+    private Integer recipientId;
+
+
 
 }

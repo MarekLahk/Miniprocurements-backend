@@ -8,6 +8,8 @@ import ee.taltech.procurementSystemBackend.models.model.MiniprocurementPartner;
 import ee.taltech.procurementSystemBackend.repository.MiniprocurementPartnerRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+
 @Service
 public class MiniprocurementPartnerService extends ServiceBase<MiniprocurementPartner, MiniprocurementPartnerDto> {
 
@@ -21,20 +23,20 @@ public class MiniprocurementPartnerService extends ServiceBase<MiniprocurementPa
     public MiniprocurementPartnerDto addMiniprocurementPartner(MiniprocurementPartnerDto dto) {
         MiniprocurementPartner miniprocurementPartner = toModelOptional(dto)
                 .orElseThrow(() -> new MiniprocurementPartnerException("No MiniprocurementPartner dto provided"));
-
+        miniprocurementPartner.setMiniprocurementPartnerTimeAdded(new Timestamp(System.currentTimeMillis()));
         return toDtoOptional(miniprocurementPartnerRepository.save(miniprocurementPartner))
                 .orElseThrow(() -> new MiniprocurementPartnerException("Could not save MiniprocurementPartner"));
     }
 
     //LINK ID needs to be given with request TODO: document this fact
     public MiniprocurementPartnerDto updateMiniprocurementPartner(Integer id, MiniprocurementPartnerDto dto) {
-        if (miniprocurementPartnerRepository.findById(id).isEmpty()) {
-            throw new RequestedObjectNotFoundException(
-                    String.format("MiniprocurementPartner with id [%d] does not exist", id));
-        }
+        MiniprocurementPartner partner = miniprocurementPartnerRepository.findById(id)
+                .orElseThrow(() -> new RequestedObjectNotFoundException(
+                String.format("MiniprocurementPartner with id [%d] does not exist", id)));
         MiniprocurementPartner miniprocurementPartner = toModelOptional(dto)
                 .orElseThrow(() -> new MiniprocurementPartnerException("No MiniprocurementPartner dto provided"));
         miniprocurementPartner.setMiniprocurementPartnerId(id);
+        miniprocurementPartner.setMiniprocurementPartnerTimeAdded(partner.getMiniprocurementPartnerTimeAdded());
         return toDtoOptional(miniprocurementPartnerRepository.save(miniprocurementPartner))
                 .orElseThrow(() -> new MiniprocurementPartnerException("Could not update MiniprocurementPartner"));
     }
