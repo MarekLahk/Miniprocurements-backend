@@ -2,11 +2,13 @@ package ee.taltech.procurementSystemBackend.models.model.person;
 
 import com.googlecode.jmapper.annotations.JGlobalMap;
 import ee.taltech.procurementSystemBackend.models.Dto.Person.PartnerDto;
+import ee.taltech.procurementSystemBackend.models.model.MiniprocurementPartner;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -28,5 +30,8 @@ public class Partner extends Person {
         this.regNr = partnerDto.getRegNr();
         this.partnerInfo = partnerDto.getPartnerInfo();
     }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
+    Set<MiniprocurementPartner> miniprocurementPartners;
 
 }

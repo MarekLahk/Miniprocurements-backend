@@ -37,6 +37,8 @@ public class Email extends ModelBase {
     @Column(name = "recipient_id", nullable = false)
     private Integer recipientId;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="procurement_id", insertable = false, updatable = false)
+    private Miniprocurement miniprocurement;
 
 }
