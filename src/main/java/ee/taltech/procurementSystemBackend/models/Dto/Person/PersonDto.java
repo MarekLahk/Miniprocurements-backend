@@ -3,16 +3,14 @@ package ee.taltech.procurementSystemBackend.models.Dto.Person;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.googlecode.jmapper.annotations.JGlobalMap;
 import ee.taltech.procurementSystemBackend.models.DtoBase;
-import ee.taltech.procurementSystemBackend.models.model.person.Person;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
 
-import static com.fasterxml.jackson.annotation.JsonInclude.*;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -21,23 +19,13 @@ import static com.fasterxml.jackson.annotation.JsonInclude.*;
 @JGlobalMap
 public class PersonDto extends DtoBase {
 
-    private Integer personID;
-    private String personName;
+    private Integer id;
+    private String name;
     @NotBlank(message = "Email cannot be blank")
     private String eMail;
-    private LocalDateTime timeOfRegister;
     @JsonInclude(Include.NON_NULL)
     private Long regNr;
     @JsonInclude(Include.NON_NULL)
     private String partnerInfo;
-
-    public PersonDto(Person person) {
-
-        this.personID = person.getPersonID();
-        this.personName = person.getPersonName();
-        this.eMail = person.getEMail();
-        this.timeOfRegister = person.getTimeOfRegister();
-
-    }
 
 }

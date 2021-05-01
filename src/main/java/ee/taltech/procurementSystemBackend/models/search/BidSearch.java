@@ -10,11 +10,11 @@ import java.util.UUID;
 
 public class BidSearch extends SearchObject<Bid> {
 
-    private Integer procurementID;
-    private UUID bidderLinkId;
-    private Long bidValue;
-    private Integer bidStatus;
-    private Timestamp timeOfRegister;
+    private final Integer procurementID;
+    private final UUID bidderLinkId;
+    private final Long bidValue;
+    private final Integer bidStatus;
+    private final Timestamp timeOfRegister;
 
     public BidSearch(Integer limit, Integer page, String sort, Sort.Direction dir,
                      Integer procurementID,

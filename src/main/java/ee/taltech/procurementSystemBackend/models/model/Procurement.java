@@ -12,20 +12,20 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "Miniprocurement")
+@Table(name = "procurement")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JGlobalMap
-public class Miniprocurement extends ModelBase {
+public class Procurement extends ModelBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "procurement_id", nullable = false)
-    private Integer procurementId;
+    private Integer id;
     @Basic
     @Column(name = "procurement_name", nullable = false, length = 50)
-    private String procurementName;
+    private String name;
     @Basic
     @Column(name = "amount")
     private Integer amount;
@@ -45,11 +45,8 @@ public class Miniprocurement extends ModelBase {
     @Column(name = "has_contract")
     private Boolean hasContract;
     @Basic
-    @Column(name = "time_added", nullable = false)
-    private Timestamp timeAdded;
-    @Basic
-    @Column(name = "added_by", nullable = false)
-    private Integer addedBy;
+    @Column(name = "created_by", nullable = false)
+    private Integer createdById;
     @Basic
     @Column(name = "deadline")
     private Timestamp deadline;
@@ -57,20 +54,23 @@ public class Miniprocurement extends ModelBase {
     @Column(name = "status", nullable = false)
     private Short status;
     @Basic
-    @Column(name = "time_finished")
-    private Timestamp timeFinished;
+    @Column(name = "completion_deadline")
+    private Timestamp completionDeadline;
+    @Basic
+    @Column(name = "completion_deadline_days")
+    private Timestamp completionDeadlineDays;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "added_by", insertable = false, updatable = false)
-    private Employee employee;
+    @JoinColumn(name = "created_by", insertable = false, updatable = false)
+    private Employee createdBy;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "miniprocurement")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
     private Set<Announcement> announcements;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "miniprocurement")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
     private Set<Bid> bids;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "miniprocurement")
-    private Set<MiniprocurementPartner> miniprocurementPartners;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "miniprocurement")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
+    private Set<ProcurementPartner> procurementPartners;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
     private Set<Question> questions;
 
 

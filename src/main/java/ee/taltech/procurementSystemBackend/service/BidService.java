@@ -1,57 +1,63 @@
 package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.BidException;
-import ee.taltech.procurementSystemBackend.models.Dto.*;
+import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
+import ee.taltech.procurementSystemBackend.models.Dto.BiddingResponse;
+import ee.taltech.procurementSystemBackend.models.Dto.ProcurementDto;
+import ee.taltech.procurementSystemBackend.models.Dto.QuestionAndRepliesResponse;
 import ee.taltech.procurementSystemBackend.models.mapper.BidMapper;
-import ee.taltech.procurementSystemBackend.models.mapper.MiniprocurementMapper;
-import ee.taltech.procurementSystemBackend.models.model.*;
+import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
+import ee.taltech.procurementSystemBackend.models.model.Bid;
+import ee.taltech.procurementSystemBackend.models.model.Procurement;
+import ee.taltech.procurementSystemBackend.models.model.ProcurementPartner;
 import ee.taltech.procurementSystemBackend.repository.BidRepository;
-import ee.taltech.procurementSystemBackend.repository.MiniprocurementPartnerRepository;
+import ee.taltech.procurementSystemBackend.repository.ProcurementPartnerRepository;
 import ee.taltech.procurementSystemBackend.utils.BidResponseUtils;
 import ee.taltech.procurementSystemBackend.utils.BidUtils;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BidService extends ServiceBase<Bid, BidDto> {
 
     private final BidRepository bidRepository;
-    private final MiniprocurementPartnerRepository miniprocurementPartnerRepository;
+    private final ProcurementPartnerRepository procurementPartnerRepository;
     private final BidUtils bidUtils;
     private final BidResponseUtils bidResponseUtils;
-    private final MiniprocurementMapper procurementMapper;
+    private final ProcurementMapper procurementMapper;
 
     public BidService(BidRepository bidRepository,
-                      MiniprocurementPartnerRepository miniprocurementPartnerRepository,
+                      ProcurementPartnerRepository procurementPartnerRepository,
                       BidUtils bidUtils, BidResponseUtils bidResponseUtils) {
         super(bidRepository, BidMapper.INSTANCE);
         this.bidRepository = bidRepository;
-        this.miniprocurementPartnerRepository = miniprocurementPartnerRepository;
+        this.procurementPartnerRepository = procurementPartnerRepository;
         this.bidUtils = bidUtils;
         this.bidResponseUtils = bidResponseUtils;
-        this.procurementMapper = MiniprocurementMapper.INSTANCE;
+        this.procurementMapper = ProcurementMapper.INSTANCE;
     }
 
     public BiddingResponse getCurrentWaitingBid(UUID partnerUuid) {
-        MiniprocurementPartner partner = miniprocurementPartnerRepository
-                .findByMiniprocurementPartnerLinkId(partnerUuid)
+        ProcurementPartner partner = procurementPartnerRepository
+                .findByLinkId(partnerUuid)
                 .orElseThrow(() -> new BidException("No such procurement partner"));
 
-        Miniprocurement procurementModel = partner.getMiniprocurement();
-        MiniProcurementDto procurement = procurementMapper.toDto(
+        Procurement procurementModel = partner.getProcurement();
+        ProcurementDto procurement = procurementMapper.toDto(
                 procurementModel
         );
 
         List<QuestionAndRepliesResponse> questionReplyMap =
-                bidResponseUtils.getQuestionsAndReplies(partner.getMiniprocurementPartnerProcurementId());
+                bidResponseUtils.getQuestionsAndReplies(partner.getProcurementId());
 
         BiddingResponse biddingResponse = new BiddingResponse();
         biddingResponse.setProcurement(procurement);
         biddingResponse.setQuestionsAndRelies(questionReplyMap);
 
-        Optional<Bid> bid = bidRepository.findFirstByBidderLinkIdAndBidStatus(partnerUuid, 1);
+        Optional<Bid> bid = bidRepository.findFirstByLinkIdAndBidStatus(partnerUuid, 1);
         if (bid.isPresent()) {
             BidDto dto = toDtoOptional(bid.get()).get();
             biddingResponse.setBid(List.of(dto));
@@ -62,20 +68,20 @@ public class BidService extends ServiceBase<Bid, BidDto> {
     }
 
     public BidDto addBid(UUID partnerUuid, BidDto bidDto) {
-        MiniprocurementPartner partner = miniprocurementPartnerRepository
-                .findByMiniprocurementPartnerLinkId(partnerUuid)
+        ProcurementPartner partner = procurementPartnerRepository
+                .findByLinkId(partnerUuid)
                 .orElseThrow(() -> new BidException("Invalid uuid"));
 
-        if (partner.getMiniprocurement().getStatus() != 2) {
+        if (partner.getProcurement().getStatus() != 2) {
             throw new BidException("Cannot add bid to non active procurement");
         }
 
         Bid bid = toModelOptional(bidDto)
                 .orElseThrow(() -> new BidException("No bid provided"));
         bidUtils.checkBidBeforeAdding(partnerUuid);
-        bid.setBidderLinkId(partnerUuid);
+        bid.setLinkId(partnerUuid);
         bid.setBidStatus(1);
-        bid.setProcurementId(partner.getMiniprocurementPartnerProcurementId());
+        bid.setProcurementId(partner.getProcurementId());
         return toDtoOptional(bidRepository.save(bid)).get();
     }
 
@@ -87,11 +93,11 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         bidUtils.checkIfBidIsInactive(sourceBid);
         bidUtils.checkIfBidIsActive(sourceBid);
 
-        bid.setBidId(sourceBid.getBidId());
+        bid.setId(sourceBid.getId());
         bid.setProcurementId(sourceBid.getProcurementId());
-        bid.setBidderLinkId(partnerUuid);
+        bid.setLinkId(partnerUuid);
         bid.setBidStatus(sourceBid.getBidStatus());
-        bid.setTimeOfRegister(sourceBid.getTimeOfRegister());
+        bid.setCreatedAt(null);
 
         return toDtoOptional(bidRepository.save(bid)).get();
     }
@@ -109,7 +115,7 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         }
 
         sourceBid.setBidStatus(2);
-        sourceBid.setTimeOfRegister(new Timestamp(System.currentTimeMillis()));
+        sourceBid.setCreatedAt(null);
         return toDtoOptional(bidRepository.save(sourceBid)).get();
 
     }

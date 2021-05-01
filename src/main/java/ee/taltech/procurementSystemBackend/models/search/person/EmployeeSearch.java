@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class EmployeeSearch extends PersonSearch<Employee> {
 
     public EmployeeSearch(Integer limit, Integer page, String sort, Direction dir, LocalDateTime before, LocalDateTime after, String name) {
-        super(limit, page, sort, dir, before, after, name);
+        super(limit, page, sort, dir, name);
     }
 
     @Override

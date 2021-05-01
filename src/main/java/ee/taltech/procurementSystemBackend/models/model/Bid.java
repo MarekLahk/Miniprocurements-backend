@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -15,19 +14,16 @@ public class Bid extends ModelBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bid_id", nullable = false)
-    private Integer bidId;
+    private Integer id;
     @Basic
     @Column(name = "bidder_link_id", nullable = false)
-    private UUID bidderLinkId;
+    private UUID linkId;
     @Basic
     @Column(name = "bid_value", nullable = false)
     private Long bidValue;
     @Basic
     @Column(name = "description", length = -1)
     private String description;
-    @Basic
-    @Column(name = "time_of_register", nullable = false)
-    private Timestamp timeOfRegister;
     @Column(name = "bid_status")
     private Integer bidStatus;
     @Column(name = "procurement_id")
@@ -35,6 +31,6 @@ public class Bid extends ModelBase {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="procurement_id", insertable = false, updatable = false)
-    private Miniprocurement miniprocurement;
+    private Procurement procurement;
 
 }

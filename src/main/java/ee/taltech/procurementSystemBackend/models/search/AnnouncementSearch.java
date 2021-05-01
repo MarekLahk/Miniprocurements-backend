@@ -7,8 +7,8 @@ import org.springframework.data.domain.Sort;
 
 public class AnnouncementSearch extends SearchObject<Announcement> {
 
-    private Integer procurementID;
-    private Integer employeeID;
+    private final Integer procurementID;
+    private final Integer employeeID;
 
     public AnnouncementSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer procurementID, Integer employeeID) {
         super(limit, page, sort, dir);

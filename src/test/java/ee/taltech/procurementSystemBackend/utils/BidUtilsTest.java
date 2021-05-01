@@ -32,7 +32,7 @@ public class BidUtilsTest {
     @Test
     void checkBidBeforeAddingShouldThrowException() {
         UUID uuid = UUID.randomUUID();
-        when(bidRepository.findFirstByBidderLinkIdAndBidStatus(uuid, 1))
+        when(bidRepository.findFirstByLinkIdAndBidStatus(uuid, 1))
                 .thenReturn(Optional.of(new Bid()));
         assertThatThrownBy(() -> bidUtils.checkBidBeforeAdding(uuid))
                 .isInstanceOf(BidException.class)
@@ -42,7 +42,7 @@ public class BidUtilsTest {
     @Test
     void checkBidBeforeAddingShouldPass() {
         UUID uuid = UUID.randomUUID();
-        when(bidRepository.findFirstByBidderLinkIdAndBidStatus(uuid, 1))
+        when(bidRepository.findFirstByLinkIdAndBidStatus(uuid, 1))
                 .thenReturn(Optional.empty());
         try {
             bidUtils.checkBidBeforeAdding(uuid);

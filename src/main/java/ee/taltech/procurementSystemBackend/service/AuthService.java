@@ -2,13 +2,11 @@ package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.models.Dto.EmployeeResponse;
 import ee.taltech.procurementSystemBackend.models.model.person.Employee;
-import ee.taltech.procurementSystemBackend.models.model.person.Person;
 import ee.taltech.procurementSystemBackend.repository.person.EmployeeRepository;
 import ee.taltech.procurementSystemBackend.repository.person.PersonRepository;
 import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,8 +25,8 @@ public class AuthService {
         if (personRepository.findByeMail(usernameAndFullName[0]).isEmpty()) {
             Employee employee = new Employee();
             employee.setEMail(usernameAndFullName[0]);
-            employee.setPersonName(usernameAndFullName[1]);
-            employee.setTimeOfRegister(LocalDateTime.now());
+            employee.setName(usernameAndFullName[1]);
+            employee.setCreatedAt(LocalDateTime.now());
             employeeRepository.save(employee);
         }
     }
