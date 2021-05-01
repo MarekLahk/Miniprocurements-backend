@@ -36,7 +36,7 @@ public class MiniprocurementController extends ControllerBase<Miniprocurement, M
 
     @PatchMapping("{id}")
     public MiniProcurementDto patchProcurementStatus(@PathVariable Integer id,
-                                                     @RequestBody MiniProcurementDto dto,
+                                                         @RequestBody MiniProcurementDto dto,
                                                      Authentication authentication) {
         return miniprocurementService.patchProcurementStatus(id, dto, authentication);
     }
