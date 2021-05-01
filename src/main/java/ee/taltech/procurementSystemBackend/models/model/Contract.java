@@ -75,14 +75,6 @@ public class Contract extends ModelBase {
     @JoinColumn(name = "added_by", insertable = false, updatable = false)
     private Employee employee;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contract")
-    private Set<Announcement> announcements;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contract")
-    private Set<Bid> bids;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contract")
-    private Set<ContractPartner> contractPartners;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contract")
-    private Set<Question> questions;
 
 
 

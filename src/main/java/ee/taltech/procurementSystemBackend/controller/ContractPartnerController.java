@@ -26,7 +26,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/contractPartners")
-@Tag(name = "contractPartners", description = "Link 0 or 1 contract and 0 or more partners", externalDocs = @ExternalDocumentation(url = "https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/issues/22", description = "Gitlab issue about creation of this API."))
+@Tag(name = "contractPartners", description = "Link 0 or 1 contract and 0 or more partners", externalDocs = @ExternalDocumentation(url = "https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/issues/27", description = "Gitlab issue about creation of this API."))
 public class ContractPartnerController extends ControllerBase<ContractPartner, ContractPartnerDto, ContractPartnerSearch> {
 
     private final ContractPartnerService contractPartnerService;
@@ -36,10 +36,10 @@ public class ContractPartnerController extends ControllerBase<ContractPartner, C
         this.contractPartnerService = contractPartnerService;
     }
 
-    @Operation(summary = "Add a new procurement-partner link", description = "Add a new contract partner to contract link.")
+    @Operation(summary = "Add a new contract-partner link", description = "Add a new contract partner to contract link.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ContractPartnerDto.class)))),
-            @ApiResponse(responseCode = "500", description = "internal server error, procurement or partner might not exist or a link like this may already exist", content = @Content(examples = @ExampleObject(value = "{\n" +
+            @ApiResponse(responseCode = "500", description = "internal server error, contract or partner might not exist or a link like this may already exist", content = @Content(examples = @ExampleObject(value = "{\n" +
                     "    \"timestamp\": \"2021-04-24T09:24:56.958+00:00\",\n" +
                     "    \"status\": 500,\n" +
                     "    \"error\": \"Internal Server Error\",\n" +
@@ -52,7 +52,7 @@ public class ContractPartnerController extends ControllerBase<ContractPartner, C
         return contractPartnerService.addContractPartner(dto);
     }
 
-    @Operation(summary = "Change a procurement-partner link", description = "Change an existing contract partner to contract link.")
+    @Operation(summary = "Change a contract-partner link", description = "Change an existing contract partner to contract link.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ContractPartnerDto.class)))),
             @ApiResponse(responseCode = "500", description = "you might have omitted the contractPartnerLinkId value", content = @Content(examples = @ExampleObject(value = "{\n" +
@@ -70,7 +70,7 @@ public class ContractPartnerController extends ControllerBase<ContractPartner, C
     }
 
     //TODO: Add checks on deleting a partner
-    @Operation(summary = "Delete a procurement-partner link. This should only be done if related procurement is in draft. Currently this is not checked.")
+    @Operation(summary = "Delete a contract-partner link. This should only be done if related contract is in draft. Currently this is not checked.")
     @DeleteMapping("{id}")
     @Parameter(name="id", example="2", description="Contract and partner connection id: contractPartnerId")
     @ApiResponses(value = {
