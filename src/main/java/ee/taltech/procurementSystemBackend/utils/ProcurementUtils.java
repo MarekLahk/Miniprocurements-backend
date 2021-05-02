@@ -1,10 +1,10 @@
 package ee.taltech.procurementSystemBackend.utils;
 
 import ee.taltech.procurementSystemBackend.exception.AuthException;
-import ee.taltech.procurementSystemBackend.exception.MiniprocurementException;
+import ee.taltech.procurementSystemBackend.exception.ProcurementException;
 import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
-import ee.taltech.procurementSystemBackend.models.model.Miniprocurement;
-import ee.taltech.procurementSystemBackend.repository.MiniprocurementRepository;
+import ee.taltech.procurementSystemBackend.models.model.Procurement;
+import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,18 +15,18 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ProcurementUtils {
 
-    private final MiniprocurementRepository miniprocurementRepository;
+    private final PocurementRepository pocurementRepository;
 
     public void checkProcurementDeadlineIsNotInPast(Timestamp timestamp) {
         if (timestamp.before(new Timestamp(System.currentTimeMillis()))) {
-            throw new MiniprocurementException("Deadline cannot be before now.");
+            throw new ProcurementException("Deadline cannot be before now.");
         }
     }
 
     public void checkEmployeePermissionAndProcurementPresence(Integer procurementId,
                                                               Integer personId,
-                                                              Optional<Miniprocurement> optionalProcurement) {
-        if (miniprocurementRepository.findByProcurementIdAndAddedBy(procurementId, personId).isEmpty()) {
+                                                              Optional<Procurement> optionalProcurement) {
+        if (pocurementRepository.findByIdAndCreatedById(procurementId, personId).isEmpty()) {
             throw new AuthException("This person does not have permission to update this procurement");
         }
 
@@ -36,21 +36,21 @@ public class ProcurementUtils {
         }
     }
 
-    public void checkProcurementBeforeStatusPatch(Miniprocurement procurement) {
+    public void checkProcurementBeforeStatusPatch(Procurement procurement) {
         if (procurement.getDescription() == null) {
-            throw new MiniprocurementException("Description must be present on status patch");
+            throw new ProcurementException("Description must be present on status patch");
         }
         if (procurement.getDescription() != null && procurement.getDescription().length() == 0) {
-            throw new MiniprocurementException("Description must not be blank");
+            throw new ProcurementException("Description must not be blank");
         }
         if (procurement.getRequirements() == null) {
-            throw new MiniprocurementException("Requirements must be present on status patch");
+            throw new ProcurementException("Requirements must be present on status patch");
         }
         if (procurement.getRequirements() != null && procurement.getRequirements().length() == 0) {
-            throw new MiniprocurementException("Requirements must not be blank");
+            throw new ProcurementException("Requirements must not be blank");
         }
         if (procurement.getDeadline() == null) {
-            throw new MiniprocurementException("Deadline must be present on status patch");
+            throw new ProcurementException("Deadline must be present on status patch");
         }
     }
 

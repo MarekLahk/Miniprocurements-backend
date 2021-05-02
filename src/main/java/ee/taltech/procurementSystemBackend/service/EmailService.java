@@ -2,7 +2,7 @@ package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.email.EmailSender;
 import ee.taltech.procurementSystemBackend.models.email.ProcurementEmail;
-import ee.taltech.procurementSystemBackend.models.model.Miniprocurement;
+import ee.taltech.procurementSystemBackend.models.model.Procurement;
 import ee.taltech.procurementSystemBackend.utils.Statics;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,9 +31,9 @@ public class EmailService {
         return this.templateEngine.process("email-test", ctx);
     }
 
-    public void sendProcurementEmail(Miniprocurement miniprocurement) throws MessagingException {
-        if (miniprocurement.getStatus() != 2) {
-
+    public void sendProcurementEmail(Procurement procurement) throws MessagingException {
+        if (procurement.getStatus() != 2) {
+            ;
         }
         Context procurementEmailContext = ProcurementEmail.builder()
                 .recipientEmail("asd")

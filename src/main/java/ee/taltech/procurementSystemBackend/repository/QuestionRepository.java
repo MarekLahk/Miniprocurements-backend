@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface QuestionRepository extends RepositoryInterface<Question> {
 
-    Optional<Question> findByQuestionIdAndProcurementId(Integer questionId, Integer procurementId);
+    Optional<Question> findByIdAndProcurementId(Integer questionId, Integer procurementId);
 
     List<Question> findAllByProcurementId(Integer id);
 }

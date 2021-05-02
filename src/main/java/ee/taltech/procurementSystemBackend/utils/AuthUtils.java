@@ -49,7 +49,7 @@ public class AuthUtils {
 
     public EmployeeResponse getEmployeeResponse(Authentication authentication) {
         String[] usernameAndFullName = getUsernameAndFullNameFormAuthentication(authentication);
-        Integer employeeId = getPersonByEmail(usernameAndFullName[0]).getPersonID();
+        Integer employeeId = getPersonByEmail(usernameAndFullName[0]).getId();
         return new EmployeeResponse(employeeId, usernameAndFullName[0], usernameAndFullName[1]);
     }
 }

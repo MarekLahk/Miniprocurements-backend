@@ -11,11 +11,11 @@ import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.Optional;
 
 
 @Service
+
 public class AnnouncementService extends ServiceBase<Announcement, AnnouncementDto> {
 
     private final AnnouncementRepository announcementRepository;
@@ -34,23 +34,23 @@ public class AnnouncementService extends ServiceBase<Announcement, AnnouncementD
         Person person = authUtils.getPersonToPerformOperations(authentication);
         Announcement announcement = toModelOptional(dto)
                 .orElseThrow(() -> new AnnouncementException("No announcement dto provided"));
-        announcement.setDateAdded(new Timestamp(System.currentTimeMillis()));
-        announcement.setEmployeeId(person.getPersonID());
+        announcement.setCreatedAt(null);
+        announcement.setEmployeeId(person.getId());
         return toDtoOptional(announcementRepository.save(announcement)).get();
     }
 
     public AnnouncementDto updateAnnouncement(Integer id, AnnouncementDto dto, Authentication authentication) {
         Person person = authUtils.getPersonToPerformOperations(authentication);
         Optional<Announcement> optionalAnnouncement =
-                announcementRepository.findByAnnouncementIdAndEmployeeId(id, person.getPersonID());
+                announcementRepository.findByIdAndEmployeeId(id, person.getId());
         if (optionalAnnouncement.isEmpty()) {
             throw new RequestedObjectNotFoundException(
-                    String.format("Announcement with id [%d] and employee id [%d] does not exist", id, person.getPersonID()));
+                    String.format("Announcement with id [%d] and employee id [%d] does not exist", id, person.getId()));
         }
         Announcement announcement = toModelOptional(dto)
                 .orElseThrow(() -> new AnnouncementException("No announcement dto provided"));
-        announcement.setAnnouncementId(id);
-        announcement.setEmployeeId(person.getPersonID());
+        announcement.setId(id);
+        announcement.setEmployeeId(person.getId());
         return toDtoOptional(announcementRepository.save(announcement)).get();
     }
 

@@ -12,8 +12,6 @@ import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-
 @Service
 public class ReplyService extends ServiceBase<Reply, ReplyDto> {
 
@@ -30,7 +28,7 @@ public class ReplyService extends ServiceBase<Reply, ReplyDto> {
 
     public ReplyDto addReply(ReplyDto dto, Authentication authentication) {
         Person person = authUtils.getPersonToPerformOperations(authentication);
-        if (questionRepository.findByQuestionIdAndProcurementId(
+        if (questionRepository.findByIdAndProcurementId(
                 dto.getQuestionId(), dto.getProcurementId()).isEmpty()) {
             throw new ReplyException(String.format(
                     "Question with id [%d] and procurement id [%d] does not exist",
@@ -38,8 +36,8 @@ public class ReplyService extends ServiceBase<Reply, ReplyDto> {
         }
         Reply reply = toModelOptional(dto)
                 .orElseThrow(() -> new ReplyException("No reply dto provided"));
-        reply.setTimeReplied(new Timestamp(System.currentTimeMillis()));
-        reply.setReplierId(person.getPersonID());
+        reply.setCreatedAt(null);
+        reply.setReplierId(person.getId());
         return toDtoOptional(replyRepository.save(reply)).get();
     }
 

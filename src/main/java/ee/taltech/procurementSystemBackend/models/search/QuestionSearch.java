@@ -9,8 +9,8 @@ import java.util.UUID;
 
 public class QuestionSearch extends SearchObject<Question> {
 
-    private UUID bidderLinkId;
-    private Integer procurementId;
+    private final UUID bidderLinkId;
+    private final Integer procurementId;
 
     public QuestionSearch(Integer limit, Integer page, String sort, Sort.Direction dir, UUID bidderLinkId, Integer procurementId) {
         super(limit, page, sort, dir);
