@@ -31,26 +31,14 @@ public class ContractPartner extends ModelBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "contract_partner_id")
     private Integer contractPartnerId;
     @Basic
-    @Column(name = "link_id")
-    private UUID contractPartnerLinkId;
-    @Basic
-    @Column(name = "procurement_id", nullable = false, length = -1)
-    private Integer contractPartnerProcurementId;
+    @Column(name = "contract_id", nullable = false, length = -1)
+    private Integer contractPartnerContractId;
     @Basic
     @Column(name = "partner_id", nullable = false, length = -1)
     private Integer contractPartnerPartnerId;
-    @Basic
-    @Column(name = "time_added", nullable = false, length = -1)
-    private Timestamp contractPartnerTimeAdded;
-    @Basic
-    @Column(name = "link_first_accessed", nullable = true, length = -1)
-    private String contractPartnerLinkFirstAccessed;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="procurement_id", insertable = false, updatable = false)
-    private Miniprocurement contract;
 }
 
 

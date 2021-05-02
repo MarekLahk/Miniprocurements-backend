@@ -32,15 +32,7 @@ public class ContractService extends ServiceBase<Contract, ContractDto> {
         Contract contract = toModelOptional(dto)
                 .orElseThrow(() -> new ContractException("No contract dto provided"));
         Integer creatorId = authUtils.getPersonToPerformOperations(authentication).getPersonID();
-        contract.setAddedBy(creatorId);
-        contract.setStatus((short) 1);
         contract.setTimeAdded(new Timestamp(System.currentTimeMillis()));
-        boolean hasContract = dto.getContractId() != null;
-        contract.setHasContract(dto.getContractId() != null);
-        if (hasContract) {
-            Integer contractSubId = contractRepository.countByContractId(dto.getContractId()) + 1;
-            contract.setContractSubId(contractSubId);
-        }
         return toDtoOptional(contractRepository.save(contract))
                 .orElseThrow(() -> new ContractException("Could not save contract"));
     }
@@ -51,26 +43,12 @@ public class ContractService extends ServiceBase<Contract, ContractDto> {
         Optional<Contract> optionalContract = contractRepository.findById(id);
         Person person = authUtils.getPersonToPerformOperations(authentication);
 
-        // optional isPresent is checked in utils
-        Integer addedBy = optionalContract.get().getAddedBy();
-
         // get this to take some values that cannot be passed by put method
         Contract initialContract = optionalContract.get();
 
         Contract contract = toModelOptional(dto)
                 .orElseThrow(() -> new ContractException("No contract dto provided"));
 
-        contract.setContractId(id);
-        contract.setAddedBy(person.getPersonID());
-        contract.setTimeAdded(initialContract.getTimeAdded());
-        contract.setAddedBy(addedBy);
-        boolean hasContract = dto.getContractId() != null;
-        contract.setHasContract(dto.getContractId() != null);
-        if (hasContract) {
-            Integer contractSubId = contractRepository.countByContractId(dto.getContractId()) + 1;
-            contract.setContractSubId(contractSubId);
-        }
-        contract.setStatus(initialContract.getStatus());
         return toDtoOptional(contractRepository.save(contract))
                 .orElseThrow(() -> new ContractException("Could not update contract"));
     }
@@ -79,10 +57,8 @@ public class ContractService extends ServiceBase<Contract, ContractDto> {
         Optional<Contract> optionalContract = contractRepository.findById(id);
         Person person = authUtils.getPersonToPerformOperations(authentication);
 
-        if (dto.getStatus() == null) throw new ContractException("Provided status is not present");
         // optional isPresent is checked in utils
         Contract contract = optionalContract.get();
-        contract.setStatus(dto.getStatus());
         return toDtoOptional(contractRepository.save(contract)).get();
     }
 

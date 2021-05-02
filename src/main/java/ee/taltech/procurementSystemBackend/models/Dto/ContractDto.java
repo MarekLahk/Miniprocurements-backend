@@ -19,20 +19,33 @@ import java.sql.Timestamp;
 @Builder
 public class ContractDto extends DtoBase  {
 
-    private Integer procurementId;
-    @NotBlank(message = "Procurement name cannot be blank.")
-    private String procurementName;
-    @Positive(message = "Amount cannot be zero or negative.")
-    private Integer amount;
-    private String description;
-    private String requirements;
     private Integer contractId;
-    private Integer contractSubId;
-    private Boolean hasContract;
+    private Integer contractReferenceNumber;
+    private Integer procurementTemplateId;
+    private Integer bidTemplateId;
+    private String contractName;
     private Timestamp timeAdded;
-    private Integer addedBy;
-    @NotNull(message = "Deadline cannot be null")
-    private Timestamp deadline;
-    private Short status;
-    private Timestamp timeFinished;
 }
+
+/*
+  @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "contract_id", nullable = false)
+    private Integer contractId;
+    @Basic
+    @Column(name = "contract_reference_number", nullable = false)
+    private Integer contractReferenceNumber;
+    @Basic
+    @Column(name = "procurement_template_id", nullable = false)
+    private Integer procurementTemplateId;
+    @Basic
+    @Column(name = "bid_template_id", nullable = false)
+    private Integer bidTemplateId;
+    @Basic
+    @Column(name = "contract_name", nullable = false, length = 50)
+    private String contractName;
+    @Basic
+    @Column(name = "date_added", nullable = false)
+    private Timestamp timeAdded;
+}
+ */

@@ -23,7 +23,6 @@ public class ContractPartnerService extends ServiceBase<ContractPartner, Contrac
     public ContractPartnerDto addContractPartner(ContractPartnerDto dto) {
         ContractPartner contractPartner = toModelOptional(dto)
                 .orElseThrow(() -> new ContractPartnerException("No ContractPartner dto provided"));
-        contractPartner.setContractPartnerTimeAdded(new Timestamp(System.currentTimeMillis()));
         return toDtoOptional(contractPartnerRepository.save(contractPartner))
                 .orElseThrow(() -> new ContractPartnerException("Could not save ContractPartner"));
     }
@@ -36,7 +35,6 @@ public class ContractPartnerService extends ServiceBase<ContractPartner, Contrac
         ContractPartner contractPartner = toModelOptional(dto)
                 .orElseThrow(() -> new ContractPartnerException("No ContractPartner dto provided"));
         contractPartner.setContractPartnerId(id);
-        contractPartner.setContractPartnerTimeAdded(partner.getContractPartnerTimeAdded());
         return toDtoOptional(contractPartnerRepository.save(contractPartner))
                 .orElseThrow(() -> new ContractPartnerException("Could not update ContractPartner"));
     }

@@ -38,44 +38,18 @@ public class Contract extends ModelBase {
     @Column(name = "contract_id", nullable = false)
     private Integer contractId;
     @Basic
+    @Column(name = "contract_reference_number", nullable = false)
+    private Integer contractReferenceNumber;
+    @Basic
+    @Column(name = "procurement_template_id", nullable = false)
+    private Integer procurementTemplateId;
+    @Basic
+    @Column(name = "bid_template_id", nullable = false)
+    private Integer bidTemplateId;
+    @Basic
     @Column(name = "contract_name", nullable = false, length = 50)
     private String contractName;
     @Basic
-    @Column(name = "amount")
-    private Integer amount;
-    @Basic
-    @Column(name = "description", length = -1)
-    private String description;
-    @Basic
-    @Column(name = "requirements", length = -1)
-    private String requirements;
-    @Basic
-    @Column(name = "contract_sub_id")
-    private Integer contractSubId;
-    @Basic
-    @Column(name = "has_contract")
-    private Boolean hasContract;
-    @Basic
-    @Column(name = "time_added", nullable = false)
+    @Column(name = "date_added", nullable = false)
     private Timestamp timeAdded;
-    @Basic
-    @Column(name = "added_by", nullable = false)
-    private Integer addedBy;
-    @Basic
-    @Column(name = "deadline")
-    private Timestamp deadline;
-    @Basic
-    @Column(name = "status", nullable = false)
-    private Short status;
-    @Basic
-    @Column(name = "time_finished")
-    private Timestamp timeFinished;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "added_by", insertable = false, updatable = false)
-    private Employee employee;
-
-
-
-
 }
