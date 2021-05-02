@@ -130,7 +130,7 @@ CREATE TABLE Procurement_Winners
 
     constraint pk_procurement_winner PRIMARY KEY (procurement_id),
     CONSTRAINT procurement_id FOREIGN KEY (procurement_id)
-        REFERENCES procurement (procurement_id),
+        REFERENCES Procurement (procurement_id),
     CONSTRAINT fk_procurement_winner_id FOREIGN KEY (winner_id)
         REFERENCES Partner (partner_id),
     CONSTRAINT fk_procurement_judge_id FOREIGN KEY (judge_id)
@@ -153,7 +153,7 @@ CREATE TABLE ProcurementPartner
     CONSTRAINT fk_procurement_link_partner_id FOREIGN KEY (partner_id)
         REFERENCES Partner (partner_id),
     CONSTRAINT fk_procurement_link_procurement_id FOREIGN KEY (procurement_id)
-        REFERENCES procurement (procurement_id)
+        REFERENCES Procurement (procurement_id)
 );
 
 
@@ -180,7 +180,7 @@ CREATE TABLE Announcement
         ON UPDATE CASCADE
         ON DELETE NO ACTION,
     CONSTRAINT fk_announcement_procurement_id FOREIGN KEY (procurement_id)
-        REFERENCES procurement (procurement_id)
+        REFERENCES Procurement (procurement_id)
         ON UPDATE CASCADE
         ON DELETE NO ACTION
 );
@@ -204,7 +204,7 @@ CREATE TABLE Bid
         ON UPDATE CASCADE
         ON DELETE NO ACTION,
     CONSTRAINT fk_bid_procurement FOREIGN KEY (procurement_id)
-        REFERENCES procurement (procurement_id)
+        REFERENCES Procurement (procurement_id)
         ON UPDATE CASCADE
         ON DELETE NO ACTION,
     CONSTRAINT fk_link_id FOREIGN KEY (link_id)
@@ -224,7 +224,7 @@ CREATE TABLE Procurer
 
     CONSTRAINT pk_procurement_id PRIMARY KEY (procurement_id),
     CONSTRAINT fk_procurement_id FOREIGN KEY (procurement_id)
-        REFERENCES procurement (procurement_id)
+        REFERENCES Procurement (procurement_id)
         ON UPDATE CASCADE
         ON DELETE NO ACTION,
     CONSTRAINT fk_employee_id FOREIGN KEY (employee_id)
@@ -249,7 +249,7 @@ CREATE TABLE Question
     CONSTRAINT fk_question_bidder_link_id FOREIGN KEY (bidder_link_id)
         REFERENCES ProcurementPartner (link_id),
     CONSTRAINT fk_q_procurement_id FOREIGN KEY (procurement_id)
-        REFERENCES procurement (procurement_id)
+        REFERENCES Procurement (procurement_id)
         ON UPDATE CASCADE
         ON DELETE NO ACTION
 );
@@ -276,7 +276,7 @@ CREATE TABLE Reply
         ON UPDATE CASCADE
         ON DELETE NO ACTION,
     CONSTRAINT fk_r_procurement_id FOREIGN KEY (procurement_id)
-        REFERENCES procurement (procurement_id)
+        REFERENCES Procurement (procurement_id)
         ON UPDATE CASCADE
         ON DELETE NO ACTION
 );
@@ -297,7 +297,7 @@ CREATE TABLE Document
 
     CONSTRAINT pk_document_id PRIMARY KEY (document_id),
     CONSTRAINT fk_document_procurement_id FOREIGN KEY (procurement_id)
-        REFERENCES procurement (procurement_id)
+        REFERENCES Procurement (procurement_id)
         ON UPDATE CASCADE
         ON DELETE NO ACTION,
     CONSTRAINT fk_document_person_id FOREIGN KEY (person_id)
@@ -353,7 +353,7 @@ CREATE TABLE Email
 
     CONSTRAINT pk_email_sent_status PRIMARY KEY (email_id),
     CONSTRAINT fk_email_procurement_id FOREIGN KEY (procurement_id)
-        REFERENCES procurement (procurement_id)
+        REFERENCES Procurement (procurement_id)
         ON UPDATE CASCADE
         ON DELETE NO ACTION,
     CONSTRAINT fk_email_reply_id FOREIGN KEY (reply_id)
