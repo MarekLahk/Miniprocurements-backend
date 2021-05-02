@@ -16,7 +16,7 @@ import static ee.taltech.procurementSystemBackend.repository.person.Specificatio
 public class PartnerSearch extends PersonSearch<Partner> {
 
     public PartnerSearch(Integer limit, Integer page, String sort, Direction dir, LocalDateTime before, LocalDateTime after, String name, Long regNr) {
-        super(limit, page, sort, dir, before, after, name);
+        super(limit, page, sort, dir, name);
         this.regNr = regNr;
     }
 

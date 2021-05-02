@@ -4,7 +4,6 @@ import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,19 +19,17 @@ public class Question extends ModelBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id", nullable = false)
-    private Integer questionId;
+    private Integer id;
     @Column(name = "bidder_link_id", nullable = false)
-    private UUID bidderLinkId;
+    private UUID linkId;
     @Column(name = "procurement_id", nullable = false)
     private Integer procurementId;
     @Column(name = "question_text", nullable = false)
     private String question;
-    @Column(name = "time_asked", nullable = false)
-    private Timestamp timeAsked;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="procurement_id", insertable = false, updatable = false)
-    private Miniprocurement miniprocurement;
+    private Procurement procurement;
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", targetEntity = Reply.class)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "question")

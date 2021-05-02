@@ -8,5 +8,5 @@ import java.util.Optional;
 @Repository
 public interface AnnouncementRepository extends RepositoryInterface<Announcement> {
 
-    Optional<Announcement> findByAnnouncementIdAndEmployeeId(Integer announcementId, Integer employeeId);
+    Optional<Announcement> findByIdAndEmployeeId(Integer announcementId, Integer employeeId);
 }

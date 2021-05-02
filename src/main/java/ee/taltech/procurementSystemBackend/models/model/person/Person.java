@@ -1,7 +1,6 @@
 package ee.taltech.procurementSystemBackend.models.model.person;
 
 import com.googlecode.jmapper.annotations.JGlobalMap;
-import ee.taltech.procurementSystemBackend.models.Dto.Person.PersonDto;
 import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,25 +21,15 @@ public class Person extends ModelBase {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")
-    Integer personID;
+    Integer id;
 
     @Column(name = "person_name", length=100)
-    private String personName;
+    private String name;
 
     @Column(name = "e_mail", length = 100, nullable = false)
     private String eMail;
 
-    @CreationTimestamp@Column(name = "time_of_register", columnDefinition = "TIMESTAMP")
-    private LocalDateTime timeOfRegister;
-
-    public Person(PersonDto personDto) {
-
-        this.personID = personDto.getPersonID();
-        this.personName = personDto.getPersonName();
-        this.eMail = personDto.getEMail();
-        this.timeOfRegister = personDto.getTimeOfRegister();
-
-    }
-
+    @CreationTimestamp@Column(name = "created_at", columnDefinition = "TIMESTAMP")
+    private LocalDateTime createdAt;
 
 }
