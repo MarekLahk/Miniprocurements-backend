@@ -346,6 +346,7 @@ CREATE TABLE Email
     reply_id        MEDIUMINT,
     announcement_id MEDIUMINT,
     recipient_id    MEDIUMINT                NOT NULL,
+    sent_at         DATETIME,
 
     created_at      DATETIME DEFAULT NOW(),
     updated_at      DATETIME DEFAULT NOW()

@@ -17,5 +17,6 @@ public interface ProcurementPartnerMapper extends MapperInterface<ProcurementPar
 
     @Override
     @Mapping(target = "procurement", ignore = true)
+    @Mapping(target = "partner", ignore = true)
     ProcurementPartner toModel(ProcurementPartnerDto dto);
 }

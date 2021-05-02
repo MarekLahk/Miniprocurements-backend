@@ -29,7 +29,6 @@ public class ProcurementDto extends DtoBase  {
     @NotNull(message = "Deadline cannot be null")
     private Timestamp deadline;
     private Short status;
-    private Timestamp finishedAt;
     private Timestamp completionDeadline;
     private Timestamp completionDeadlineDays;
 }
