@@ -5,7 +5,6 @@ import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
@@ -15,30 +14,24 @@ import java.util.UUID;
 @JGlobalMap
 @Getter
 @Setter
-public class MiniprocurementPartner extends ModelBase {
+public class ProcurementPartner extends ModelBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer miniprocurementPartnerId;
+    private Integer id;
     @Basic
     @Column(name = "link_id")
-    private UUID miniprocurementPartnerLinkId;
+    private UUID linkId;
     @Basic
     @Column(name = "procurement_id", nullable = false, length = -1)
-    private Integer miniprocurementPartnerProcurementId;
+    private Integer procurementId;
     @Basic
     @Column(name = "partner_id", nullable = false, length = -1)
-    private Integer miniprocurementPartnerPartnerId;
-    @Basic
-    @Column(name = "time_added", nullable = false, length = -1)
-    private Timestamp miniprocurementPartnerTimeAdded;
-    @Basic
-    @Column(name = "link_first_accessed", nullable = true, length = -1)
-    private String miniprocurementPartnerLinkFirstAccessed;
+    private Integer partnerId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="procurement_id", insertable = false, updatable = false)
-    private Miniprocurement miniprocurement;
+    private Procurement procurement;
 }
 
 

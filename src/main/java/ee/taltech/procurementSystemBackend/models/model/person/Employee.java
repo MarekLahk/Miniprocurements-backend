@@ -2,8 +2,8 @@ package ee.taltech.procurementSystemBackend.models.model.person;
 
 
 import com.googlecode.jmapper.annotations.JGlobalMap;
-import ee.taltech.procurementSystemBackend.models.Dto.Person.EmployeeDto;
-import ee.taltech.procurementSystemBackend.models.model.Miniprocurement;
+import ee.taltech.procurementSystemBackend.models.model.Procurement;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,6 +13,7 @@ import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "Employee")
@@ -20,11 +21,8 @@ import java.util.Set;
 @JGlobalMap
 public class Employee extends Person {
 
-    public Employee(EmployeeDto employeeDto) {
-        super(employeeDto);
-    }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
-    private Set<Miniprocurement> procurements;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "createdBy")
+    private Set<Procurement> procurements;
 
 }

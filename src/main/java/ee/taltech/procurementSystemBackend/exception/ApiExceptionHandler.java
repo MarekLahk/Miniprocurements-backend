@@ -11,8 +11,8 @@ import java.time.ZonedDateTime;
 @ControllerAdvice
 public class ApiExceptionHandler {
 
-    @ExceptionHandler(value = MiniprocurementException.class)
-    public ResponseEntity<Object> handleAuthorizationException(MiniprocurementException e) {
+    @ExceptionHandler(value = ProcurementException.class)
+    public ResponseEntity<Object> handleAuthorizationException(ProcurementException e) {
         ApiException apiException = new ApiException(
                 e.getMessage(),
                 HttpStatus.BAD_REQUEST,

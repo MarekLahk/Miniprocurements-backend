@@ -4,6 +4,7 @@ import ee.taltech.procurementSystemBackend.models.Dto.AnnouncementDto;
 import ee.taltech.procurementSystemBackend.models.MapperInterface;
 import ee.taltech.procurementSystemBackend.models.model.Announcement;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -15,6 +16,8 @@ public interface AnnouncementMapper extends MapperInterface<Announcement, Announ
     AnnouncementDto toDto(Announcement model);
 
     @Override
+    @Mapping(target = "procurement", ignore = true)
+    @Mapping(target = "employee", ignore = true)
     Announcement toModel(AnnouncementDto dto);
 
 

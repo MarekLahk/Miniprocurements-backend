@@ -7,9 +7,9 @@ import org.springframework.data.domain.Sort;
 
 public class ReplySearch extends SearchObject<Reply> {
 
-    private Integer replierId;
-    private Integer questionId;
-    private Integer procurementId;
+    private final Integer replierId;
+    private final Integer questionId;
+    private final Integer procurementId;
 
     public ReplySearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer replierId, Integer questionId, Integer procurementId) {
         super(limit, page, sort, dir);

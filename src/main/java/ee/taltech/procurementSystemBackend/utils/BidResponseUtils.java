@@ -35,7 +35,7 @@ public class BidResponseUtils {
         questions.forEach(question -> {
             QuestionDto questionDto = questionMapper.toDto(question);
             List<ReplyDto> replies = replyRepository
-                    .findAllByQuestionId(question.getQuestionId())
+                    .findAllByQuestionId(question.getId())
                     .stream()
                     .map(replyMapper::toDto)
                     .collect(Collectors.toList());

@@ -4,7 +4,6 @@ import ee.taltech.procurementSystemBackend.models.DtoBase;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -13,7 +12,7 @@ import java.sql.Timestamp;
 @Builder
 public class ReplyDto extends DtoBase {
 
-    private Integer replyId;
+    private Integer id;
     @NotNull(message = "Replier id cannot be null.")
     private Integer replierId;
     @NotNull(message = "Question id cannot be null.")
@@ -21,5 +20,4 @@ public class ReplyDto extends DtoBase {
     @NotNull(message = "Procurement id cannot be null.")
     private Integer procurementId;
     private String reply;
-    private Timestamp timeReplied;
 }
