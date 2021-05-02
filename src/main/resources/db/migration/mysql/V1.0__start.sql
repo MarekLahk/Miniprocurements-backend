@@ -90,14 +90,14 @@ CREATE TABLE ContractPartners
 CREATE TABLE Procurement
 (
     procurement_id           MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-    procurement_name         VARCHAR(50)              NOT NULL,
+    name                     VARCHAR(50)              NOT NULL,
     amount                   INT,
     description              TEXT,
     requirements             TEXT,
     has_contract             BOOLEAN                  NOT NULL default (0),
     contract_id              MEDIUMINT,
     contract_sub_id          MEDIUMINT,
-    created_by                 MEDIUMINT                NOT NULL,
+    created_by               MEDIUMINT                NOT NULL,
     deadline                 DATETIME,
     status                   SMALLINT                 NOT NULL default (1),
     completion_deadline      DATETIME,
@@ -139,13 +139,13 @@ CREATE TABLE Procurement_Winners
 
 CREATE TABLE ProcurementPartner
 (
-    id                  MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-    link_id             BINARY(16)               NOT NULL UNIQUE,
-    procurement_id      MEDIUMINT                NOT NULL,
-    partner_id          MEDIUMINT                NOT NULL,
+    id             MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
+    link_id        BINARY(16)               NOT NULL UNIQUE,
+    procurement_id MEDIUMINT                NOT NULL,
+    partner_id     MEDIUMINT                NOT NULL,
 
-    created_at          DATETIME                          DEFAULT NOW(),
-    updated_at          DATETIME                          DEFAULT NOW()
+    created_at     DATETIME DEFAULT NOW(),
+    updated_at     DATETIME DEFAULT NOW()
         ON UPDATE NOW(),
 
     CONSTRAINT uq_partner_procurement UNIQUE (procurement_id, partner_id),
@@ -188,7 +188,7 @@ CREATE TABLE Announcement
 CREATE TABLE Bid
 (
     bid_id         MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-    bidder_link_id BINARY(16)               NOT NULL,
+    link_id        BINARY(16)               NOT NULL,
     bid_value      BIGINT,
     bid_status     SMALLINT                 NOT NULL DEFAULT 1,
     description    TEXT,
@@ -207,7 +207,7 @@ CREATE TABLE Bid
         REFERENCES procurement (procurement_id)
         ON UPDATE CASCADE
         ON DELETE NO ACTION,
-    CONSTRAINT fk_bidder_link_id FOREIGN KEY (bidder_link_id)
+    CONSTRAINT fk_link_id FOREIGN KEY (link_id)
         REFERENCES ProcurementPartner (link_id)
         ON UPDATE CASCADE
         ON DELETE NO ACTION

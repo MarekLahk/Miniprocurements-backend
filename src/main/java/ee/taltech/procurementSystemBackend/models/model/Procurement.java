@@ -24,7 +24,7 @@ public class Procurement extends ModelBase {
     @Column(name = "procurement_id", nullable = false)
     private Integer id;
     @Basic
-    @Column(name = "procurement_name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
     @Basic
     @Column(name = "amount")

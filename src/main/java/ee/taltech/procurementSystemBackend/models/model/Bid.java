@@ -16,7 +16,7 @@ public class Bid extends ModelBase {
     @Column(name = "bid_id", nullable = false)
     private Integer id;
     @Basic
-    @Column(name = "bidder_link_id", nullable = false)
+    @Column(name = "link_id", nullable = false)
     private UUID linkId;
     @Basic
     @Column(name = "bid_value", nullable = false)
