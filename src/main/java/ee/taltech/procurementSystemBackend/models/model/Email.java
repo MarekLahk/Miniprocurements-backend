@@ -5,7 +5,6 @@ import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -21,9 +20,6 @@ public class Email extends ModelBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "email_id", nullable = false)
     private Integer emailId;
-    @Basic
-    @Column(name = "sent_date")
-    private LocalDateTime sentDate;
     @Basic
     @Column(name = "procurement_id")
     private Integer procurementId;

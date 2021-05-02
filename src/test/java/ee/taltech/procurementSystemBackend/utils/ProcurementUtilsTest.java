@@ -1,7 +1,7 @@
 package ee.taltech.procurementSystemBackend.utils;
 
-import ee.taltech.procurementSystemBackend.exception.MiniprocurementException;
-import ee.taltech.procurementSystemBackend.repository.MiniprocurementRepository;
+import ee.taltech.procurementSystemBackend.exception.ProcurementException;
+import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,13 +17,13 @@ import static org.springframework.test.util.AssertionErrors.fail;
 public class ProcurementUtilsTest {
 
     @MockBean
-    private MiniprocurementRepository miniprocurementRepository;
+    private PocurementRepository pocurementRepository;
     
     private ProcurementUtils procurementUtils;
 
     @BeforeEach
     void setUp() {
-        procurementUtils = new ProcurementUtils(miniprocurementRepository);
+        procurementUtils = new ProcurementUtils(pocurementRepository);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class ProcurementUtilsTest {
         LocalDateTime nowMinusDay = LocalDateTime.now().minusDays(1);
         Timestamp timestamp = Timestamp.valueOf(nowMinusDay);
         assertThatThrownBy(() -> procurementUtils.checkProcurementDeadlineIsNotInPast(timestamp))
-                .isInstanceOf(MiniprocurementException.class)
+                .isInstanceOf(ProcurementException.class)
                 .hasMessageContaining("Deadline cannot be before now.");
     }
 

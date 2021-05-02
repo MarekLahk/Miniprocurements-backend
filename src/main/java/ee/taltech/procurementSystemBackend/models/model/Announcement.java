@@ -6,7 +6,6 @@ import ee.taltech.procurementSystemBackend.models.model.person.Employee;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -19,7 +18,7 @@ public class Announcement extends ModelBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "announcement_id", nullable = false)
-    private Integer announcementId;
+    private Integer id;
     @Basic
     @Column(name = "procurement_id", nullable = false)
     private Integer procurementId;
@@ -29,9 +28,7 @@ public class Announcement extends ModelBase {
     @Basic
     @Column(name = "announcement", nullable = false, length = -1)
     private String announcement;
-    @Basic
-    @Column(name = "date_added", nullable = false)
-    private Timestamp dateAdded;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", insertable = false, updatable = false)
@@ -39,5 +36,5 @@ public class Announcement extends ModelBase {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="procurement_id", insertable = false, updatable = false)
-    private Miniprocurement miniprocurement;
+    private Procurement procurement;
 }

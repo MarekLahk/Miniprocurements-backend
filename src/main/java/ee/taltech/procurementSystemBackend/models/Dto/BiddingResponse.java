@@ -14,6 +14,6 @@ import java.util.List;
 public class BiddingResponse {
 
     private List<BidDto> bid;
-    private MiniProcurementDto procurement;
+    private ProcurementDto procurement;
     private List<QuestionAndRepliesResponse> questionsAndRelies;
 }

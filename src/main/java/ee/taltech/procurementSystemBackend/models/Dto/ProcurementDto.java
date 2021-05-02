@@ -13,11 +13,11 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MiniProcurementDto extends DtoBase  {
+public class ProcurementDto extends DtoBase  {
 
-    private Integer procurementId;
+    private Integer id;
     @NotBlank(message = "Procurement name cannot be blank.")
-    private String procurementName;
+    private String name;
     @Positive(message = "Amount cannot be zero or negative.")
     private Integer amount;
     private String description;
@@ -25,10 +25,11 @@ public class MiniProcurementDto extends DtoBase  {
     private Integer contractId;
     private Integer contractSubId;
     private Boolean hasContract;
-    private Timestamp timeAdded;
-    private Integer addedBy;
+    private Integer createdById;
     @NotNull(message = "Deadline cannot be null")
     private Timestamp deadline;
     private Short status;
-    private Timestamp timeFinished;
+    private Timestamp finishedAt;
+    private Timestamp completionDeadline;
+    private Timestamp completionDeadlineDays;
 }

@@ -2,10 +2,8 @@ package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.email.EmailSender;
 import ee.taltech.procurementSystemBackend.models.email.ProcurementEmail;
-import ee.taltech.procurementSystemBackend.models.model.Email;
 import ee.taltech.procurementSystemBackend.models.model.Miniprocurement;
-import ee.taltech.procurementSystemBackend.models.model.MiniprocurementPartner;
-import ee.taltech.procurementSystemBackend.repository.EmailRepository;
+import ee.taltech.procurementSystemBackend.utils.Statics;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -13,6 +11,7 @@ import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Locale;
 
 @Service
