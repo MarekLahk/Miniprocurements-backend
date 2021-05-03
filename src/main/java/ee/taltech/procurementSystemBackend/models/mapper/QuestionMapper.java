@@ -15,6 +15,7 @@ public interface QuestionMapper extends MapperInterface<Question, QuestionDto> {
     QuestionMapper INSTANCE = Mappers.getMapper(QuestionMapper.class);
 
     @Override
+    @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
     QuestionDto toDto(Question model);
 
     @Override

@@ -15,6 +15,7 @@ public interface ProcurementPartnerMapper extends MapperInterface<ProcurementPar
     ProcurementPartnerMapper INSTANCE = Mappers.getMapper(ProcurementPartnerMapper.class);
 
     @Override
+    @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
     ProcurementPartnerDto toDto(ProcurementPartner model);
 
     @Override
