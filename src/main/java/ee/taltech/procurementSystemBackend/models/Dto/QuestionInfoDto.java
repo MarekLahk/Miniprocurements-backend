@@ -4,17 +4,16 @@ import ee.taltech.procurementSystemBackend.models.DtoBase;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
-
+import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class QuestionDto extends DtoBase {
+public class QuestionInfoDto extends DtoBase {
 
-    private Integer id;
-    private Integer procurementId;
     @NotBlank(message = "Question cannot be null or blank.")
     private String question;
+    private Set<ReplyDto> replies;
 
 }

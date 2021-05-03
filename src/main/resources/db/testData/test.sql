@@ -1,5 +1,3 @@
-INSERT INTO ProcurementStatus (ProcurementStatus.procurement_status_name) VALUES ('TestStatus');
-INSERT INTO BidStatus (BidStatus.status_name) VALUES ('TestStatus');
 INSERT INTO Person (Person.person_name, Person.e_mail) VALUE ('Employee user', 'test@email.com');
 INSERT INTO Person (Person.person_name, Person.e_mail) VALUE ('Partner user', 'test1@email.com');
 INSERT INTO Employee (Employee.employee_id) VALUE (1);

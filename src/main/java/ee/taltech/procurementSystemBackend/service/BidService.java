@@ -2,13 +2,10 @@ package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.BidException;
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
-import ee.taltech.procurementSystemBackend.models.Dto.BiddingResponse;
-import ee.taltech.procurementSystemBackend.models.Dto.ProcurementDto;
-import ee.taltech.procurementSystemBackend.models.Dto.QuestionAndRepliesResponse;
+import ee.taltech.procurementSystemBackend.models.Dto.BidResponseDto;
 import ee.taltech.procurementSystemBackend.models.mapper.BidMapper;
 import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Bid;
-import ee.taltech.procurementSystemBackend.models.model.Procurement;
 import ee.taltech.procurementSystemBackend.models.model.ProcurementPartner;
 import ee.taltech.procurementSystemBackend.repository.BidRepository;
 import ee.taltech.procurementSystemBackend.repository.ProcurementPartnerRepository;
@@ -16,7 +13,6 @@ import ee.taltech.procurementSystemBackend.utils.BidResponseUtils;
 import ee.taltech.procurementSystemBackend.utils.BidUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,32 +36,45 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         this.procurementMapper = ProcurementMapper.INSTANCE;
     }
 
-    public BiddingResponse getCurrentWaitingBid(UUID partnerUuid) {
-        ProcurementPartner partner = procurementPartnerRepository
-                .findByLinkId(partnerUuid)
+    public BidResponseDto getBidInfo(UUID partnerUUID) {
+        ProcurementPartner procurementPartner = procurementPartnerRepository.findByLinkId(partnerUUID)
                 .orElseThrow(() -> new BidException("No such procurement partner"));
+        System.out.println(procurementPartner.getProcurement().getCreatedAt());
+        System.out.println(procurementPartner.getProcurement().getUpdatedAt());
+        return procurementMapper.toInfoDto(procurementPartner.getProcurement());
 
-        Procurement procurementModel = partner.getProcurement();
-        ProcurementDto procurement = procurementMapper.toDto(
-                procurementModel
-        );
-
-        List<QuestionAndRepliesResponse> questionReplyMap =
-                bidResponseUtils.getQuestionsAndReplies(partner.getProcurementId());
-
-        BiddingResponse biddingResponse = new BiddingResponse();
-        biddingResponse.setProcurement(procurement);
-        biddingResponse.setQuestionsAndRelies(questionReplyMap);
-
-        Optional<Bid> bid = bidRepository.findFirstByLinkIdAndBidStatus(partnerUuid, 1);
-        if (bid.isPresent()) {
-            BidDto dto = toDtoOptional(bid.get()).get();
-            biddingResponse.setBid(List.of(dto));
-        } else {
-            biddingResponse.setBid(List.of());
-        }
-        return biddingResponse;
     }
+
+    public Optional<Bid> getCurrentWaitingBit(UUID partnerUUID) {
+        return bidRepository.findFirstByLinkIdAndBidStatus(partnerUUID, 1);
+    }
+
+//    public BidResponseDto getCurrentWaitingBid(UUID partnerUuid) {
+//        ProcurementPartner partner = procurementPartnerRepository
+//                .findByLinkId(partnerUuid)
+//                .orElseThrow(() -> new BidException("No such procurement partner"));
+//
+//        Procurement procurementModel = partner.getProcurement();
+//        ProcurementDto procurement = procurementMapper.toDto(
+//                procurementModel
+//        );
+//
+//        List<QuestionAndRepliesResponse> questionReplyMap =
+//                bidResponseUtils.getQuestionsAndReplies(partner.getProcurementId());
+//
+//        BidResponseDto bidResponseDto = new BidResponseDto();
+//        bidResponseDto.setProcurement(procurement);
+//        bidResponseDto.setQuestionsAndRelies(questionReplyMap);
+//
+//        Optional<Bid> bid = bidRepository.findFirstByLinkIdAndBidStatus(partnerUuid, 1);
+//        if (bid.isPresent()) {
+//            BidDto dto = toDtoOptional(bid.get()).get();
+//            bidResponseDto.setBid(List.of(dto));
+//        } else {
+//            bidResponseDto.setBid(List.of());
+//        }
+//        return bidResponseDto;
+//    }
 
     public BidDto addBid(UUID partnerUuid, BidDto bidDto) {
         ProcurementPartner partner = procurementPartnerRepository
