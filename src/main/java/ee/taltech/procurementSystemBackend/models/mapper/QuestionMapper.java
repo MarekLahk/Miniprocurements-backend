@@ -3,8 +3,10 @@ package ee.taltech.procurementSystemBackend.models.mapper;
 import ee.taltech.procurementSystemBackend.models.Dto.QuestionDto;
 import ee.taltech.procurementSystemBackend.models.MapperInterface;
 import ee.taltech.procurementSystemBackend.models.model.Question;
+import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.NullValueMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -13,6 +15,7 @@ public interface QuestionMapper extends MapperInterface<Question, QuestionDto> {
     QuestionMapper INSTANCE = Mappers.getMapper(QuestionMapper.class);
 
     @Override
+    @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
     QuestionDto toDto(Question model);
 
     @Override

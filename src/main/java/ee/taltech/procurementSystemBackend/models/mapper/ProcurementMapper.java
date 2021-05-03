@@ -3,8 +3,10 @@ package ee.taltech.procurementSystemBackend.models.mapper;
 import ee.taltech.procurementSystemBackend.models.Dto.ProcurementDto;
 import ee.taltech.procurementSystemBackend.models.MapperInterface;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
+import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.NullValueMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
@@ -13,6 +15,7 @@ public interface ProcurementMapper extends MapperInterface<Procurement, Procurem
     ProcurementMapper INSTANCE = Mappers.getMapper(ProcurementMapper.class);
 
     @Override
+    @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
     ProcurementDto toDto(Procurement model);
 
     @Override
