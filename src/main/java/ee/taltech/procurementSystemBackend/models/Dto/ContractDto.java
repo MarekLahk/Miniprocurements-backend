@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -24,28 +25,6 @@ public class ContractDto extends DtoBase  {
     private Integer procurementTemplateId;
     private Integer bidTemplateId;
     private String contractName;
-    private Timestamp timeAdded;
+    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
 }
-
-/*
-  @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "contract_id", nullable = false)
-    private Integer contractId;
-    @Basic
-    @Column(name = "contract_reference_number", nullable = false)
-    private Integer contractReferenceNumber;
-    @Basic
-    @Column(name = "procurement_template_id", nullable = false)
-    private Integer procurementTemplateId;
-    @Basic
-    @Column(name = "bid_template_id", nullable = false)
-    private Integer bidTemplateId;
-    @Basic
-    @Column(name = "contract_name", nullable = false, length = 50)
-    private String contractName;
-    @Basic
-    @Column(name = "date_added", nullable = false)
-    private Timestamp timeAdded;
-}
- */

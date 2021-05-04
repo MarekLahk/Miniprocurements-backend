@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -31,8 +32,7 @@ public class ContractService extends ServiceBase<Contract, ContractDto> {
     public ContractDto addContract(ContractDto dto, Authentication authentication) {
         Contract contract = toModelOptional(dto)
                 .orElseThrow(() -> new ContractException("No contract dto provided"));
-        Integer creatorId = authUtils.getPersonToPerformOperations(authentication).getPersonID();
-        contract.setTimeAdded(new Timestamp(System.currentTimeMillis()));
+        Integer creatorId = authUtils.getPersonToPerformOperations(authentication).getId();
         return toDtoOptional(contractRepository.save(contract))
                 .orElseThrow(() -> new ContractException("Could not save contract"));
     }

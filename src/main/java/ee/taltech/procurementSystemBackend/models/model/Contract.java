@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -50,6 +51,9 @@ public class Contract extends ModelBase {
     @Column(name = "contract_name", nullable = false, length = 50)
     private String contractName;
     @Basic
-    @Column(name = "date_added", nullable = false)
-    private Timestamp timeAdded;
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+    @Basic
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 }
