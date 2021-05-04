@@ -38,7 +38,7 @@ public class BidService extends ServiceBase<Bid, BidDto> {
 
     public BidResponseDto getBidInfo(UUID partnerUUID) {
         ProcurementPartner procurementPartner = procurementPartnerRepository.findByLinkId(partnerUUID)
-                .orElseThrow(() -> new BidException("No such procurement partner"));
+                .orElseThrow(() -> new BidException("No such bid"));
         System.out.println(procurementPartner.getProcurement().getCreatedAt());
         System.out.println(procurementPartner.getProcurement().getUpdatedAt());
         return procurementMapper.toInfoDto(procurementPartner.getProcurement());
