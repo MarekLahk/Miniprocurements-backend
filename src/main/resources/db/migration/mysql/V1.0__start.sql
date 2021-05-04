@@ -32,6 +32,8 @@ CREATE TABLE Contract
     updated_at                DATETIME DEFAULT NOW()
         ON UPDATE NOW(),
 
+    status                    TINYINT,
+
     CONSTRAINT pk_contract_id PRIMARY KEY (contract_id)
 );
 

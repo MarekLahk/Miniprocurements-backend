@@ -56,4 +56,7 @@ public class Contract extends ModelBase {
     @Basic
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
+    @Basic
+    @Column(name = "status", nullable = false)
+    private Integer status;
 }

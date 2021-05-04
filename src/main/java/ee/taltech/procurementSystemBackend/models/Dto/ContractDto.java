@@ -27,4 +27,5 @@ public class ContractDto extends DtoBase  {
     private String contractName;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
+    private Integer status;
 }
