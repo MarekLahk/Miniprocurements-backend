@@ -12,7 +12,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "procurement")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
