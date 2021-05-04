@@ -4,7 +4,7 @@ import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -33,5 +33,5 @@ public class Question extends ModelBase {
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "question", targetEntity = Reply.class)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "question")
-    private Set<Reply> replies;
+    private List<Reply> replies;
 }

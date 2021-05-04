@@ -22,4 +22,5 @@ public interface QuestionMapper extends MapperInterface<Question, QuestionDto> {
     @Mapping(target = "procurement", ignore = true)
     @Mapping(target = "replies", ignore = true)
     Question toModel(QuestionDto dto);
+
 }

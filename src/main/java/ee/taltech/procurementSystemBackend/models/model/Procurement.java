@@ -74,5 +74,4 @@ public class Procurement extends ModelBase {
     private Set<Question> questions;
 
 
-
 }
