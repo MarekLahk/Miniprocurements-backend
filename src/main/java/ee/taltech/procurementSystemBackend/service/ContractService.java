@@ -43,7 +43,7 @@ public class ContractService extends ServiceBase<Contract, ContractDto> {
         Optional<Contract> optionalContract = contractRepository.findById(id);
         Person person = authUtils.getPersonToPerformOperations(authentication);
 
-        // get this to take some values that cannot be passed by put method
+        // get this to take some values that cannot be passed by put method ,
         Contract initialContract = optionalContract.get();
 
         Contract contract = toModelOptional(dto)
