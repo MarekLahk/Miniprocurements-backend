@@ -27,7 +27,7 @@ public class ProcurerService extends ServiceBase<Procurer, ProcurerDto> {
         this.authUtils = authUtils;
     }
 
-    public void addProcurer(ProcurerDto dto, Authentication authentication) {
+    public ProcurerDto addProcurer(ProcurerDto dto, Authentication authentication) {
         Integer creatorId = authUtils.getPersonToPerformOperations(authentication).getId();
         if (procurerRepository.findByProcurementIdAndAndEmployeeId(dto.getProcurementId(), creatorId).isEmpty()) {
             throw new ProcurerException(
@@ -40,11 +40,9 @@ public class ProcurerService extends ServiceBase<Procurer, ProcurerDto> {
             );
         }
         // Not null is checked with @NotNull annotation
-        Procurer procurer = new Procurer();
-        procurer.setProcurementId(dto.getProcurementId());
-        procurer.setEmployeeId(dto.getEmployeeId());
+        Procurer procurer = toModelOptional(dto).get();
         procurer.setCreatedAt(LocalDateTime.now());
         procurer.setUpdatedAt(LocalDateTime.now());
-        procurerRepository.save(procurer);
+        return toDtoOptional(procurerRepository.save(procurer)).get();
     }
 }

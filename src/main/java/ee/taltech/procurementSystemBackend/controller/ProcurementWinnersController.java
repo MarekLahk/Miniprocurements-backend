@@ -4,6 +4,8 @@ import ee.taltech.procurementSystemBackend.models.Dto.ProcurementWinnersDto;
 import ee.taltech.procurementSystemBackend.models.model.ProcurementWinners;
 import ee.taltech.procurementSystemBackend.models.search.ProcurementWinnersSearch;
 import ee.taltech.procurementSystemBackend.service.ProcurementWinnersService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,9 +27,10 @@ public class ProcurementWinnersController extends ControllerBase<ProcurementWinn
     }
 
     @PostMapping
-    public ProcurementWinnersDto addProcurementWinner(@Valid @NotNull @RequestBody ProcurementWinnersDto dto,
+    public ResponseEntity<ProcurementWinnersDto> addProcurementWinner(@Valid @NotNull @RequestBody ProcurementWinnersDto dto,
                                                       Authentication authentication) {
-        return procurementWinnersService.addProcurementWinner(dto, authentication);
+        ProcurementWinnersDto result = procurementWinnersService.addProcurementWinner(dto, authentication);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
 }

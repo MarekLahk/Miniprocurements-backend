@@ -27,9 +27,9 @@ public class ProcurerController extends ControllerBase<Procurer, ProcurerDto, Pr
     }
 
     @PostMapping
-    public ResponseEntity<Void> addProcurer(@Valid @NotNull @RequestBody ProcurerDto dto,
+    public ResponseEntity<ProcurerDto> addProcurer(@Valid @NotNull @RequestBody ProcurerDto dto,
                                       Authentication authentication) {
-        procurerService.addProcurer(dto, authentication);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        ProcurerDto procurerDto = procurerService.addProcurer(dto, authentication);
+        return new ResponseEntity<>(procurerDto, HttpStatus.CREATED);
     }
 }
