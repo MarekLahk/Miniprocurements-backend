@@ -215,14 +215,15 @@ CREATE TABLE Bid
 
 CREATE TABLE Procurer
 (
-    procurement_id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    procurer_id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    procurement_id MEDIUMINT NOT NULL,
     employee_id    MEDIUMINT NOT NULL,
 
     created_at     DATETIME DEFAULT NOW(),
     updated_at     DATETIME DEFAULT NOW()
         ON UPDATE NOW(),
 
-    CONSTRAINT pk_procurement_id PRIMARY KEY (procurement_id),
+    CONSTRAINT pk_procurer_id PRIMARY KEY (procurer_id),
     CONSTRAINT fk_procurement_id FOREIGN KEY (procurement_id)
         REFERENCES Procurement (procurement_id)
         ON UPDATE CASCADE

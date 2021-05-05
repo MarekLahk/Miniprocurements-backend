@@ -37,7 +37,7 @@ public class ProcurementWinnersService extends ServiceBase<ProcurementWinners, P
         }
 
         Integer creatorId = authUtils.getPersonToPerformOperations(authentication).getId();
-        Procurement procurement = procurementWinnersUtils.getAndCheckProcurementToSetWinner(dto.getProcurementId());
+        Procurement procurement = procurementWinnersUtils.getAndCheckProcurementToSetWinner(dto.getProcurementId(), creatorId);
 
         LocalDateTime decisionTime = LocalDateTime.now();
         // dto cannot be null, checked with @NotNull annotation in controller

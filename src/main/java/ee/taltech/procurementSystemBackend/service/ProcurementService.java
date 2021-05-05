@@ -4,14 +4,17 @@ import ee.taltech.procurementSystemBackend.exception.ProcurementException;
 import ee.taltech.procurementSystemBackend.models.Dto.ProcurementDto;
 import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
+import ee.taltech.procurementSystemBackend.models.model.Procurer;
 import ee.taltech.procurementSystemBackend.models.model.person.Person;
 import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
+import ee.taltech.procurementSystemBackend.repository.ProcurerRepository;
 import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import ee.taltech.procurementSystemBackend.utils.ProcurementUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -23,7 +26,8 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
 
     public ProcurementService(RepositoryInterface<Procurement> repository,
                               PocurementRepository pocurementRepository,
-                              AuthUtils authUtils, ProcurementUtils procurementUtils) {
+                              AuthUtils authUtils,
+                              ProcurementUtils procurementUtils) {
         super(repository, ProcurementMapper.INSTANCE);
         this.pocurementRepository = pocurementRepository;
         this.authUtils = authUtils;
@@ -44,8 +48,12 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
             Integer contractSubId = pocurementRepository.countByContractId(dto.getContractId()) + 1;
             procurement.setContractSubId(contractSubId);
         }
-        return toDtoOptional(pocurementRepository.save(procurement))
-                .orElseThrow(() -> new ProcurementException("Could not save procurement"));
+
+        Procurement savedProcurement = pocurementRepository.save(procurement);
+
+        procurementUtils.saveProcurerForAddedProcurement(savedProcurement.getId(), creatorId);
+
+        return toDtoOptional(savedProcurement).get();
     }
 
     public ProcurementDto updateProcurement(Integer id,
@@ -69,6 +77,7 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
         procurement.setId(id);
         procurement.setCreatedById(person.getId());
         procurement.setCreatedAt(initialProcurement.getCreatedAt());
+        procurement.setUpdatedAt(LocalDateTime.now());
         procurement.setCreatedById(addedBy);
         boolean hasContract = dto.getContractId() != null;
         procurement.setHasContract(dto.getContractId() != null);
@@ -109,6 +118,7 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
             // TODO: 5/5/2021 Send emails that active procurement was deleted
         }
         procurement.setStatus(newStatus);
+        procurement.setCreatedAt(LocalDateTime.now());
         procurementUtils.checkProcurementBeforeStatusPatch(procurement);
         return toDtoOptional(pocurementRepository.save(procurement)).get();
     }
