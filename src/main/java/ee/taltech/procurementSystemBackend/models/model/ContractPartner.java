@@ -34,13 +34,13 @@ public class ContractPartner extends ModelBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "contract_partner_id")
-    private Integer contractPartnerId;
+    private Integer id;
     @Basic
     @Column(name = "contract_id", nullable = false, length = -1)
-    private Integer contractPartnerContractId;
+    private Integer ContractId;
     @Basic
     @Column(name = "partner_id", nullable = false, length = -1)
-    private Integer contractPartnerPartnerId;
+    private Integer PartnerId;
 }
 
 

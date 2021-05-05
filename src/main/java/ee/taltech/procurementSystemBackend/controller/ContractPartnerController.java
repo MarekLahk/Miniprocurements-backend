@@ -63,7 +63,7 @@ public class ContractPartnerController extends ControllerBase<ContractPartner, C
                     "    \"path\": \"/api/contractPartners\"\n" +
                     "}")))
     })
-    @Parameter(name="id", example="2", description="Contract and partner connection id: contractPartnerId")
+    @Parameter(name="id", example="2", description="Contract and partner connection id: id")
     @PutMapping("{id}")
     public ContractPartnerDto updateContractPartner(@PathVariable Integer id, @RequestBody ContractPartnerDto dto) {
         return contractPartnerService.updateContractPartner(id, dto);
@@ -72,7 +72,7 @@ public class ContractPartnerController extends ControllerBase<ContractPartner, C
     //TODO: Add checks on deleting a partner
     @Operation(summary = "Delete a contract-partner link. This should only be done if related contract is in draft. Currently this is not checked.")
     @DeleteMapping("{id}")
-    @Parameter(name="id", example="2", description="Contract and partner connection id: contractPartnerId")
+    @Parameter(name="id", example="2", description="Contract and partner connection id: id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "successful operation", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ContractPartnerDto.class)))),
             @ApiResponse(responseCode = "500", description = "unexpected server error ocurred - perhaps a link with that id does not exist", content = @Content(examples = @ExampleObject(value = "{\n" +

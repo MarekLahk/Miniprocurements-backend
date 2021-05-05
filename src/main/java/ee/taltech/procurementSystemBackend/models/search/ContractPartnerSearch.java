@@ -7,15 +7,15 @@ import org.springframework.data.domain.Sort;
 
 public class ContractPartnerSearch extends SearchObject<ContractPartner> {
 
-    private Integer contractPartnerContractId; //contractPartnerLinkId
-    private Integer contractPartnerPartnerId;
-    private Integer contractPartnerId;
+    private Integer ContractId; //contractPartnerLinkId
+    private Integer PartnerId;
+    private Integer id;
 
-    public ContractPartnerSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer contractPartnerId, Integer contractPartnerContractId, Integer contractPartnerPartnerId) {
+    public ContractPartnerSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer id, Integer ContractId, Integer PartnerId) {
         super(limit, page, sort, dir);
-        this.contractPartnerId = contractPartnerId;
-        this.contractPartnerContractId = contractPartnerContractId;
-        this.contractPartnerPartnerId = contractPartnerPartnerId;
+        this.id = id;
+        this.ContractId = ContractId;
+        this.PartnerId = PartnerId;
     }
 
 
@@ -23,14 +23,14 @@ public class ContractPartnerSearch extends SearchObject<ContractPartner> {
     public SearchSpecPack<ContractPartner> getSearchSpec() {
 
         SearchSpecPack<ContractPartner> searchSpec = super.getSearchSpec();
-        if (contractPartnerContractId != null) {
-            searchSpec.addSpec(Specifications.specEquals("contractPartnerContractId", this.contractPartnerContractId));
+        if (ContractId != null) {
+            searchSpec.addSpec(Specifications.specEquals("ContractId", this.ContractId));
         }
-        if (contractPartnerPartnerId != null) {
-            searchSpec.addSpec(Specifications.specEquals("contractPartnerPartnerId", this.contractPartnerPartnerId));
+        if (PartnerId != null) {
+            searchSpec.addSpec(Specifications.specEquals("PartnerId", this.PartnerId));
         }
-        if (contractPartnerId != null) {
-            searchSpec.addSpec(Specifications.specEquals("contractPartnerId", this.contractPartnerId));
+        if (id != null) {
+            searchSpec.addSpec(Specifications.specEquals("id", this.id));
         }
         return searchSpec;
     }

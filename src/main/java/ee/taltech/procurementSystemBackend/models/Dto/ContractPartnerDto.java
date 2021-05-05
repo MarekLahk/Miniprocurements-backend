@@ -21,14 +21,14 @@ import java.util.UUID;
 @Schema(name = "ContractPartnerDto", description = "DTO for contract partner links")
 public class ContractPartnerDto extends DtoBase {
     @Schema(title="ID of the link", example = "")
-    private Integer contractPartnerId;
+    private Integer id;
 
     @Schema(title="ID of the contract in the link", example = "3")
-    @NotNull(message = "contractPartnerContractId cannot be null")
-    private Integer contractPartnerContractId;
+    @NotNull(message = "ContractId cannot be null")
+    private Integer ContractId;
 
     @Schema(title="ID of the partner in the link", example = "2")
-    @NotNull(message = "contractPartnerPartnerId cannot be null")
-    private Integer contractPartnerPartnerId;
+    @NotNull(message = "PartnerId cannot be null")
+    private Integer PartnerId;
 
 }
