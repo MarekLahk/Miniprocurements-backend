@@ -1,6 +1,5 @@
 package ee.taltech.procurementSystemBackend;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -12,8 +11,8 @@ class ProcurementSystemBackendApplicationTests {
 	}
 
 
-	@Test
-	void contextLoads() {
-	}
+//	@Test
+//	void contextLoads() {
+//	}
 
 }
