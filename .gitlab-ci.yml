@@ -29,7 +29,7 @@ build backend:
 test backend:
   stage: test
   script:
-    - ./gradlew check
+    - ./gradlew check -Pconfig=application-prod
 
 deploy:
   stage: deploy

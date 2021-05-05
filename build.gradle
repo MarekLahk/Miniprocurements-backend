@@ -55,7 +55,13 @@ dependencies {
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
+//test {
+//	useJUnitPlatform()
+//}
 test {
+	if (project.hasProperty('config')){
+		environment "spring.config.name",  project.getProperties().get('config')
+	}
+//	environment "spring.config.name",  "application"//System.getenv('name')
 	useJUnitPlatform()
 }
-
