@@ -61,6 +61,7 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
 
         // get this to take some values that cannot be passed by put method
         Procurement initialProcurement = optionalProcurement.get();
+        procurementUtils.checkThatProcurementCanBePatchedOrUpdated(initialProcurement);
 
         Procurement procurement = toModelOptional(dto)
                 .orElseThrow(() -> new ProcurementException("No procurement dto provided"));
@@ -75,7 +76,14 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
             Integer contractSubId = pocurementRepository.countByContractId(dto.getContractId()) + 1;
             procurement.setContractSubId(contractSubId);
         }
+
         procurement.setStatus(initialProcurement.getStatus());
+
+        if (initialProcurement.getStatus() == 2) {
+            System.out.println("Email must be sent");
+            // TODO: 5/5/2021 send emails claiming that active procurement was updated
+        }
+
         return toDtoOptional(pocurementRepository.save(procurement))
                 .orElseThrow(() -> new ProcurementException("Could not update procurement"));
     }
@@ -86,9 +94,21 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
 
         procurementUtils.checkEmployeePermissionAndProcurementPresence(id, person.getId(), optionalProcurement);
         if (dto.getStatus() == null) throw new ProcurementException("Provided status is not present");
+        if (!(dto.getStatus() == 2 || dto.getStatus() == 4)) throw new ProcurementException("Status to patch must be equal to 2 or 4");
         // optional isPresent is checked in utils
         Procurement procurement = optionalProcurement.get();
-        procurement.setStatus(dto.getStatus());
+        procurementUtils.checkThatProcurementCanBePatchedOrUpdated(procurement);
+
+        Short newStatus = dto.getStatus();
+        if (procurement.getStatus() == 1 && newStatus == 2) {
+            System.out.println("Procurement was activated");
+            // TODO: 5/5/2021 Send emails that procurement was activated
+        }
+        if (procurement.getStatus() == 2 && newStatus == 4) {
+            System.out.println("Procurement was deleted");
+            // TODO: 5/5/2021 Send emails that active procurement was deleted
+        }
+        procurement.setStatus(newStatus);
         procurementUtils.checkProcurementBeforeStatusPatch(procurement);
         return toDtoOptional(pocurementRepository.save(procurement)).get();
     }
