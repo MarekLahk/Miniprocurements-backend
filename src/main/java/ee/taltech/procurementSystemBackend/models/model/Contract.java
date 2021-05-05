@@ -51,12 +51,6 @@ public class Contract extends ModelBase {
     @Column(name = "contract_name", nullable = false, length = 50)
     private String contractName;
     @Basic
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-    @Basic
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
-    @Basic
     @Column(name = "status", nullable = false)
     private Integer status;
 }

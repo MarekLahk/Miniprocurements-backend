@@ -31,8 +31,6 @@ public class ContractDto extends DtoBase  {
 
     @NotNull(message = "contractName cannot be null")
     private String contractName;
-    private LocalDateTime updatedAt;
-    private LocalDateTime createdAt;
 
     @Size(min = 1, max = 2, message = "Status has to be 1 or 2. , See https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/wikis/klassifikaatorid for valid options.")
     @NotNull(message = "Status cannot be null, See https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/wikis/klassifikaatorid for valid options.")
