@@ -34,7 +34,7 @@ public class ContractPartnerService extends ServiceBase<ContractPartner, Contrac
                 String.format("ContractPartner with id [%d] does not exist", id)));
         ContractPartner contractPartner = toModelOptional(dto)
                 .orElseThrow(() -> new ContractPartnerException("No ContractPartner dto provided"));
-        contractPartner.setContractPartnerId(id);
+        contractPartner.setPartnerId(id);
         return toDtoOptional(contractPartnerRepository.save(contractPartner))
                 .orElseThrow(() -> new ContractPartnerException("Could not update ContractPartner"));
     }

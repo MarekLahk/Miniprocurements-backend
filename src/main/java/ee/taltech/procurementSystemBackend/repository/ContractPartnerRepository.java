@@ -9,5 +9,5 @@ import java.util.UUID;
 @Repository
 public interface ContractPartnerRepository extends RepositoryInterface<ContractPartner> {
 
-    Optional<ContractPartner> findByContractPartnerId(UUID id);
+    Optional<ContractPartner> findByPartnerId(UUID id);
 }
