@@ -8,6 +8,7 @@ import ee.taltech.procurementSystemBackend.models.model.ProcurementPartner;
 import ee.taltech.procurementSystemBackend.repository.BidRepository;
 import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
 import ee.taltech.procurementSystemBackend.repository.ProcurementPartnerRepository;
+import ee.taltech.procurementSystemBackend.repository.ProcurerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ public class ProcurementWinnersUtils {
 
     private final ProcurementPartnerRepository procurementPartnerRepository;
     private final PocurementRepository procurementRepository;
+    private final ProcurerRepository procurerRepository;
     private final BidRepository bidRepository;
 
     public void checkProcurementWinner(ProcurementWinnersDto dto) {
@@ -30,13 +32,15 @@ public class ProcurementWinnersUtils {
         }
     }
 
-    public Procurement getAndCheckProcurementToSetWinner(Integer procurementId) {
+    public Procurement getAndCheckProcurementToSetWinner(Integer procurementId, Integer employeeId) {
         Procurement procurement = procurementRepository.findById(procurementId)
                 .orElseThrow(() -> new ProcurementException(
                         String.format(
                                 "Procurement with id [%d] does not exist",
                                 procurementId)));
-        // TODO: 5/5/2021 check that employee has access to update current procurement
+        if (procurerRepository.findByProcurementIdAndAndEmployeeId(procurementId, employeeId).isEmpty()) {
+            throw new ProcurementWinnersException("This person does not have permission to set winner to this procurement");
+        }
         if (procurement.getStatus() != 2) {
             throw new ProcurementWinnersException("It is possible to set winner only to active procurement");
         }

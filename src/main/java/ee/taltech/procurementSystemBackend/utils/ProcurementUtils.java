@@ -4,18 +4,21 @@ import ee.taltech.procurementSystemBackend.exception.AuthException;
 import ee.taltech.procurementSystemBackend.exception.ProcurementException;
 import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
+import ee.taltech.procurementSystemBackend.models.model.Procurer;
 import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
+import ee.taltech.procurementSystemBackend.repository.ProcurerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Component
 @AllArgsConstructor
 public class ProcurementUtils {
 
-    private final PocurementRepository pocurementRepository;
+    private final ProcurerRepository procurerRepository;
 
     public void checkProcurementDeadlineIsNotInPast(Timestamp timestamp) {
         if (timestamp.before(new Timestamp(System.currentTimeMillis()))) {
@@ -26,7 +29,7 @@ public class ProcurementUtils {
     public void checkEmployeePermissionAndProcurementPresence(Integer procurementId,
                                                               Integer personId,
                                                               Optional<Procurement> optionalProcurement) {
-        if (pocurementRepository.findByIdAndCreatedById(procurementId, personId).isEmpty()) {
+        if (procurerRepository.findByProcurementIdAndAndEmployeeId(procurementId, personId).isEmpty()) {
             throw new AuthException("This person does not have permission to update this procurement");
         }
 
@@ -61,5 +64,17 @@ public class ProcurementUtils {
         if (procurement.getStatus() == 4) {
             throw new ProcurementException("Deleted procurement cannot be patched or updated");
         }
+    }
+
+    public void saveProcurerForAddedProcurement(Integer procurementId, Integer creatorId) {
+        Procurer procurer = Procurer.builder()
+                .procurementId(procurementId)
+                .employeeId(creatorId).build();
+        procurer.setCreatedAt(LocalDateTime.now());
+        procurer.setUpdatedAt(LocalDateTime.now());
+
+        procurerRepository.save(
+                procurer
+        );
     }
 }
