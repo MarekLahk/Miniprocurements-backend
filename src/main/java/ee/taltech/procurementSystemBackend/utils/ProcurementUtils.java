@@ -54,4 +54,12 @@ public class ProcurementUtils {
         }
     }
 
+    public void checkThatProcurementCanBePatchedOrUpdated(Procurement procurement) {
+        if (procurement.getStatus() == 3) {
+            throw new ProcurementException("Finished procurement cannot be patched or updated");
+        }
+        if (procurement.getStatus() == 4) {
+            throw new ProcurementException("Deleted procurement cannot be patched or updated");
+        }
+    }
 }
