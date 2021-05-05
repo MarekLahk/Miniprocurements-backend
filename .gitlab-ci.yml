@@ -29,8 +29,7 @@ build backend:
 test backend:
   stage: test
   script:
-    - ./gradlew check --args='--spring.config.name=application-prod'
-
+    - ./gradlew check
 
 deploy:
   stage: deploy
