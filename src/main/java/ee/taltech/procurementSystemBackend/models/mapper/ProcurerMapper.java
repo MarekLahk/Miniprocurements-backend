@@ -14,17 +14,11 @@ public interface ProcurerMapper extends MapperInterface<Procurer, ProcurerDto> {
     ProcurerMapper INSTANCE = Mappers.getMapper(ProcurerMapper.class);
 
     @Override
-    default ProcurerDto toDto(Procurer model) {
-        return MapperInterface.super.toDto(model);
-    }
+    ProcurerDto toDto(Procurer model);
 
     @Override
-    default Procurer toModel(ProcurerDto dto) {
-        return MapperInterface.super.toModel(dto);
-    }
+    Procurer toModel(ProcurerDto dto);
 
     @Override
-    default List<ProcurerDto> toDtoList(List<Procurer> dtoList) {
-        return MapperInterface.super.toDtoList(dtoList);
-    }
+    List<ProcurerDto> toDtoList(List<Procurer> dtoList);
 }
