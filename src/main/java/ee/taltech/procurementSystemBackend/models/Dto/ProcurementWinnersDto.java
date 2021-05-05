@@ -14,7 +14,6 @@ public class ProcurementWinnersDto extends DtoBase {
 
     @NotNull(message = "Procurement id cannot be null")
     private Integer procurementId;
-    @NotNull(message = "Winner id cannot be null")
     private Integer winnerId;
     private Integer judgeId;
     private String reason;

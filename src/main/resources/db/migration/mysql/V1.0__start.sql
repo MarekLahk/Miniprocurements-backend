@@ -120,7 +120,7 @@ CREATE TABLE Procurement
 CREATE TABLE Procurement_Winners
 (
     procurement_id MEDIUMINT NOT NULL,
-    winner_id      MEDIUMINT NOT NULL,
+    winner_id      MEDIUMINT,
     judge_id       MEDIUMINT NOT NULL,
     reason         TEXT,
 
