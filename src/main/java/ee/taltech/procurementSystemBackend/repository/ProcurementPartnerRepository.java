@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface ProcurementPartnerRepository extends RepositoryInterface<ProcurementPartner> {
 
     Optional<ProcurementPartner> findByLinkId(UUID linkId);
+
+    Optional<ProcurementPartner> findByProcurementIdAndPartnerId(Integer procurementId, Integer partnerId);
 }
