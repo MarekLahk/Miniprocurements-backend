@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS miniprocurements;
-COMMIT;
-USE miniprocurements;
+# CREATE DATABASE IF NOT EXISTS miniprocurements;
+# COMMIT;
+# USE miniprocurements;
 
 
 

@@ -26,6 +26,11 @@ build backend:
       - build/libs/*.jar
     expire_in: 1 week
 
+test backend:
+  stage: test
+  script:
+    - ./gradlew check --args='--spring.config.name=application-prod'
+
 
 deploy:
   stage: deploy
