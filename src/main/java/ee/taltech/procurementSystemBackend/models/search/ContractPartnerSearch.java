@@ -7,21 +7,15 @@ import org.springframework.data.domain.Sort;
 
 public class ContractPartnerSearch extends SearchObject<ContractPartner> {
 
-    private Integer contractPartnerLinkId;
-    private Integer contractPartnerProcurementId;
+    private Integer contractPartnerContractId; //contractPartnerLinkId
     private Integer contractPartnerPartnerId;
-    private String contractPartnerTimeAdded;
-    private String contractPartnerLinkFirstAccessed;
     private Integer contractPartnerId;
 
-    public ContractPartnerSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer contractPartnerId, Integer contractPartnerLinkId, Integer contractPartnerProcurementId, Integer contractPartnerPartnerId, String contractPartnerTimeAdded, String contractPartnerLinkFirstAccessed) {
+    public ContractPartnerSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer contractPartnerId, Integer contractPartnerContractId, Integer contractPartnerPartnerId) {
         super(limit, page, sort, dir);
         this.contractPartnerId = contractPartnerId;
-        this.contractPartnerLinkId = contractPartnerLinkId;
-        this.contractPartnerProcurementId = contractPartnerProcurementId;
+        this.contractPartnerContractId = contractPartnerContractId;
         this.contractPartnerPartnerId = contractPartnerPartnerId;
-        this.contractPartnerTimeAdded = contractPartnerTimeAdded;
-        this.contractPartnerLinkFirstAccessed = contractPartnerLinkFirstAccessed;
     }
 
 
@@ -29,11 +23,8 @@ public class ContractPartnerSearch extends SearchObject<ContractPartner> {
     public SearchSpecPack<ContractPartner> getSearchSpec() {
 
         SearchSpecPack<ContractPartner> searchSpec = super.getSearchSpec();
-        if (contractPartnerLinkId != null) {
-            searchSpec.addSpec(Specifications.specEquals("contractPartnerLinkId", this.contractPartnerLinkId));
-        }
-        if (contractPartnerProcurementId != null) {
-            searchSpec.addSpec(Specifications.specEquals("contractPartnerProcurementId", this.contractPartnerProcurementId));
+        if (contractPartnerContractId != null) {
+            searchSpec.addSpec(Specifications.specEquals("contractPartnerContractId", this.contractPartnerContractId));
         }
         if (contractPartnerPartnerId != null) {
             searchSpec.addSpec(Specifications.specEquals("contractPartnerPartnerId", this.contractPartnerPartnerId));
