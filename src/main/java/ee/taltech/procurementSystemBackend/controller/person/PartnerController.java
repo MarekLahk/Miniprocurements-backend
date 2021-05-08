@@ -2,7 +2,6 @@ package ee.taltech.procurementSystemBackend.controller.person;
 
 import ee.taltech.procurementSystemBackend.controller.ControllerBase;
 import ee.taltech.procurementSystemBackend.models.Dto.Person.PartnerDto;
-import ee.taltech.procurementSystemBackend.models.Dto.Person.PersonDto;
 import ee.taltech.procurementSystemBackend.models.model.person.Partner;
 import ee.taltech.procurementSystemBackend.models.search.person.PartnerSearch;
 import ee.taltech.procurementSystemBackend.service.person.PartnerService;
@@ -19,7 +18,7 @@ public class PartnerController extends ControllerBase<Partner, PartnerDto, Partn
     private final PartnerService partnerService;
 
     public PartnerController(PartnerService partnerService) {
-        super(partnerService, Partner.class, PartnerDto.class);
+        super(partnerService);
         this.partnerService = partnerService;
     }
 

@@ -285,10 +285,12 @@ CREATE TABLE Reply
 CREATE TABLE Document
 (
     document_id     MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-    document_number BIGINT                   NOT NULL,
+    document_uuid   BINARY(16)               NOT NULL UNIQUE,
     document_name   VARCHAR(100)             NOT NULL,
-    procurement_id  MEDIUMINT                NOT NULL,
+    procurement_id  MEDIUMINT,
     bid_id          MEDIUMINT,
+    announcement_id MEDIUMINT,
+    reply_id MEDIUMINT,
     person_id       MEDIUMINT                NOT NULL,
     document_path   TEXT                     NOT NULL,
 
@@ -310,6 +312,30 @@ CREATE TABLE Document
         ON UPDATE CASCADE
         ON DELETE NO ACTION
 );
+
+CREATE TRIGGER before_insert_document
+    BEFORE INSERT
+    ON Document
+    FOR EACH ROW SET NEW.document_uuid = UUID_TO_BIN(uuid());
+
+DELIMITER //
+CREATE TRIGGER tr_document_is_attached
+    BEFORE INSERT
+    ON Document
+    FOR EACH ROW
+BEGIN
+    IF NOT (((NEW.procurement_id is not null) and (NEW.reply_id is null) and (NEW.announcement_id is null) and (NEW.bid_id is null))
+        OR ((NEW.procurement_id is null) and (NEW.reply_id is not null) and (NEW.announcement_id is null) and (NEW.bid_id is null))
+        OR ((NEW.procurement_id is null) and (NEW.reply_id is null) and (NEW.announcement_id is not null) and (NEW.bid_id is null))
+        OR ((NEW.procurement_id is null) and (NEW.reply_id is null) and (NEW.announcement_id is null) and (NEW.bid_id is not null)))
+    THEN
+
+        SIGNAL SQLSTATE '23000';
+    end if;
+end//
+DELIMITER ;
+
+
 
 CREATE TABLE Role
 (
@@ -373,7 +399,7 @@ CREATE TABLE Email
 );
 
 DELIMITER //
-CREATE TRIGGER a
+CREATE TRIGGER tr_email_has_reason
     BEFORE INSERT
     ON Email
     FOR EACH ROW

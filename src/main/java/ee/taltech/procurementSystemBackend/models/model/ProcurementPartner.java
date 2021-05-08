@@ -3,6 +3,8 @@ package ee.taltech.procurementSystemBackend.models.model;
 import com.googlecode.jmapper.annotations.JGlobalMap;
 import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.*;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import java.util.UUID;
@@ -20,8 +22,8 @@ public class ProcurementPartner extends ModelBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Basic
     @Column(name = "link_id")
+    @Generated(GenerationTime.INSERT)
     private UUID linkId;
     @Basic
     @Column(name = "procurement_id", nullable = false, length = -1)

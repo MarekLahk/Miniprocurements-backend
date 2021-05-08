@@ -26,7 +26,7 @@ public class ProcurementPartnerController extends ControllerBase<ProcurementPart
     private final ProcurementPartnerService procurementPartnerService;
 
     public ProcurementPartnerController(ProcurementPartnerService procurementPartnerService) {
-        super(procurementPartnerService, ProcurementPartner.class, ProcurementPartnerDto.class);
+        super(procurementPartnerService);
         this.procurementPartnerService = procurementPartnerService;
     }
 

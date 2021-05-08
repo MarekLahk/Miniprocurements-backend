@@ -16,7 +16,7 @@ public class AnnouncementController extends ControllerBase<Announcement, Announc
     private final AnnouncementService announcementService;
 
     public AnnouncementController(AnnouncementService announcementService) {
-        super(announcementService, Announcement.class, AnnouncementDto.class);
+        super(announcementService);
         this.announcementService = announcementService;
     }
 

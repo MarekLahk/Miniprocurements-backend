@@ -22,7 +22,7 @@ public class ProcurementWinnersController extends ControllerBase<ProcurementWinn
     private final ProcurementWinnersService procurementWinnersService;
 
     public ProcurementWinnersController(ProcurementWinnersService procurementWinnersService) {
-        super(procurementWinnersService, ProcurementWinners.class, ProcurementWinnersDto.class);
+        super(procurementWinnersService);
         this.procurementWinnersService = procurementWinnersService;
     }
 
