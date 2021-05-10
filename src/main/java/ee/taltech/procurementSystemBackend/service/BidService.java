@@ -2,7 +2,7 @@ package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.BidException;
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
-import ee.taltech.procurementSystemBackend.models.Dto.BidResponseDto;
+import ee.taltech.procurementSystemBackend.models.Dto.BidInfoDto;
 import ee.taltech.procurementSystemBackend.models.mapper.BidMapper;
 import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Bid;
@@ -36,7 +36,7 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         this.procurementMapper = ProcurementMapper.INSTANCE;
     }
 
-    public BidResponseDto getBidInfo(UUID partnerUUID) {
+    public BidInfoDto getBidInfo(UUID partnerUUID) {
         ProcurementPartner procurementPartner = procurementPartnerRepository.findByLinkId(partnerUUID)
                 .orElseThrow(() -> new BidException("No such bid"));
         System.out.println(procurementPartner.getProcurement().getCreatedAt());

@@ -1,6 +1,6 @@
 package ee.taltech.procurementSystemBackend.models.mapper;
 
-import ee.taltech.procurementSystemBackend.models.Dto.BidResponseDto;
+import ee.taltech.procurementSystemBackend.models.Dto.BidInfoDto;
 import ee.taltech.procurementSystemBackend.models.Dto.ProcurementDto;
 import ee.taltech.procurementSystemBackend.models.Dto.QuestionInfoDto;
 import ee.taltech.procurementSystemBackend.models.Dto.ReplyDto;
@@ -36,7 +36,7 @@ public interface ProcurementMapper extends MapperInterface<Procurement, Procurem
     Procurement toModel(ProcurementDto dto);
 
     @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
-    BidResponseDto toInfoDto(Procurement model);
+    BidInfoDto toInfoDto(Procurement model);
 
     @Mapping(source = "questions", target = "questions")
     @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import java.util.Set;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -32,5 +33,8 @@ public class Bid extends ModelBase {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="procurement_id", insertable = false, updatable = false)
     private Procurement procurement;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bid")
+    private Set<Document> documents;
 
 }

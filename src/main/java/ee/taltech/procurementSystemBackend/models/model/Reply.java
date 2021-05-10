@@ -4,6 +4,7 @@ import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -30,4 +31,7 @@ public class Reply extends ModelBase {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="question_id", insertable = false, updatable = false)
     private Question question;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reply")
+    private Set<Document> documents;
 }

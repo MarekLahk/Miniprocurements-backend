@@ -310,6 +310,14 @@ CREATE TABLE Document
     CONSTRAINT fk_document_bid_id FOREIGN KEY (bid_id)
         REFERENCES Bid (bid_id)
         ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_document_announcement_id FOREIGN KEY (announcement_id)
+        REFERENCES Announcement (announcement_id)
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_document_reply_id FOREIGN KEY (reply_id)
+        REFERENCES Reply (reply_id)
+        ON UPDATE CASCADE
         ON DELETE NO ACTION
 );
 

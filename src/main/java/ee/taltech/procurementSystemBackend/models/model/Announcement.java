@@ -6,6 +6,7 @@ import ee.taltech.procurementSystemBackend.models.model.person.Employee;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -37,4 +38,7 @@ public class Announcement extends ModelBase {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="procurement_id", insertable = false, updatable = false)
     private Procurement procurement;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "announcement")
+    private Set<Document> documents;
 }

@@ -49,4 +49,17 @@ public class Document extends ModelBase {
     @Column(name = "document_path", nullable = false)
     private String path;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "procurement_id", insertable = false, updatable = false)
+    private Procurement procurement;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bid_id", insertable = false, updatable = false)
+    private Bid bid;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "announcement_id", insertable = false, updatable = false)
+    private Announcement announcement;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reply_id", insertable = false, updatable = false)
+    private Reply reply;
+
 }

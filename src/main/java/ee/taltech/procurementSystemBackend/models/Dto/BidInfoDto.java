@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BidResponseDto extends DtoBase {
+public class BidInfoDto extends DtoBase {
 
     private Integer id;
     @NotBlank(message = "Procurement name cannot be blank.")
