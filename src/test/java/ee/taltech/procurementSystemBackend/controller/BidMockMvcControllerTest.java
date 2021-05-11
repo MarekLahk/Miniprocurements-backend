@@ -49,12 +49,12 @@ public class BidMockMvcControllerTest {
                 .andExpect(status().isFound());
 
     }
-
+/*
     @Sql(value = "classpath:/db/testData/test.sql" , executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Test
     @WithMockUser(username = "test", password = "test", roles = "group1")
     public void whenAuthenticatedGetProtectedEndpointThenStatusFound() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get(PROTECTED_PATH).accept(APPLICATION_JSON))
                 .andExpect(status().isOk());
-    }
+    }*/
 }
