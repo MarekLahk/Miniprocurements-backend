@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 @JGlobalMap
-public class AnnouncementDto extends DtoBase {
+public class AnnouncementInfoDto extends DtoBase {
 
     private Integer id;
     @NotNull(message = "Procurement id cannot be null.")
@@ -23,6 +24,5 @@ public class AnnouncementDto extends DtoBase {
     @NotBlank(message = "Announcement cannot be blank")
     private String announcement;
 
-
-
+    private List<DocumentDto> documents;
 }

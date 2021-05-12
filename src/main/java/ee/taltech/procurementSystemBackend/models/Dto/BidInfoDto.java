@@ -34,7 +34,8 @@ public class BidInfoDto extends DtoBase {
     private Timestamp completionDeadline;
     private Timestamp completionDeadlineDays;
 
-    private List<AnnouncementDto> announcements;
+    private List<AnnouncementInfoDto> announcements;
     private List<QuestionInfoDto> questions;
+    private List<DocumentDto> documents;
 
 }
