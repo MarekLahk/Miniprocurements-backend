@@ -45,13 +45,13 @@ public class ControllerGetMappingIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    void getContractPartnersTest() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get(CONTRACT_PARTNERS).accept(APPLICATION_JSON))
-                .andExpect(status().isOk());
-        mvc.perform(MockMvcRequestBuilders.get(CONTRACT_PARTNERS + "/0").accept(APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }
+//    @Test
+//    void getContractPartnersTest() throws Exception {
+//        mvc.perform(MockMvcRequestBuilders.get(CONTRACT_PARTNERS).accept(APPLICATION_JSON))
+//                .andExpect(status().isOk());
+//        mvc.perform(MockMvcRequestBuilders.get(CONTRACT_PARTNERS + "/0").accept(APPLICATION_JSON))
+//                .andExpect(status().isNotFound());
+//    }
 
     @Test
     void getProcurementsPartnersTest() throws Exception {
@@ -61,13 +61,13 @@ public class ControllerGetMappingIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
-    @Test
-    void getProcurementWinnersTest() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get(PROCUREMENT_WINNERS).accept(APPLICATION_JSON))
-                .andExpect(status().isOk());
-        mvc.perform(MockMvcRequestBuilders.get(PROCUREMENT_WINNERS + "/0").accept(APPLICATION_JSON))
-                .andExpect(status().isNotFound());
-    }
+//    @Test
+//    void getProcurementWinnersTest() throws Exception {
+//        mvc.perform(MockMvcRequestBuilders.get(PROCUREMENT_WINNERS).accept(APPLICATION_JSON))
+//                .andExpect(status().isOk());
+//        mvc.perform(MockMvcRequestBuilders.get(PROCUREMENT_WINNERS + "/0").accept(APPLICATION_JSON))
+//                .andExpect(status().isNotFound());
+//    }
 
     @Test
     void getQuestionsTest() throws Exception {
