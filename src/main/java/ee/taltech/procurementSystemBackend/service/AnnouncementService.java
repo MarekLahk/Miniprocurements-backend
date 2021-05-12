@@ -15,7 +15,6 @@ import java.util.Optional;
 
 
 @Service
-
 public class AnnouncementService extends ServiceBase<Announcement, AnnouncementDto> {
 
     private final AnnouncementRepository announcementRepository;

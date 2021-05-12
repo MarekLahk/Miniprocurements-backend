@@ -12,7 +12,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "procurement")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -72,7 +71,6 @@ public class Procurement extends ModelBase {
     private Set<ProcurementPartner> procurementPartners;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
     private Set<Question> questions;
-
 
 
 }

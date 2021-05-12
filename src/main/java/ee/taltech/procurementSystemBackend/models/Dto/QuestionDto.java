@@ -4,7 +4,6 @@ import ee.taltech.procurementSystemBackend.models.DtoBase;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
-import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -14,7 +13,6 @@ import java.util.UUID;
 public class QuestionDto extends DtoBase {
 
     private Integer id;
-    private UUID linkId;
     private Integer procurementId;
     @NotBlank(message = "Question cannot be null or blank.")
     private String question;

@@ -1,14 +1,15 @@
 package ee.taltech.procurementSystemBackend.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+
+@Data
+@MappedSuperclass
 public abstract class ModelBase {
 
     @Basic

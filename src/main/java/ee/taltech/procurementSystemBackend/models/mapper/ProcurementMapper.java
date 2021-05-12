@@ -1,11 +1,20 @@
 package ee.taltech.procurementSystemBackend.models.mapper;
 
+import ee.taltech.procurementSystemBackend.models.Dto.BidResponseDto;
 import ee.taltech.procurementSystemBackend.models.Dto.ProcurementDto;
+import ee.taltech.procurementSystemBackend.models.Dto.QuestionInfoDto;
+import ee.taltech.procurementSystemBackend.models.Dto.ReplyDto;
 import ee.taltech.procurementSystemBackend.models.MapperInterface;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
+import ee.taltech.procurementSystemBackend.models.model.Question;
+import ee.taltech.procurementSystemBackend.models.model.Reply;
+import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.NullValueMappingStrategy;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper
 public interface ProcurementMapper extends MapperInterface<Procurement, ProcurementDto> {
@@ -13,7 +22,10 @@ public interface ProcurementMapper extends MapperInterface<Procurement, Procurem
     ProcurementMapper INSTANCE = Mappers.getMapper(ProcurementMapper.class);
 
     @Override
+    @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
     ProcurementDto toDto(Procurement model);
+
+
 
     @Override
     @Mapping(target = "createdBy", ignore = true)
@@ -22,4 +34,15 @@ public interface ProcurementMapper extends MapperInterface<Procurement, Procurem
     @Mapping(target = "procurementPartners", ignore = true)
     @Mapping(target = "questions", ignore = true)
     Procurement toModel(ProcurementDto dto);
+
+    @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
+    BidResponseDto toInfoDto(Procurement model);
+
+    @Mapping(source = "questions", target = "questions")
+    @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
+    List<QuestionInfoDto> toQuestionInfoDtoList(List<Question> questions);
+    QuestionInfoDto toQuestionInfoDto(Question question);
+    @Mapping(source = "replies", target = "replies")
+    @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
+    List<ReplyDto> toReplyDtoList(List<Reply> questions);
 }

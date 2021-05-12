@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS miniprocurements;
-COMMIT;
-USE miniprocurements;
+# CREATE DATABASE IF NOT EXISTS miniprocurements;
+# COMMIT;
+# USE miniprocurements;
 
 
 
@@ -31,6 +31,8 @@ CREATE TABLE Contract
     created_at                DATETIME DEFAULT NOW(),
     updated_at                DATETIME DEFAULT NOW()
         ON UPDATE NOW(),
+
+    status                    TINYINT,
 
     CONSTRAINT pk_contract_id PRIMARY KEY (contract_id)
 );
@@ -70,7 +72,7 @@ CREATE TABLE Employee
 
 CREATE TABLE ContractPartners
 (
-    contract_partner_id MEDIUMINT,
+    contract_partner_id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
     contract_id         MEDIUMINT NOT NULL,
     partner_id          MEDIUMINT NOT NULL,
 
@@ -120,7 +122,7 @@ CREATE TABLE Procurement
 CREATE TABLE Procurement_Winners
 (
     procurement_id MEDIUMINT NOT NULL,
-    winner_id      MEDIUMINT NOT NULL,
+    winner_id      MEDIUMINT,
     judge_id       MEDIUMINT NOT NULL,
     reason         TEXT,
 
@@ -215,14 +217,15 @@ CREATE TABLE Bid
 
 CREATE TABLE Procurer
 (
-    procurement_id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    procurer_id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    procurement_id MEDIUMINT NOT NULL,
     employee_id    MEDIUMINT NOT NULL,
 
     created_at     DATETIME DEFAULT NOW(),
     updated_at     DATETIME DEFAULT NOW()
         ON UPDATE NOW(),
 
-    CONSTRAINT pk_procurement_id PRIMARY KEY (procurement_id),
+    CONSTRAINT pk_procurer_id PRIMARY KEY (procurer_id),
     CONSTRAINT fk_procurement_id FOREIGN KEY (procurement_id)
         REFERENCES Procurement (procurement_id)
         ON UPDATE CASCADE
