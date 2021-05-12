@@ -15,15 +15,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.internal.verification.Times;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -59,7 +54,7 @@ public class ProcurementIntegrationTest {
     @BeforeEach
     void setUp() {
         Employee employee = new Employee();
-        employee.setEMail("test@mail.com");
+        employee.setEMail("test@mail.test");
         employee.setName("test name");
         employee.setCreatedAt(LocalDateTime.now());
         employeeRepository.save(employee);
