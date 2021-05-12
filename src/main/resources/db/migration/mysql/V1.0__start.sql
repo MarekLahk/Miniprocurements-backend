@@ -32,6 +32,8 @@ CREATE TABLE Contract
     updated_at                DATETIME DEFAULT NOW()
         ON UPDATE NOW(),
 
+    status                    TINYINT,
+
     CONSTRAINT pk_contract_id PRIMARY KEY (contract_id)
 );
 
@@ -70,7 +72,7 @@ CREATE TABLE Employee
 
 CREATE TABLE ContractPartners
 (
-    contract_partner_id MEDIUMINT,
+    contract_partner_id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
     contract_id         MEDIUMINT NOT NULL,
     partner_id          MEDIUMINT NOT NULL,
 
