@@ -85,6 +85,8 @@ public class ProcurementIntegrationTest {
         LocalDateTime nowPlusMonth = LocalDateTime.now().plusMonths(1);
         Timestamp deadline = Timestamp.valueOf(nowPlusMonth);
 
+        // Add procurement
+
         ProcurementDto dto = ProcurementDto
                 .builder()
                 .name("Procurement")
@@ -96,5 +98,22 @@ public class ProcurementIntegrationTest {
         Optional<ProcurementDto> result = Optional.of(procurementService.addProcurement(dto, authentication));
 
         assertThat(result.get().getCreatedById()).isEqualTo(1);
+
+        // Update procurement
+
+        ProcurementDto procurementDto = result.get();
+        procurementDto.setName("Procurement Updated");
+        Optional<ProcurementDto> updatedResult = Optional.of(procurementService.updateProcurement(1, procurementDto, authentication));
+
+        assertThat(updatedResult.get().getCreatedById()).isEqualTo(1);
+        assertThat(updatedResult.get().getName()).isEqualTo("Procurement Updated");
+
+        // Make Procurement active
+
+        ProcurementDto patchDto = new ProcurementDto();
+        patchDto.setStatus((short) 2);
+        Optional<ProcurementDto> patchedResult = Optional.of(procurementService.patchProcurementStatus(1, patchDto, authentication));
+
+        assertThat(patchedResult.get().getStatus()).isEqualTo((short) 2);
     }
 }
