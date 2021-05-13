@@ -4,10 +4,8 @@ import ee.taltech.procurementSystemBackend.exception.ProcurementException;
 import ee.taltech.procurementSystemBackend.models.Dto.ProcurementDto;
 import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
-import ee.taltech.procurementSystemBackend.models.model.Procurer;
 import ee.taltech.procurementSystemBackend.models.model.person.Person;
 import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
-import ee.taltech.procurementSystemBackend.repository.ProcurerRepository;
 import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import ee.taltech.procurementSystemBackend.utils.ProcurementUtils;
@@ -37,17 +35,17 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
     public ProcurementDto addProcurement(ProcurementDto dto, Authentication authentication) {
         Procurement procurement = toModelOptional(dto)
                 .orElseThrow(() -> new ProcurementException("No procurement dto provided"));
-        procurementUtils.checkProcurementDeadlineIsNotInPast(dto.getDeadline());
+//        procurementUtils.checkProcurementDeadlineIsNotInPast(dto.getDeadline());
         Integer creatorId = authUtils.getPersonToPerformOperations(authentication).getId();
         procurement.setCreatedById(creatorId);
         procurement.setStatus((short) 1);
         procurement.setCreatedAt(null);
-        boolean hasContract = dto.getContractId() != null;
-        procurement.setHasContract(dto.getContractId() != null);
-        if (hasContract) {
-            Integer contractSubId = pocurementRepository.countByContractId(dto.getContractId()) + 1;
-            procurement.setContractSubId(contractSubId);
-        }
+//        boolean hasContract = dto.getContractId() != null;
+//        procurement.setHasContract(dto.getContractId() != null);
+//        if (hasContract) {
+//            Integer contractSubId = pocurementRepository.countByContractId(dto.getContractId()) + 1;
+//            procurement.setContractSubId(contractSubId);
+//        }
 
         Procurement savedProcurement = pocurementRepository.save(procurement);
 

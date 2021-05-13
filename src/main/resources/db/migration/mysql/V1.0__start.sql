@@ -92,7 +92,7 @@ CREATE TABLE ContractPartners
 CREATE TABLE Procurement
 (
     procurement_id           MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-    name                     VARCHAR(50)              NOT NULL,
+    name                     VARCHAR(50),
     amount                   INT,
     description              TEXT,
     requirements             TEXT,
