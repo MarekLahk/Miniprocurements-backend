@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 public class ReplyDto extends DtoBase {
 
     private Integer id;
-    @NotNull(message = "Replier id cannot be null.")
     private Integer replierId;
     @NotNull(message = "Question id cannot be null.")
     private Integer questionId;
