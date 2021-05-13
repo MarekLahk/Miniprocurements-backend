@@ -16,7 +16,6 @@ import java.sql.Timestamp;
 public class ProcurementDto extends DtoBase  {
 
     private Integer id;
-    @NotBlank(message = "Procurement name cannot be blank.")
     private String name;
     @Positive(message = "Amount cannot be zero or negative.")
     private Integer amount;
@@ -26,7 +25,6 @@ public class ProcurementDto extends DtoBase  {
     private Integer contractSubId;
     private Boolean hasContract;
     private Integer createdById;
-    @NotNull(message = "Deadline cannot be null")
     private Timestamp deadline;
     private Short status;
     private Timestamp finishedAt;
