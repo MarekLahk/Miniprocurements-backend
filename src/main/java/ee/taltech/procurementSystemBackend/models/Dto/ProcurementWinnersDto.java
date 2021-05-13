@@ -18,9 +18,11 @@ public class ProcurementWinnersDto extends DtoBase {
     private Integer procurementId;
 
     @Schema(title="procurementId of ProcurementWinnersDto")
+    @NotNull(message = "winnerId cannot be null")
     private Integer winnerId;
 
     @Schema(title="procurementId of ProcurementWinnersDto")
+    @NotNull(message = "judgeId cannot be null")
     private Integer judgeId;
 
     @Schema(title="procurementId of ProcurementWinnersDto")
