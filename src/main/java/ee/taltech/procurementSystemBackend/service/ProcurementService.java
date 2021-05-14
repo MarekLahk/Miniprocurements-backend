@@ -37,7 +37,7 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
     public ProcurementDto addProcurement(ProcurementDto dto, Authentication authentication) {
         Procurement procurement = toModelOptional(dto)
                 .orElseThrow(() -> new ProcurementException("No procurement dto provided"));
-        procurementUtils.checkProcurementDeadlineIsNotInPast(dto.getDeadline());
+
         Integer creatorId = authUtils.getPersonToPerformOperations(authentication).getId();
         procurement.setCreatedById(creatorId);
         procurement.setStatus((short) 1);
@@ -63,7 +63,7 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
         Person person = authUtils.getPersonToPerformOperations(authentication);
 
         procurementUtils.checkEmployeePermissionAndProcurementPresence(id, person.getId(), optionalProcurement);
-        procurementUtils.checkProcurementDeadlineIsNotInPast(dto.getDeadline());
+
         // optional isPresent is checked in utils
         Integer addedBy = optionalProcurement.get().getCreatedById();
 
@@ -89,6 +89,9 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
         procurement.setStatus(initialProcurement.getStatus());
 
         if (initialProcurement.getStatus() == 2) {
+            // if this is active procurement then check needed attributes
+            procurementUtils.checkProcurementBeforeStatusPatch(procurement);
+            procurementUtils.checkProcurementDeadlineIsNotInPast(procurement.getDeadline());
             System.out.println("Email must be sent");
             // TODO: 5/5/2021 send emails claiming that active procurement was updated
         }
@@ -118,8 +121,11 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
             // TODO: 5/5/2021 Send emails that active procurement was deleted
         }
         procurement.setStatus(newStatus);
-        procurement.setCreatedAt(LocalDateTime.now());
-        procurementUtils.checkProcurementBeforeStatusPatch(procurement);
+        if (newStatus == 2) {
+            procurement.setCreatedAt(LocalDateTime.now());
+            procurementUtils.checkProcurementBeforeStatusPatch(procurement);
+            procurementUtils.checkProcurementDeadlineIsNotInPast(procurement.getDeadline());
+        }
         return toDtoOptional(pocurementRepository.save(procurement)).get();
     }
 
