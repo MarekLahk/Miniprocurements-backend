@@ -17,7 +17,6 @@ public class ReplyDto extends DtoBase {
     @Schema(title="id of ReplyDto")
     private Integer id;
 
-    @NotNull(message = "Replier id cannot be null.")
     @Schema(title="replierId of ReplyDto")
     private Integer replierId;
 
