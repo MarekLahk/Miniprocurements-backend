@@ -23,12 +23,12 @@ import java.time.LocalDateTime;
 @Builder
 @Schema(name = "ContractDto", description = "DTO for ContractDto")
 public class ContractDto extends DtoBase  {
-    @Schema(title="contractId of ContractDto")
-    private Integer contractId;
+    @Schema(title="id of ContractDto")
+    private Integer id;
 
-    @NotNull(message = "contractReferenceNumber cannot be null")
-    @Schema(title="contractReferenceNumber of ContractDto")
-    private Integer contractReferenceNumber;
+    @NotNull(message = "referenceNumber cannot be null")
+    @Schema(title="referenceNumber of ContractDto")
+    private Integer referenceNumber;
 
     @Schema(title="procurementTemplateId of ContractDto")
     private Integer procurementTemplateId;
@@ -36,10 +36,10 @@ public class ContractDto extends DtoBase  {
     @Schema(title="bidTemplateId of ContractDto")
     private Integer bidTemplateId;
 
-    @NotNull(message = "contractName cannot be null")
-    @NotBlank(message = "contractName cannot be blank")
-    @Schema(title="contractName of ContractDto")
-    private String contractName;
+    @NotNull(message = "name cannot be null")
+    @NotBlank(message = "name cannot be blank")
+    @Schema(title="name of ContractDto")
+    private String name;
 
     @Size(min = 1, max = 2, message = "Status has to be 1 or 2. , See https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/wikis/klassifikaatorid for valid options.")
     @NotNull(message = "Status cannot be null, See https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/wikis/klassifikaatorid for valid options.")
