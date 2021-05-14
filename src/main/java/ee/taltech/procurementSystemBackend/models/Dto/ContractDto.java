@@ -30,12 +30,6 @@ public class ContractDto extends DtoBase  {
     @Schema(title="referenceNumber of ContractDto")
     private Integer referenceNumber;
 
-    @Schema(title="procurementTemplateId of ContractDto")
-    private Integer procurementTemplateId;
-
-    @Schema(title="bidTemplateId of ContractDto")
-    private Integer bidTemplateId;
-
     @NotNull(message = "name cannot be null")
     @NotBlank(message = "name cannot be blank")
     @Schema(title="name of ContractDto")

@@ -4,6 +4,7 @@ import ee.taltech.procurementSystemBackend.models.DtoBase;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @EqualsAndHashCode(callSuper = true)
@@ -28,6 +29,8 @@ public class ReplyDto extends DtoBase {
     @Schema(title="procurementId of ReplyDto")
     private Integer procurementId;
 
+    @NotNull(message = "Reply message should not be null")
+    @NotBlank(message = "Reply message should not be empty")
     @Schema(title="reply of ReplyDto")
     private String reply;
 }

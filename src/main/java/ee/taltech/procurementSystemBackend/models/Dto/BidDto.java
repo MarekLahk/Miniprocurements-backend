@@ -18,7 +18,6 @@ public class BidDto extends DtoBase {
     private Integer id;
 
     @Schema(title="ID of link")
-    @NotNull(message="LinkId cannot be null")
     private UUID LinkId;
 
     @Schema(title="Value of the bid")
@@ -28,7 +27,6 @@ public class BidDto extends DtoBase {
     private String description;
 
     @Schema(title="Status of the bid")
-    @NotNull(message="bidStatus cannot be null")
     private Integer bidStatus;
 
     @Schema(title="ID of procurement")

@@ -3,7 +3,6 @@
 # USE miniprocurements;
 
 
-
 CREATE TABLE BidStatus
 (
     status_id   SMALLINT AUTO_INCREMENT,
@@ -25,8 +24,6 @@ CREATE TABLE Contract
     contract_id               MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
     contract_reference_number BIGINT                   NOT NULL,
     contract_name             TEXT                     NOT NULL,
-    procurement_template_id   MEDIUMINT,
-    bid_template_id           MEDIUMINT,
 
     created_at                DATETIME DEFAULT NOW(),
     updated_at                DATETIME DEFAULT NOW()
@@ -73,8 +70,8 @@ CREATE TABLE Employee
 CREATE TABLE ContractPartners
 (
     contract_partner_id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-    contract_id         MEDIUMINT NOT NULL,
-    partner_id          MEDIUMINT NOT NULL,
+    contract_id         MEDIUMINT                NOT NULL,
+    partner_id          MEDIUMINT                NOT NULL,
 
     created_at          DATETIME DEFAULT NOW(),
     updated_at          DATETIME DEFAULT NOW()
@@ -82,9 +79,13 @@ CREATE TABLE ContractPartners
 
     CONSTRAINT pk_contract_partner_id PRIMARY KEY (contract_partner_id),
     CONSTRAINT fk_contract_id FOREIGN KEY (contract_id)
-        REFERENCES Contract (contract_id),
+        REFERENCES Contract (contract_id)
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
     CONSTRAINT fk_contract_partner_id FOREIGN KEY (partner_id)
-        REFERENCES Partner (partner_id),
+        REFERENCES Partner (partner_id)
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
     CONSTRAINT UC_partner_contract UNIQUE (contract_id, partner_id)
 );
 
@@ -92,7 +93,7 @@ CREATE TABLE ContractPartners
 CREATE TABLE Procurement
 (
     procurement_id           MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-    name                     VARCHAR(50)              NOT NULL,
+    name                     VARCHAR(50),
     amount                   INT,
     description              TEXT,
     requirements             TEXT,
@@ -142,7 +143,7 @@ CREATE TABLE Procurement_Winners
 CREATE TABLE ProcurementPartner
 (
     id             MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-    link_id        BINARY(16)               NOT NULL UNIQUE,
+    link_id        BINARY(16)               NOT NULL UNIQUE, #Created with a trigger
     procurement_id MEDIUMINT                NOT NULL,
     partner_id     MEDIUMINT                NOT NULL,
 
@@ -153,13 +154,17 @@ CREATE TABLE ProcurementPartner
     CONSTRAINT uq_partner_procurement UNIQUE (procurement_id, partner_id),
     CONSTRAINT pk_link_id PRIMARY KEY (link_id),
     CONSTRAINT fk_procurement_link_partner_id FOREIGN KEY (partner_id)
-        REFERENCES Partner (partner_id),
+        REFERENCES Partner (partner_id)
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
     CONSTRAINT fk_procurement_link_procurement_id FOREIGN KEY (procurement_id)
         REFERENCES Procurement (procurement_id)
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION
 );
 
 
-CREATE TRIGGER before_insert_Miniprocurement_Partners
+CREATE TRIGGER before_insert_Procurement_Partners
     BEFORE INSERT
     ON ProcurementPartner
     FOR EACH ROW SET NEW.link_id = UUID_TO_BIN(uuid());
@@ -217,7 +222,7 @@ CREATE TABLE Bid
 
 CREATE TABLE Procurer
 (
-    procurer_id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    procurer_id    MEDIUMINT NOT NULL AUTO_INCREMENT,
     procurement_id MEDIUMINT NOT NULL,
     employee_id    MEDIUMINT NOT NULL,
 
@@ -250,7 +255,9 @@ CREATE TABLE Question
 
     CONSTRAINT pk_question_id PRIMARY KEY (question_id),
     CONSTRAINT fk_question_bidder_link_id FOREIGN KEY (bidder_link_id)
-        REFERENCES ProcurementPartner (link_id),
+        REFERENCES ProcurementPartner (link_id)
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
     CONSTRAINT fk_q_procurement_id FOREIGN KEY (procurement_id)
         REFERENCES Procurement (procurement_id)
         ON UPDATE CASCADE
@@ -263,7 +270,7 @@ CREATE TABLE Reply
     replier_id     MEDIUMINT                NOT NULL,
     question_id    MEDIUMINT                NOT NULL,
     procurement_id MEDIUMINT                NOT NULL,
-    reply          TEXT,
+    reply          TEXT                     NOT NULL ,
 
     created_at     DATETIME DEFAULT NOW(),
     updated_at     DATETIME DEFAULT NOW()

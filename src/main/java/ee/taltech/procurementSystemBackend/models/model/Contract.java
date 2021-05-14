@@ -42,12 +42,6 @@ public class Contract extends ModelBase {
     @Column(name = "contract_reference_number", nullable = false)
     private Integer referenceNumber;
     @Basic
-    @Column(name = "procurement_template_id", nullable = false)
-    private Integer procurementTemplateId;
-    @Basic
-    @Column(name = "bid_template_id", nullable = false)
-    private Integer bidTemplateId;
-    @Basic
     @Column(name = "contract_name", nullable = false, length = 50)
     private String name;
     @Basic

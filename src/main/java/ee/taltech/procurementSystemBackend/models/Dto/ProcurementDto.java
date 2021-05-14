@@ -20,7 +20,6 @@ public class ProcurementDto extends DtoBase  {
     private Integer id;
 
     @NotBlank(message = "Procurement name cannot be blank.")
-    @NotNull(message = "Procurement name cannot be null.")
     @Schema(title="name of ProcurementDto")
     private String name;
 
@@ -41,19 +40,15 @@ public class ProcurementDto extends DtoBase  {
     private Integer contractSubId;
 
     @Schema(title="hasContract of ProcurementDto")
-    @NotNull(message = "hasContract cannot be null.")
     private Boolean hasContract;
 
     @Schema(title="createdById of ProcurementDto")
-    @NotNull(message = "createdById cannot be null.")
     private Integer createdById;
 
-    @NotNull(message = "Deadline cannot be null")
     @Schema(title="deadline of ProcurementDto")
     private Timestamp deadline;
 
     @Schema(title="status of ProcurementDto")
-    @NotNull(message = "createdById cannot be null.")
     private Short status;
 
     @Schema(title="finishedAt of ProcurementDto")
