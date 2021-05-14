@@ -19,11 +19,9 @@ public class ProcurementDto extends DtoBase  {
     @Schema(title="id of ProcurementDto")
     private Integer id;
 
-    @NotBlank(message = "Procurement name cannot be blank.")
     @Schema(title="name of ProcurementDto")
     private String name;
 
-    @Positive(message = "Amount cannot be zero or negative.")
     @Schema(title="amount of ProcurementDto")
     private Integer amount;
 
