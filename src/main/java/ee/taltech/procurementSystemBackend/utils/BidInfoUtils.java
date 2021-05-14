@@ -7,14 +7,14 @@ import ee.taltech.procurementSystemBackend.repository.ReplyRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BidResponseUtils {
+public class BidInfoUtils {
 
     private final QuestionMapper questionMapper;
     private final ReplyMapper replyMapper;
     private final QuestionRepository questionRepository;
     private final ReplyRepository replyRepository;
 
-    public BidResponseUtils(QuestionRepository questionRepository,
+    public BidInfoUtils(QuestionRepository questionRepository,
                             ReplyRepository replyRepository) {
         this.questionRepository = questionRepository;
         this.replyRepository = replyRepository;
