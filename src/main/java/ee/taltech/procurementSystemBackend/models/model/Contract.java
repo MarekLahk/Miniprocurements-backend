@@ -37,10 +37,10 @@ public class Contract extends ModelBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "contract_id", nullable = false)
-    private Integer contractId;
+    private Integer id;
     @Basic
     @Column(name = "contract_reference_number", nullable = false)
-    private Integer contractReferenceNumber;
+    private Integer referenceNumber;
     @Basic
     @Column(name = "procurement_template_id", nullable = false)
     private Integer procurementTemplateId;
@@ -49,7 +49,7 @@ public class Contract extends ModelBase {
     private Integer bidTemplateId;
     @Basic
     @Column(name = "contract_name", nullable = false, length = 50)
-    private String contractName;
+    private String name;
     @Basic
     @Column(name = "status", nullable = false)
     private Integer status;
