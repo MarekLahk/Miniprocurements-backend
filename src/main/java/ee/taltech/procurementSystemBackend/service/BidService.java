@@ -2,14 +2,14 @@ package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.BidException;
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
-import ee.taltech.procurementSystemBackend.models.Dto.BidResponseDto;
+import ee.taltech.procurementSystemBackend.models.Dto.BidInfoDto;
 import ee.taltech.procurementSystemBackend.models.mapper.BidMapper;
 import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Bid;
 import ee.taltech.procurementSystemBackend.models.model.ProcurementPartner;
 import ee.taltech.procurementSystemBackend.repository.BidRepository;
 import ee.taltech.procurementSystemBackend.repository.ProcurementPartnerRepository;
-import ee.taltech.procurementSystemBackend.utils.BidResponseUtils;
+import ee.taltech.procurementSystemBackend.utils.BidInfoUtils;
 import ee.taltech.procurementSystemBackend.utils.BidUtils;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +22,12 @@ public class BidService extends ServiceBase<Bid, BidDto> {
     private final BidRepository bidRepository;
     private final ProcurementPartnerRepository procurementPartnerRepository;
     private final BidUtils bidUtils;
-    private final BidResponseUtils bidResponseUtils;
+    private final BidInfoUtils bidResponseUtils;
     private final ProcurementMapper procurementMapper;
 
     public BidService(BidRepository bidRepository,
                       ProcurementPartnerRepository procurementPartnerRepository,
-                      BidUtils bidUtils, BidResponseUtils bidResponseUtils) {
+                      BidUtils bidUtils, BidInfoUtils bidResponseUtils) {
         super(bidRepository, BidMapper.INSTANCE);
         this.bidRepository = bidRepository;
         this.procurementPartnerRepository = procurementPartnerRepository;
@@ -36,7 +36,7 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         this.procurementMapper = ProcurementMapper.INSTANCE;
     }
 
-    public BidResponseDto getBidInfo(UUID partnerUUID) {
+    public BidInfoDto getBidInfo(UUID partnerUUID) {
         ProcurementPartner procurementPartner = procurementPartnerRepository.findByLinkId(partnerUUID)
                 .orElseThrow(() -> new BidException("No such bid"));
         System.out.println(procurementPartner.getProcurement().getCreatedAt());
@@ -49,7 +49,7 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         return bidRepository.findFirstByLinkIdAndBidStatus(partnerUUID, 1);
     }
 
-//    public BidResponseDto getCurrentWaitingBid(UUID partnerUuid) {
+//    public BidInfoDto getCurrentWaitingBid(UUID partnerUuid) {
 //        ProcurementPartner partner = procurementPartnerRepository
 //                .findByLinkId(partnerUuid)
 //                .orElseThrow(() -> new BidException("No such procurement partner"));
@@ -62,7 +62,7 @@ public class BidService extends ServiceBase<Bid, BidDto> {
 //        List<QuestionAndRepliesResponse> questionReplyMap =
 //                bidResponseUtils.getQuestionsAndReplies(partner.getProcurementId());
 //
-//        BidResponseDto bidResponseDto = new BidResponseDto();
+//        BidInfoDto bidResponseDto = new BidInfoDto();
 //        bidResponseDto.setProcurement(procurement);
 //        bidResponseDto.setQuestionsAndRelies(questionReplyMap);
 //
