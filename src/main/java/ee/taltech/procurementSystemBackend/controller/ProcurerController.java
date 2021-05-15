@@ -22,7 +22,7 @@ public class ProcurerController extends ControllerBase<Procurer, ProcurerDto, Pr
     private final ProcurerService procurerService;
 
     public ProcurerController(ProcurerService procurerService) {
-        super(procurerService, Procurer.class, ProcurerDto.class);
+        super(procurerService);
         this.procurerService = procurerService;
     }
 

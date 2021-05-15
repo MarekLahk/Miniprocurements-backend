@@ -1,6 +1,7 @@
 package ee.taltech.procurementSystemBackend.integration;
 
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
+import ee.taltech.procurementSystemBackend.models.Dto.BidResponseDto;
 import ee.taltech.procurementSystemBackend.models.Dto.BidInfoDto;
 import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
@@ -14,7 +15,6 @@ import ee.taltech.procurementSystemBackend.repository.ProcurerRepository;
 import ee.taltech.procurementSystemBackend.repository.person.EmployeeRepository;
 import ee.taltech.procurementSystemBackend.repository.person.PartnerRepository;
 import ee.taltech.procurementSystemBackend.service.BidService;
-import ee.taltech.procurementSystemBackend.utils.BidInfoUtils;
 import ee.taltech.procurementSystemBackend.utils.BidUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +38,7 @@ public class BidIntegrationTest {
     @Autowired
     private BidUtils bidUtils;
     @Autowired
-    private BidInfoUtils bidResponseUtils;
+    private BidResponseUtils bidResponseUtils;
 
     private ProcurementMapper procurementMapper;
 
@@ -94,7 +94,7 @@ public class BidIntegrationTest {
         procurementPartner.setPartnerId(2);
 
         procurementPartnerRepository.save(procurementPartner);
-        bidService = new BidService(bidRepository, procurementPartnerRepository, bidUtils, bidResponseUtils);
+        bidService = new BidService(bidRepository, procurementPartnerRepository, bidUtils);
     }
 
     @AfterEach

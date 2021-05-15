@@ -67,4 +67,8 @@ public class BidInfoDto extends DtoBase {
 
     @Schema(title="questions of bidinfo")
     private List<QuestionInfoDto> questions;
+
+    @Schema(title="documents of bidinfo")
+    private List<DocumentDto> documents;
+
 }

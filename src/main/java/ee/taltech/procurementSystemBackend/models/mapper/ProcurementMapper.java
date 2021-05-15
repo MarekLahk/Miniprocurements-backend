@@ -1,13 +1,12 @@
 package ee.taltech.procurementSystemBackend.models.mapper;
 
+import ee.taltech.procurementSystemBackend.models.Dto.*;
 import ee.taltech.procurementSystemBackend.models.Dto.BidInfoDto;
 import ee.taltech.procurementSystemBackend.models.Dto.ProcurementDto;
 import ee.taltech.procurementSystemBackend.models.Dto.QuestionInfoDto;
 import ee.taltech.procurementSystemBackend.models.Dto.ReplyDto;
 import ee.taltech.procurementSystemBackend.models.MapperInterface;
-import ee.taltech.procurementSystemBackend.models.model.Procurement;
-import ee.taltech.procurementSystemBackend.models.model.Question;
-import ee.taltech.procurementSystemBackend.models.model.Reply;
+import ee.taltech.procurementSystemBackend.models.model.*;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -45,4 +44,10 @@ public interface ProcurementMapper extends MapperInterface<Procurement, Procurem
     @Mapping(source = "replies", target = "replies")
     @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
     List<ReplyDto> toReplyDtoList(List<Reply> questions);
+    @Mapping(source = "documents", target = "documents")
+    @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
+    List<DocumentDto> toDocumentDto(List<Document> documents);
+    @Mapping(source = "announcements", target = "announcements")
+    @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
+    List<AnnouncementInfoDto> toAnnouncementDto(List<Announcement> announcements);
 }

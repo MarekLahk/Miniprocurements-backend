@@ -42,12 +42,7 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
         procurement.setCreatedById(creatorId);
         procurement.setStatus((short) 1);
         procurement.setCreatedAt(null);
-        boolean hasContract = dto.getContractId() != null;
-        procurement.setHasContract(dto.getContractId() != null);
-        if (hasContract) {
-            Integer contractSubId = pocurementRepository.countByContractId(dto.getContractId()) + 1;
-            procurement.setContractSubId(contractSubId);
-        }
+
 
         Procurement savedProcurement = pocurementRepository.save(procurement);
 
@@ -113,6 +108,12 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
 
         Short newStatus = dto.getStatus();
         if (procurement.getStatus() == 1 && newStatus == 2) {
+            boolean hasContract = dto.getContractId() != null;
+            procurement.setHasContract(dto.getContractId() != null);
+            if (hasContract) {
+                Integer contractSubId = pocurementRepository.countByContractId(dto.getContractId()) + 1;
+                procurement.setContractSubId(contractSubId);
+            }
             System.out.println("Procurement was activated");
             // TODO: 5/5/2021 Send emails that procurement was activated
         }

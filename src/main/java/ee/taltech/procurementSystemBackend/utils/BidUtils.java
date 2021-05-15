@@ -25,7 +25,7 @@ public class BidUtils {
 
     public Bid getBidToUpdate(UUID bidderLinkId, BidDto dto) {
         Integer bidId = Optional.ofNullable(dto.getId())
-                .orElseThrow(() -> new BidException("No bid id id provided in dto"));
+                .orElseThrow(() -> new BidException("No bid id provided in dto"));
         return bidRepository.findByIdAndLinkId(
                 bidId, bidderLinkId)
                 .orElseThrow(() -> new BidException("No bid to update"));

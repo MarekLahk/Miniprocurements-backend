@@ -32,4 +32,5 @@ public class ReplyDto extends DtoBase {
     @NotBlank(message = "Reply message should not be empty")
     @Schema(title="reply of ReplyDto")
     private String reply;
+
 }

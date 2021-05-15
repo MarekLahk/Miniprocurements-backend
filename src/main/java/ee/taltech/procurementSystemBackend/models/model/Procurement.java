@@ -71,6 +71,8 @@ public class Procurement extends ModelBase {
     private Set<ProcurementPartner> procurementPartners;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
     private Set<Question> questions;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
+    private Set<Document> documents;
 
 
 }

@@ -48,6 +48,7 @@ dependencies {
 	compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	compile 'com.fasterxml.jackson.core:jackson-annotations:latest.release'
 	compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.6.Final'
+	compile 'commons-io:commons-io:2.8.0'
 
 	annotationProcessor 'org.hibernate:hibernate-jpamodelgen:latest.release'
 	annotationProcessor 'org.projectlombok:lombok'

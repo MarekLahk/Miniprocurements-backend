@@ -10,5 +10,6 @@ import java.time.LocalDateTime;
 public abstract class DtoBase {
 
     private LocalDateTime createdAt;
+//    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDateTime updatedAt;
 }
