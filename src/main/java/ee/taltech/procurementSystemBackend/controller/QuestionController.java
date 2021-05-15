@@ -6,10 +6,6 @@ import ee.taltech.procurementSystemBackend.models.search.QuestionSearch;
 import ee.taltech.procurementSystemBackend.service.QuestionService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.List;
-import java.util.UUID;
-
 @RestController
 @RequestMapping("api/questions")
 public class QuestionController extends ControllerBase<Question, QuestionDto, QuestionSearch> {
@@ -17,7 +13,7 @@ public class QuestionController extends ControllerBase<Question, QuestionDto, Qu
     private final QuestionService questionService;
 
     public QuestionController(QuestionService questionService) {
-        super(questionService, Question.class, QuestionDto.class);
+        super(questionService);
         this.questionService = questionService;
     }
 

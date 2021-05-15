@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -18,10 +18,15 @@ public class BidPublicController {
 
     private final BidService bidService;
 
-    @GetMapping("{partnerUuid}")
-    public Optional<Bid> getCurrentWaitingBid(@PathVariable UUID partnerUuid) {
-        return bidService.getCurrentWaitingBit(partnerUuid);
+    @GetMapping("{partnerUUID}")
+    public List<BidDto> getPartnerBids(@PathVariable UUID partnerUUID) {
+        return bidService.getPartnerBids(partnerUUID);
     }
+
+//    @GetMapping("{partnerUuid}")
+//    public Optional<Bid> getCurrentWaitingBid(@PathVariable UUID partnerUuid) {
+//        return bidService.getCurrentWaitingBit(partnerUuid);
+//    }
 
     @PostMapping("{partnerUuid}")
     public ResponseEntity<BidDto> addBid(@PathVariable UUID partnerUuid,

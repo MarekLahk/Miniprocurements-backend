@@ -1,21 +1,28 @@
 package ee.taltech.procurementSystemBackend.models;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 
-@Data
+@Getter
+@Setter
 @MappedSuperclass
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class ModelBase {
 
-    @Basic
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
+    @Generated(GenerationTime.INSERT)
     private LocalDateTime createdAt;
-    @Basic
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = false, updatable = false, insertable = false)
+    @Generated(GenerationTime.ALWAYS)
     private LocalDateTime updatedAt;
 }

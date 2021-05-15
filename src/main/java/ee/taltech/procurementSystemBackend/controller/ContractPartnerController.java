@@ -32,7 +32,7 @@ public class ContractPartnerController extends ControllerBase<ContractPartner, C
     private final ContractPartnerService contractPartnerService;
 
     public ContractPartnerController(ContractPartnerService contractPartnerService) {
-        super(contractPartnerService, ContractPartner.class, ContractPartnerDto.class);
+        super(contractPartnerService);
         this.contractPartnerService = contractPartnerService;
     }
 
