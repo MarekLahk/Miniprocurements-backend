@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -34,6 +35,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .oauth2Login()
                 .userInfoEndpoint()
                 .oidcUserService(oidcUserService);
+        http
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/api/logout"))
+                .logoutSuccessUrl("/")
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true);
+
     }
 
     @Override
@@ -44,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
                         "/api/public/bids/*",
-                        "/api/public/questions/*");
+                        "/api/public/questions/*",
+                        "/api/public/bidInfo/*");
     }
 }
 

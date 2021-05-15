@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class PersonController extends ControllerBase<Person, PersonDto, PersonSearch<Person>> {
 
     public PersonController(PersonService personService) {
-        super(personService, PersonDto.class);
+        super(personService);
     }
 
     //Note: Contains all search attributes of PersonControllerInterface

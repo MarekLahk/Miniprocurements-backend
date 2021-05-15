@@ -26,6 +26,10 @@ build backend:
       - build/libs/*.jar
     expire_in: 1 week
 
+test backend:
+  stage: test
+  script:
+    - ./gradlew check -Pconfig=application-prod
 
 deploy:
   stage: deploy

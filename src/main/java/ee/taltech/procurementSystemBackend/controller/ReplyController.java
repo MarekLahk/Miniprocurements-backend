@@ -16,7 +16,7 @@ public class ReplyController extends ControllerBase<Reply, ReplyDto, ReplySearch
     private final ReplyService replyService;
 
     public ReplyController(ReplyService replyService) {
-        super(replyService, Reply.class, ReplyDto.class);
+        super(replyService);
         this.replyService = replyService;
     }
 

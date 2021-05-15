@@ -15,12 +15,6 @@ import java.util.Optional;
 public abstract class ControllerBase<ModelT extends ModelBase, DtoT extends DtoBase, O extends SearchObject<ModelT>  > {
 
     private final ServiceBase<ModelT, DtoT> service;
-    private final Class<DtoT> dto;
-
-    public ControllerBase(ServiceBase<ModelT, DtoT> personService, Class<ModelT> model, Class<DtoT> dto) {
-        this.service = personService;
-        this.dto = dto;
-    }
 
     @GetMapping()
     public List<DtoT> getByParams(O searchObject) {

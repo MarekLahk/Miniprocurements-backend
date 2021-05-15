@@ -100,4 +100,24 @@ public class ApiExceptionHandler {
                 ZonedDateTime.now());
         return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = ProcurementWinnersException.class)
+    public ResponseEntity<Object> handleProcurementWinnersException(
+            ProcurementWinnersException e) {
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST,
+                ZonedDateTime.now());
+        return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = ProcurerException.class)
+    public ResponseEntity<Object> handleProcurerException(
+            ProcurerException e) {
+        ApiException apiException = new ApiException(
+                e.getMessage(),
+                HttpStatus.BAD_REQUEST,
+                ZonedDateTime.now());
+        return new ResponseEntity<>(apiException, HttpStatus.BAD_REQUEST);
+    }
 }

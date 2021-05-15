@@ -4,6 +4,7 @@ import com.googlecode.jmapper.annotations.JGlobalMap;
 import ee.taltech.procurementSystemBackend.models.ModelBase;
 import ee.taltech.procurementSystemBackend.models.model.person.Employee;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,11 +13,11 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "procurement")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JGlobalMap
+@DynamicInsert
 public class Procurement extends ModelBase {
 
     @Id
@@ -42,7 +43,7 @@ public class Procurement extends ModelBase {
     @Column(name = "contract_sub_id")
     private Integer contractSubId;
     @Basic
-    @Column(name = "has_contract")
+    @Column(name = "has_contract", nullable = false)
     private Boolean hasContract;
     @Basic
     @Column(name = "created_by", nullable = false)
@@ -72,7 +73,8 @@ public class Procurement extends ModelBase {
     private Set<ProcurementPartner> procurementPartners;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
     private Set<Question> questions;
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
+    private Set<Document> documents;
 
 
 }
