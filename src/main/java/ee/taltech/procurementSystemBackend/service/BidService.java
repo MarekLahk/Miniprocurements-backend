@@ -47,7 +47,7 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         return bidRepository.findFirstByLinkIdAndBidStatus(partnerUUID, 1);
     }
 
-//    public BidResponseDto getCurrentWaitingBid(UUID partnerUuid) {
+//    public BidInfoDto getCurrentWaitingBid(UUID partnerUuid) {
 //        ProcurementPartner partner = procurementPartnerRepository
 //                .findByLinkId(partnerUuid)
 //                .orElseThrow(() -> new BidException("No such procurement partner"));
@@ -60,7 +60,7 @@ public class BidService extends ServiceBase<Bid, BidDto> {
 //        List<QuestionAndRepliesResponse> questionReplyMap =
 //                bidResponseUtils.getQuestionsAndReplies(partner.getProcurementId());
 //
-//        BidResponseDto bidResponseDto = new BidResponseDto();
+//        BidInfoDto bidResponseDto = new BidInfoDto();
 //        bidResponseDto.setProcurement(procurement);
 //        bidResponseDto.setQuestionsAndRelies(questionReplyMap);
 //

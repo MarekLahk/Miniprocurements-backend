@@ -2,6 +2,7 @@ package ee.taltech.procurementSystemBackend.integration;
 
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
 import ee.taltech.procurementSystemBackend.models.Dto.BidResponseDto;
+import ee.taltech.procurementSystemBackend.models.Dto.BidInfoDto;
 import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
 import ee.taltech.procurementSystemBackend.models.model.ProcurementPartner;
@@ -119,7 +120,7 @@ public class BidIntegrationTest {
         assertThat(result.getDescription()).isEqualTo("Description");
 
         // get bid info
-        BidResponseDto searchResult = bidService.getBidInfo(link);
+        BidInfoDto searchResult = bidService.getBidInfo(link);
         assertThat(searchResult.getName()).isEqualTo("Procurement");
 
         // update bid

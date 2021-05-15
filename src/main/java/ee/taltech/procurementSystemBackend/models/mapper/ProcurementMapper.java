@@ -1,6 +1,10 @@
 package ee.taltech.procurementSystemBackend.models.mapper;
 
 import ee.taltech.procurementSystemBackend.models.Dto.*;
+import ee.taltech.procurementSystemBackend.models.Dto.BidInfoDto;
+import ee.taltech.procurementSystemBackend.models.Dto.ProcurementDto;
+import ee.taltech.procurementSystemBackend.models.Dto.QuestionInfoDto;
+import ee.taltech.procurementSystemBackend.models.Dto.ReplyDto;
 import ee.taltech.procurementSystemBackend.models.MapperInterface;
 import ee.taltech.procurementSystemBackend.models.model.*;
 import org.mapstruct.IterableMapping;
