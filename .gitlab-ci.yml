@@ -36,7 +36,6 @@ deploy:
   only:
     refs:
       - master
-      - Documents
   script:
     - docker-compose down
     - docker-compose up -d

@@ -4,8 +4,10 @@ import ee.taltech.procurementSystemBackend.exception.FileException;
 import ee.taltech.procurementSystemBackend.models.Dto.DocumentDto;
 import ee.taltech.procurementSystemBackend.models.Dto.FileDto;
 import ee.taltech.procurementSystemBackend.models.mapper.DocumentMapper;
+import ee.taltech.procurementSystemBackend.models.model.Bid;
 import ee.taltech.procurementSystemBackend.models.model.Document;
 import ee.taltech.procurementSystemBackend.models.model.person.Person;
+import ee.taltech.procurementSystemBackend.repository.BidRepository;
 import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -31,14 +33,16 @@ public class FileService {
     private final DocumentService documentService;
     private final AuthUtils authUtils;
     private final DocumentMapper documentMapper = DocumentMapper.INSTANCE;
+    private final BidRepository bidRepository;
 
     @NotNull
     @Value( "${spring.files.path}" )
     private String filePath;
 
-    public FileService(DocumentService documentService, AuthUtils authUtils) {
+    public FileService(DocumentService documentService, AuthUtils authUtils, BidRepository bidRepository) {
         this.documentService = documentService;
         this.authUtils = authUtils;
+        this.bidRepository = bidRepository;
     }
 
     private Document addNewDocument(Document document) {
@@ -71,16 +75,8 @@ public class FileService {
                 .name(file.getOriginalFilename())
                 .path(filePath)
         ;
-        Document document = addNewDocument(documentBuilder.build());
-        System.out.println(document);
-
-        File file1 = new File(filePath + document.getLinkId());
-        try (OutputStream os = new FileOutputStream(file1)) {
-            os.write(file.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        Document document = documentBuilder.build();
+        document = saveFile(file, document);
 
         return documentMapper.toDto(document);
     }
@@ -98,8 +94,43 @@ public class FileService {
 
     }
 
-//    Resource loadAsResource(String filename) {
-//
-//    }
+    public DocumentDto handlePublicFileUpload(UUID bidLinkUUID, MultipartFile file) {
+        if (file.isEmpty()) {
+            throw new FileException("File cannot be empty!");
+        }
+        if (file.getOriginalFilename() == null || file.getOriginalFilename().isEmpty()) {
+            throw new FileException("File name cannot be empty!");
+        }
+        Document.DocumentBuilder documentBuilder = Document.builder();
+
+        Bid bid = bidRepository.findFirstByLinkIdAndBidStatus(bidLinkUUID, 1)
+                .orElseThrow(() -> new FileException("No such bid link ID"));
+
+        documentBuilder
+                .personId(bid.getProcurementPartner().getPartnerId())
+                .bidId(bid.getId())
+                .name(file.getOriginalFilename())
+                .path(filePath)
+        ;
+        Document document = documentBuilder.build();
+        document = saveFile(file, document);
+
+
+        return documentMapper.toDto(document);
+    }
+
+    private Document saveFile(MultipartFile file, Document document) {
+        document = addNewDocument(document);
+        System.out.println(document);
+
+        File file1 = new File(filePath + document.getLinkId());
+        try (OutputStream os = new FileOutputStream(file1)) {
+            os.write(file.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return document;
+    }
+
 
 }

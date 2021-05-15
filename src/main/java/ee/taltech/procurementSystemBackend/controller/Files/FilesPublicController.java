@@ -3,6 +3,8 @@ package ee.taltech.procurementSystemBackend.controller.Files;
 import ee.taltech.procurementSystemBackend.models.Dto.DocumentDto;
 import ee.taltech.procurementSystemBackend.service.FileService;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +24,16 @@ public class FilesPublicController {
 
 
 //        return fileService.storeFile(file);
-        return null;
+        return fileService.handlePublicFileUpload(bidLinkUUID, file);
+    }
+
+    @GetMapping("/{uuid}")
+    @ResponseBody
+    public ResponseEntity<Resource> serveFile(@PathVariable UUID uuid) {
+
+
+
+        return fileService.loadAsResource(uuid);
+
     }
 }

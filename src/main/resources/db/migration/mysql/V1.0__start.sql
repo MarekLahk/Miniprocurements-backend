@@ -3,7 +3,6 @@
 # USE miniprocurements;
 
 
-
 CREATE TABLE BidStatus
 (
     status_id   SMALLINT AUTO_INCREMENT,
@@ -73,8 +72,8 @@ CREATE TABLE Employee
 CREATE TABLE ContractPartners
 (
     contract_partner_id MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-    contract_id         MEDIUMINT NOT NULL,
-    partner_id          MEDIUMINT NOT NULL,
+    contract_id         MEDIUMINT                NOT NULL,
+    partner_id          MEDIUMINT                NOT NULL,
 
     created_at          DATETIME DEFAULT NOW(),
     updated_at          DATETIME DEFAULT NOW()
@@ -189,15 +188,16 @@ CREATE TABLE Announcement
 
 CREATE TABLE Bid
 (
-    bid_id         MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
-    link_id        BINARY(16)               NOT NULL,
-    bid_value      BIGINT,
-    bid_status     SMALLINT                 NOT NULL DEFAULT 1,
-    description    TEXT,
-    procurement_id MEDIUMINT                NOT NULL,
+    bid_id                 MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
+    link_id                BINARY(16)               NOT NULL,
+    procurement_partner_id MEDIUMINT                NOT NULL,
+    bid_value              BIGINT,
+    bid_status             SMALLINT                 NOT NULL DEFAULT 1,
+    description            TEXT,
+    procurement_id         MEDIUMINT                NOT NULL,
 
-    created_at     DATETIME                          DEFAULT NOW(),
-    updated_at     DATETIME                          DEFAULT NOW()
+    created_at             DATETIME                          DEFAULT NOW(),
+    updated_at             DATETIME                          DEFAULT NOW()
         ON UPDATE NOW(),
 
     CONSTRAINT pk_bid_id PRIMARY KEY (bid_id),
@@ -212,12 +212,16 @@ CREATE TABLE Bid
     CONSTRAINT fk_link_id FOREIGN KEY (link_id)
         REFERENCES ProcurementPartner (link_id)
         ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_procurement_partner_id FOREIGN KEY (procurement_partner_id)
+        REFERENCES ProcurementPartner (id)
+        ON UPDATE CASCADE
         ON DELETE NO ACTION
 );
 
 CREATE TABLE Procurer
 (
-    procurer_id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    procurer_id    MEDIUMINT NOT NULL AUTO_INCREMENT,
     procurement_id MEDIUMINT NOT NULL,
     employee_id    MEDIUMINT NOT NULL,
 
@@ -292,7 +296,7 @@ CREATE TABLE Document
     procurement_id  MEDIUMINT,
     bid_id          MEDIUMINT,
     announcement_id MEDIUMINT,
-    reply_id MEDIUMINT,
+    reply_id        MEDIUMINT,
     person_id       MEDIUMINT                NOT NULL,
     document_path   TEXT                     NOT NULL,
 
@@ -334,17 +338,20 @@ CREATE TRIGGER tr_document_is_attached
     ON Document
     FOR EACH ROW
 BEGIN
-    IF NOT (((NEW.procurement_id is not null) and (NEW.reply_id is null) and (NEW.announcement_id is null) and (NEW.bid_id is null))
-        OR ((NEW.procurement_id is null) and (NEW.reply_id is not null) and (NEW.announcement_id is null) and (NEW.bid_id is null))
-        OR ((NEW.procurement_id is null) and (NEW.reply_id is null) and (NEW.announcement_id is not null) and (NEW.bid_id is null))
-        OR ((NEW.procurement_id is null) and (NEW.reply_id is null) and (NEW.announcement_id is null) and (NEW.bid_id is not null)))
+    IF NOT (((NEW.procurement_id is not null) and (NEW.reply_id is null) and (NEW.announcement_id is null) and
+             (NEW.bid_id is null))
+        OR ((NEW.procurement_id is null) and (NEW.reply_id is not null) and (NEW.announcement_id is null) and
+            (NEW.bid_id is null))
+        OR ((NEW.procurement_id is null) and (NEW.reply_id is null) and (NEW.announcement_id is not null) and
+            (NEW.bid_id is null))
+        OR ((NEW.procurement_id is null) and (NEW.reply_id is null) and (NEW.announcement_id is null) and
+            (NEW.bid_id is not null)))
     THEN
 
         SIGNAL SQLSTATE '23000';
     end if;
 end//
 DELIMITER ;
-
 
 
 CREATE TABLE Role
