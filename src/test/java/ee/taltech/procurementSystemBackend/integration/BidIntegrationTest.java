@@ -1,7 +1,6 @@
 package ee.taltech.procurementSystemBackend.integration;
 
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
-import ee.taltech.procurementSystemBackend.models.Dto.BidResponseDto;
 import ee.taltech.procurementSystemBackend.models.Dto.BidInfoDto;
 import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
@@ -37,8 +36,6 @@ public class BidIntegrationTest {
     private ProcurementPartnerRepository procurementPartnerRepository;
     @Autowired
     private BidUtils bidUtils;
-    @Autowired
-    private BidResponseUtils bidResponseUtils;
 
     private ProcurementMapper procurementMapper;
 
@@ -110,6 +107,7 @@ public class BidIntegrationTest {
     @Test
     void bidOperationsTest() {
         UUID link = procurementPartnerRepository.findById(1).get().getLinkId();
+        System.out.println(link);
 
         BidDto dto = new BidDto();
         dto.setBidValue(1234L);

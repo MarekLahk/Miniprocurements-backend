@@ -101,13 +101,11 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         bidUtils.checkIfBidIsInactive(sourceBid);
         bidUtils.checkIfBidIsActive(sourceBid);
 
-        bid.setId(sourceBid.getId());
-        bid.setProcurementId(sourceBid.getProcurementId());
-        bid.setLinkId(partnerUuid);
-        bid.setBidStatus(sourceBid.getBidStatus());
-        bid.setCreatedAt(null);
+        sourceBid.setBidValue(bid.getBidValue());
+        sourceBid.setDescription(bid.getDescription());
 
-        return toDtoOptional(bidRepository.save(bid)).get();
+
+        return toDtoOptional(bidRepository.save(sourceBid)).get();
     }
 
     public BidDto patchBidStatus(UUID partnerUuid, BidDto bidDto) {
