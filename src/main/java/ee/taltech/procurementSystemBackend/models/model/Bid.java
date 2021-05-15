@@ -3,6 +3,7 @@ package ee.taltech.procurementSystemBackend.models.model;
 import com.googlecode.jmapper.annotations.JGlobalMap;
 import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Builder
 @JGlobalMap
 @Data
+@DynamicInsert
 public class Bid extends ModelBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
