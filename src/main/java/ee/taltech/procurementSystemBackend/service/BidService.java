@@ -87,7 +87,7 @@ public class BidService extends ServiceBase<Bid, BidDto> {
                 .orElseThrow(() -> new BidException("No bid provided"));
         bidUtils.checkBidBeforeAdding(partnerUuid);
         bid.setLinkId(partnerUuid);
-        bid.setProcurementPartnerId(procurementPartner.getPartnerId());
+        bid.setProcurementPartnerId(procurementPartner.getId());
         bid.setBidStatus(1);
         bid.setProcurementId(procurementPartner.getProcurementId());
         return toDtoOptional(bidRepository.save(bid)).get();
@@ -101,13 +101,11 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         bidUtils.checkIfBidIsInactive(sourceBid);
         bidUtils.checkIfBidIsActive(sourceBid);
 
-        bid.setId(sourceBid.getId());
-        bid.setProcurementId(sourceBid.getProcurementId());
-        bid.setLinkId(partnerUuid);
-        bid.setBidStatus(sourceBid.getBidStatus());
-        bid.setCreatedAt(null);
+        sourceBid.setBidValue(bid.getBidValue());
+        sourceBid.setDescription(bid.getDescription());
 
-        return toDtoOptional(bidRepository.save(bid)).get();
+
+        return toDtoOptional(bidRepository.save(sourceBid)).get();
     }
 
     public BidDto patchBidStatus(UUID partnerUuid, BidDto bidDto) {
