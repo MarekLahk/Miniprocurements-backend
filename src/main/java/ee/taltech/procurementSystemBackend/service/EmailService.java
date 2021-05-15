@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
@@ -28,7 +27,7 @@ public class EmailService {
     }
 
 
-    public void sendProcurementEmail(Procurement procurement) throws MessagingException {
+    public void sendProcurementEmail(Procurement procurement) {
         ProcurementEmail.ProcurementEmailBuilder emailBuilder = ProcurementEmail.builder();
         emailBuilder.procurementDeadline(procurement.getDeadline().toLocalDateTime());
         emailBuilder.procurementTitle(procurement.getName());

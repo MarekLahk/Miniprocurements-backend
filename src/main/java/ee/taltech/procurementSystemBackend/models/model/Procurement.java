@@ -8,7 +8,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -66,15 +66,15 @@ public class Procurement extends ModelBase {
     private Employee createdBy;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
-    private Set<Announcement> announcements;
+    private List<Announcement> announcements;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
-    private Set<Bid> bids;
+    private List<Bid> bids;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
-    private Set<ProcurementPartner> procurementPartners;
+    private List<ProcurementPartner> procurementPartners;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
-    private Set<Question> questions;
+    private List<Question> questions;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurement")
-    private Set<Document> documents;
+    private List<Document> documents;
 
 
 }

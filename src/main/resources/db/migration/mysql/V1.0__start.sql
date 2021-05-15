@@ -393,12 +393,11 @@ CREATE TABLE Email
 (
 
     email_id        MEDIUMINT AUTO_INCREMENT NOT NULL,
-    sent_date       DATETIME DEFAULT NULL,
     procurement_id  MEDIUMINT,
     reply_id        MEDIUMINT,
     announcement_id MEDIUMINT,
     recipient_id    MEDIUMINT                NOT NULL,
-    sent_at         DATETIME,
+    sent_at         DATETIME DEFAULT NULL,
 
     created_at      DATETIME DEFAULT NOW(),
     updated_at      DATETIME DEFAULT NOW()
