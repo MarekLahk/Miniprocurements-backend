@@ -26,7 +26,7 @@ public class Partner extends Person {
     @Column(name = "partner_info")
     String partnerInfo;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
     private Set<ProcurementPartner> procurementPartners;
 
 

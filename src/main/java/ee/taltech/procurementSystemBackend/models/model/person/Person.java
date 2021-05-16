@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @JGlobalMap
+@Table(name = "Person")
 public class Person extends ModelBase {
 
     @Id()
