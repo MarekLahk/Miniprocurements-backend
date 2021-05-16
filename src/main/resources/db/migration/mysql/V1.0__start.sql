@@ -24,6 +24,7 @@ CREATE TABLE Contract
     contract_id               MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
     contract_reference_number BIGINT                   NOT NULL,
     contract_name             TEXT                     NOT NULL,
+    description               TEXT,
 
     created_at                DATETIME DEFAULT NOW(),
     updated_at                DATETIME DEFAULT NOW()
@@ -275,7 +276,7 @@ CREATE TABLE Reply
     replier_id     MEDIUMINT                NOT NULL,
     question_id    MEDIUMINT                NOT NULL,
     procurement_id MEDIUMINT                NOT NULL,
-    reply          TEXT                     NOT NULL ,
+    reply          TEXT                     NOT NULL,
 
     created_at     DATETIME DEFAULT NOW(),
     updated_at     DATETIME DEFAULT NOW()

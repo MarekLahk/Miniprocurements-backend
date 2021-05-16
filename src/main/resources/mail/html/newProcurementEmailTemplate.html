@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ee" style="height: 0;" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Taltech Minihanked</title>
+    <style>
+
+        .ExternalClass {width: 100%;}
+
+        body {
+            font-family: Proxima Nova, Regular,Verdana, sans-serif;
+            color: #353535;
+            background-color: #FBFAFB;
+            margin: 0;
+            padding: 0;
+        }
+
+        .mainWrapper {
+            color: #353535;
+            background-color: #FBFAFB;
+            height: 100%;
+            table-layout: fixed;
+            padding-bottom: 40px;
+        }
+
+        div {
+            color: #353535;
+            display: block;
+            background-color: #ffffff;
+            margin: 10px 20px;
+            text-align: center;
+        }
+
+        .webkit {
+            max-width: 680px;
+            background-color: #ffffff;
+            margin: 0 auto;
+        }
+
+
+        .outer {
+            margin: 0 auto 40px;
+            width: 600px;
+        }
+
+
+        h1 {
+            text-transform: uppercase;
+            text-align: center;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 36px;
+            margin-top: 0;
+        }
+
+        h2 {
+            text-transform: uppercase;
+            font-style: normal;
+            text-align: left;
+            font-weight: bold;
+            font-size: 28px;
+            margin-bottom: 15px;
+            margin-top: 18px;
+        }
+
+
+        .bodyText {
+            font-size: 14px;
+            line-height: 20px;
+            text-align: left;
+        }
+
+        .textWarning {
+            color: #FE3030;
+            font-weight: bold;
+        }
+
+        .ttButton {
+            display: inline-block;
+            background-color: #E40D7E;
+            border: none;
+            color: white !important;
+            padding: 20px 20px;
+            text-align: center;
+            font-weight: bold;
+            line-height: 17px;
+            font-style: normal;
+            font-size: 15px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 29px;
+            width: 100%;
+            max-width: 160px;
+            float: left;
+            text-decoration: none;
+        }
+
+        .ttButton:hover {
+            background-color: #C00B6A;
+        }
+
+        .footerText {
+            margin-top: 23px;
+            margin-bottom: 30px;
+            line-height: 19px;
+            font-size: 10px;
+            color:#818182;
+            text-align: left;
+        }
+
+        .footerText.linkInfo {
+
+        }
+
+        .titleTD {
+            padding-top: 20px;
+        }
+
+        td {
+            width: 600px;
+        }
+    </style>
+</head>
+<body>
+<!--    Body wrapper    -->
+<div class="mainWrapper">
+    <div class="webkit">
+        <table class="outer">
+            <tr>
+                <td style="width: 350px;">
+                    <div style="margin: 0 auto;">
+                        <img width="50%" src="https://portal-int.taltech.ee/sites/default/files/news-image/Logo_veeb_esitlus_png.png" alt="TalTech">
+                    </div>
+                    <h1 th:text="${procurementTitle}">
+                        Mööbli hange
+                    </h1>
+                </td>
+            </tr>
+            <tr>
+                <td class="titleTD">
+                    <hr>
+                    <h2 th:text="#{procurement_requirements_title}">
+                        Konkursi Tingimused
+                    </h2>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="bodyText" th:utext="#{Procurement_introduction(${procurementNumber})}">
+                        <!--     Framework agreement number       -->
+                        Palume teil esitada pakkumus raamlepingu nr <b>207933</b> alusel.
+                    </p>
+                    <!--    Description    -->
+                    <p class="bodyText" style="white-space: pre-line" th:text="${procurementDescription}">
+                        <b>Konkursi kirjeldus: </b>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et pellentesque dolor.
+                        Integer arcu urna, imperdiet sit amet gravida sit amet, tristique sed eros.
+                    </p>
+                    <br>
+                    <!--    Requirements    -->
+                    <p class="bodyText" style="white-space: pre-line" th:text="${procurementRequirements}">
+                        <b>Konkursi nõuded:</b>
+                        Donec arcu risus, luctus vel rutrum venenatis, tristique id nibh.
+                        Ut accumsan lectus risus, nec lacinia arcu pretium egestas. Morbi consectetur,
+                        lorem sed semper placerat, ante lorem bibendum turpis, et pulvinar est neque quis ante.
+
+                        In convallis est at iaculis semper. Integer sed mattis orci, eu aliquet metus.
+                        Vestibulum mattis, lacus at aliquet molestie, nibh purus tincidunt dui, non ullamcorper purus diam at dui.
+                        Nam elit diam, scelerisque vel pulvinar eget, egestas vitae massa.
+                        Nam nec nisl et libero tincidunt auctor non ac risus.
+                    </p>
+                    <br>
+                    <p class="bodyText" th:text="#{Procurement_winning_condition}">
+                        Hankeleping sõlmitakse pakkujaga, kes on esitanud madalaima pakkumuse.
+                    </p>
+                    <p class="bodyText" th:utext="#{Procurement_deadline_info(${procurementDeadline})}">
+                        <!--    Procurement offers deadline    -->
+                        Pakkumuste esitamise tähtaeg: <b>15.03.2021 12:00</b>.
+                    </p>
+                    <p class="bodyText textWarning" th:text="#{Late_bid_warning_text}">
+                        Pärast pakkumuste esitamise tähtaega laekunud pakkumusi ei arvestata.
+                    </p>
+                    <p class="bodyText" th:text="#{No_bid_warning_text}">
+                        Kui pakkumuse esitamise tähtpäevaks ei ole laekunud pakkumust, loeb hankija seda minikonkursil osalemisest loobumiseks.
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="titleTD">
+                    <hr>
+                    <h2 th:text="#{Make_bid_title}">
+                        Pakkumuse esitamine
+                    </h2>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <p class="bodyText" th:text="#{Make_bid_info}">
+                                    Järgneva nupu alt on võimalik näha konkursi täpsemaid tingimusi, esitada küsimusi ning esitada pakkumus.
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a th:href="@{${bidLink}}" href="https://google.com" target="_blank" class="button ttButton" th:text="#{Make_bid_button_text}">Vaata lähemalt</a>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="footerText linkInfo" th:text="#{Make_bid_link_info}">
+                                    Kui nupp ei tööta, kopeerige oma veebilehitsejasse järgnev link:
+                                </p>
+                                <p class="footerText linkInfo" th:text="${bidLink}">https://google.com</p>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                </td>
+            </tr>
+            <tr>
+                <td class="titleTD">
+                    <hr>
+                    <p class="footerText">
+                        <!--     Procurement contacts name       -->
+                        Nimi Nimeste<br>
+                        <!--     Procurement contacts job position       -->
+                        ametikoht<br>
+                        <!--     Procurement contacts department       -->
+                        struktuuriüksus (vajadusel)<br>
+                        Tallinna Tehnikaülikool<br>
+                        <!--     Procurement contacts phone number       -->
+                        tel 620 2002, 5123 4567 (mobiilinumber vajadusel)<br>
+                        <!--     Procurement contacts email address       -->
+                        nimi.nimeste@taltech.ee<br>
+                        www.taltech.ee<br>
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -2,19 +2,9 @@ package ee.taltech.procurementSystemBackend.models.Dto;
 
 import ee.taltech.procurementSystemBackend.models.DtoBase;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import javax.validation.constraints.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -35,8 +25,12 @@ public class ContractDto extends DtoBase  {
     @Schema(title="name of ContractDto")
     private String name;
 
-    @Size(min = 1, max = 2, message = "Status has to be 1 or 2. , See https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/wikis/klassifikaatorid for valid options.")
+    @Min(1)
+    @Max(2)
     @NotNull(message = "Status cannot be null, See https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/wikis/klassifikaatorid for valid options.")
     @Schema(title="status of ContractDto")
     private Integer status;
+
+    @Schema(title = "description of ContractDto")
+    private String description;
 }

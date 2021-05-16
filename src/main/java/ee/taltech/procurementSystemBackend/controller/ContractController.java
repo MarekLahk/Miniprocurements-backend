@@ -41,6 +41,7 @@ public class ContractController extends ControllerBase<Contract, ContractDto, Co
         return contractService.updateContract(id, dto, authentication);
     }
 
+    @Deprecated
     @PatchMapping("{id}")
     public ContractDto patchContractStatus(@PathVariable Integer id,
                                                          @RequestBody ContractDto dto,
