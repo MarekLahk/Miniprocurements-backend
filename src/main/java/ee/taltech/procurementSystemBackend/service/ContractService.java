@@ -11,8 +11,6 @@ import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -32,7 +30,6 @@ public class ContractService extends ServiceBase<Contract, ContractDto> {
     public ContractDto addContract(ContractDto dto, Authentication authentication) {
         Contract contract = toModelOptional(dto)
                 .orElseThrow(() -> new ContractException("No contract dto provided"));
-        Integer creatorId = authUtils.getPersonToPerformOperations(authentication).getId();
         return toDtoOptional(contractRepository.save(contract))
                 .orElseThrow(() -> new ContractException("Could not save contract"));
     }
@@ -40,14 +37,13 @@ public class ContractService extends ServiceBase<Contract, ContractDto> {
     public ContractDto updateContract(Integer id,
                                                 ContractDto dto,
                                                 Authentication authentication) {
-        Optional<Contract> optionalContract = contractRepository.findById(id);
-        Person person = authUtils.getPersonToPerformOperations(authentication);
 
-        // get this to take some values that cannot be passed by put method ,
-        Contract initialContract = optionalContract.get();
+        if (dto == null) throw new ContractException("No contract dto provided");
 
-        Contract contract = toModelOptional(dto)
-                .orElseThrow(() -> new ContractException("No contract dto provided"));
+        Contract contract = contractRepository.findById(id).orElseThrow(() -> new ContractException("No such contract"));
+        contract.setName(dto.getName());
+        contract.setReferenceNumber(dto.getReferenceNumber());
+        contract.setDescription(dto.getDescription());
 
         return toDtoOptional(contractRepository.save(contract))
                 .orElseThrow(() -> new ContractException("Could not update contract"));

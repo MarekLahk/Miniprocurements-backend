@@ -2,27 +2,9 @@ package ee.taltech.procurementSystemBackend.models.model;
 
 import com.googlecode.jmapper.annotations.JGlobalMap;
 import ee.taltech.procurementSystemBackend.models.ModelBase;
-import ee.taltech.procurementSystemBackend.models.model.person.Employee;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Set;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -47,4 +29,7 @@ public class Contract extends ModelBase {
     @Basic
     @Column(name = "status", nullable = false)
     private Integer status;
+    @Basic
+    @Column(name = "description")
+    private String description;
 }

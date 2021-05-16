@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html lang="ee" style="height: 0;" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Taltech Minihanked</title>
     <style>
 
         .ExternalClass {width: 100%;}
 
         body {
-            font-family: Proxima nova, Regular,Verdana,serif ;
+            font-family: Proxima Nova, Regular,Verdana, sans-serif;
             color: #353535;
-            background-color: #F6F9FC;
+            background-color: #FBFAFB;
             margin: 0;
             padding: 0;
-
         }
 
         .mainWrapper {
             color: #353535;
-            background-color: #F6F9FC;
+            background-color: #FBFAFB;
             height: 100%;
             table-layout: fixed;
             padding-bottom: 40px;
-            /*text-align: center;*/
         }
 
         div {
             color: #353535;
             display: block;
-            flex-direction: column;
             background-color: #ffffff;
             margin: 10px 20px;
             text-align: center;
@@ -36,16 +33,14 @@
 
         .webkit {
             max-width: 680px;
-            background-color: white;
+            background-color: #ffffff;
             margin: 0 auto;
         }
 
 
         .outer {
-            Margin: 0 auto 40px;
-            width: 100%;
-            max-width: 600px;
-            border-spacing: 0;
+            margin: 0 auto 40px;
+            width: 600px;
         }
 
 
@@ -81,21 +76,27 @@
         }
 
         .ttButton {
-            background-color: #E4067E;
+            display: inline-block;
+            background-color: #E40D7E;
             border: none;
-            color: white;
+            color: white !important;
             padding: 20px 20px;
             text-align: center;
             font-weight: bold;
             line-height: 17px;
             font-style: normal;
-            font-size: 14px;
+            font-size: 15px;
             margin: 4px 2px;
             cursor: pointer;
             border-radius: 29px;
             width: 100%;
-            max-width: 200px;
+            max-width: 160px;
             float: left;
+            text-decoration: none;
+        }
+
+        .ttButton:hover {
+            background-color: #C00B6A;
         }
 
         .footerText {
@@ -107,8 +108,16 @@
             text-align: left;
         }
 
+        .footerText.linkInfo {
+
+        }
+
         .titleTD {
             padding-top: 20px;
+        }
+
+        td {
+            width: 600px;
         }
     </style>
 </head>
@@ -118,10 +127,10 @@
     <div class="webkit">
         <table class="outer">
             <tr>
-                <td width="350">
-                    <center>
-                        <img width="80%" style="height: auto" src="https://portal-int.taltech.ee/sites/default/files/news-image/Logo_veeb_esitlus_png.png">
-                    </center>
+                <td style="width: 350px;">
+                    <div style="margin: 0 auto;">
+                        <img width="50%" src="https://portal-int.taltech.ee/sites/default/files/news-image/Logo_veeb_esitlus_png.png" alt="TalTech">
+                    </div>
                     <h1 th:text="${procurementTitle}">
                         Mööbli hange
                     </h1>
@@ -131,7 +140,7 @@
                 <td class="titleTD">
                     <hr>
                     <h2 th:text="#{procurement_requirements_title}">
-                        Hanke Tingimused
+                        Konkursi Tingimused
                     </h2>
                 </td>
             </tr>
@@ -141,18 +150,26 @@
                         <!--     Framework agreement number       -->
                         Palume teil esitada pakkumus raamlepingu nr <b>207933</b> alusel.
                     </p>
+                    <!--    Description    -->
+                    <p class="bodyText" style="white-space: pre-line" th:text="${procurementDescription}">
+                        <b>Konkursi kirjeldus: </b>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et pellentesque dolor.
+                        Integer arcu urna, imperdiet sit amet gravida sit amet, tristique sed eros.
+                    </p>
+                    <br>
                     <!--    Requirements    -->
-                    <p class="bodyText" style="white-space: pre-wrap" th:text="${procurementDescription}">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean et pellentesque dolor.
-Integer arcu urna, imperdiet sit amet gravida sit amet, tristique sed eros.
+                    <p class="bodyText" style="white-space: pre-line" th:text="${procurementRequirements}">
+                        <b>Konkursi nõuded:</b>
+                        Donec arcu risus, luctus vel rutrum venenatis, tristique id nibh.
+                        Ut accumsan lectus risus, nec lacinia arcu pretium egestas. Morbi consectetur,
+                        lorem sed semper placerat, ante lorem bibendum turpis, et pulvinar est neque quis ante.
 
-Donec arcu risus, luctus vel rutrum venenatis, tristique id nibh.
-Ut accumsan lectus risus, nec lacinia arcu pretium egestas. Morbi consectetur,
-lorem sed semper placerat, ante lorem bibendum turpis, et pulvinar est neque quis ante.
-
-In convallis est at iaculis semper. Integer sed mattis orci, eu aliquet metus.
-Vestibulum mattis, lacus at aliquet molestie, nibh purus tincidunt dui, non ullamcorper purus diam at dui.
-Nam elit diam, scelerisque vel pulvinar eget, egestas vitae massa.
-                        Nam nec nisl et libero tincidunt auctor non ac risus.</p>
+                        In convallis est at iaculis semper. Integer sed mattis orci, eu aliquet metus.
+                        Vestibulum mattis, lacus at aliquet molestie, nibh purus tincidunt dui, non ullamcorper purus diam at dui.
+                        Nam elit diam, scelerisque vel pulvinar eget, egestas vitae massa.
+                        Nam nec nisl et libero tincidunt auctor non ac risus.
+                    </p>
+                    <br>
                     <p class="bodyText" th:text="#{Procurement_winning_condition}">
                         Hankeleping sõlmitakse pakkujaga, kes on esitanud madalaima pakkumuse.
                     </p>
@@ -178,29 +195,33 @@ Nam elit diam, scelerisque vel pulvinar eget, egestas vitae massa.
             </tr>
             <tr>
                 <td>
-                    <p class="bodyText" th:text="#{Make_bid_info}">
-                        Pakkumuse saate esitada vajutates alljärgnevale nupule “Esita pakkumus”.
-                    </p>
-                    <a th:href="@{${bidLink}}" href="https://google.com"><button class="ttButton" th:text="#{Make_bid_button_text}">Esita pakkumus</button></a>
+                    <table>
+                        <tr>
+                            <td>
+                                <p class="bodyText" th:text="#{Make_bid_info}">
+                                    Järgneva nupu alt on võimalik näha konkursi täpsemaid tingimusi, esitada küsimusi ning esitada pakkumus.
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a th:href="@{${bidLink}}" href="https://google.com" target="_blank" class="button ttButton" th:text="#{Make_bid_button_text}">Vaata lähemalt</a>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="footerText linkInfo" th:text="#{Make_bid_link_info}">
+                                    Kui nupp ei tööta, kopeerige oma veebilehitsejasse järgnev link:
+                                </p>
+                                <p class="footerText linkInfo" th:text="${bidLink}">https://google.com</p>
+                            </td>
+                        </tr>
+                    </table>
+
+
                 </td>
             </tr>
-<!--            <tr>-->
-<!--                <td class="titleTD">-->
-<!--                    <hr>-->
-<!--                    <h2 th:text="#{Ask_question_title}">-->
-<!--                        Küsimused-->
-<!--                    </h2>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>-->
-
-<!--                    <p class="bodyText" th:text="#{Ask_question_info}">-->
-<!--                        Kõik tekkinud küsimused saate esitada kasutades alljärgnevat nuppu “Esita küsimus”.-->
-<!--                    </p>-->
-<!--                    <a th:href="@{${questionLink}}" href="https://google.com"><button class="ttButton" th:text="#{Ask_question_button_text}">Esita küsimus</button></a>-->
-<!--                </td>-->
-<!--            </tr>-->
             <tr>
                 <td class="titleTD">
                     <hr>
