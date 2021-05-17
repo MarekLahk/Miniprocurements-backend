@@ -56,7 +56,7 @@ public class BidUtilsTest {
         BidDto dto = new BidDto();
         assertThatThrownBy(() -> bidUtils.getBidToUpdate(UUID.randomUUID(), dto))
                 .isInstanceOf(BidException.class)
-                .hasMessageContaining("No bid id id provided in dto");
+                .hasMessageContaining("No bid id provided in dto");
     }
 
     @Test

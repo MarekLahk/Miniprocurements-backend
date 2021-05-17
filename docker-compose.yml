@@ -7,3 +7,8 @@ services:
             - 8080
         ports:
             - 8080:8080
+        volumes:
+        -   procurements_vol:/procurements/files
+volumes:
+    procurements_vol:
+        external: false

@@ -32,7 +32,7 @@ public class BidMockMvcControllerTest {
 
 //    @Test
 //    public void whenRequestBidThenStatusOk() throws Exception {
-//        when(bidService.getCurrentWaitingBid(RANDOM_UUID)).thenReturn(new BidResponseDto());
+//        when(bidService.getCurrentWaitingBid(RANDOM_UUID)).thenReturn(new BidInfoDto());
 //        mvc.perform(MockMvcRequestBuilders.get(BID_PATH).accept(APPLICATION_JSON))
 //                .andExpect(status().isOk());
 //    }

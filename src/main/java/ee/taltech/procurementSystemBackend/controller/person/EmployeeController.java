@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/employee")
+@RequestMapping("api/employees")
 public class EmployeeController extends ControllerBase<Employee, EmployeeDto, EmployeeSearch> {
     public EmployeeController(EmployeeService employeeService) {
-        super(employeeService, Employee.class, EmployeeDto.class);
+        super(employeeService);
     }
 
     //Note: Contains all search attributes of PersonControllerInterface

@@ -2,26 +2,30 @@ package ee.taltech.procurementSystemBackend.models.model;
 
 import com.googlecode.jmapper.annotations.JGlobalMap;
 import ee.taltech.procurementSystemBackend.models.ModelBase;
+import ee.taltech.procurementSystemBackend.models.model.person.Partner;
 import lombok.*;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JGlobalMap
-@Getter
-@Setter
+@Data
 public class ProcurementPartner extends ModelBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Basic
     @Column(name = "link_id")
+    @Generated(GenerationTime.INSERT)
     private UUID linkId;
     @Basic
     @Column(name = "procurement_id", nullable = false, length = -1)
@@ -29,23 +33,18 @@ public class ProcurementPartner extends ModelBase {
     @Basic
     @Column(name = "partner_id", nullable = false, length = -1)
     private Integer partnerId;
+
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="procurement_id", insertable = false, updatable = false)
     private Procurement procurement;
+
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="partner_id", insertable = false, updatable = false)
+    private Partner partner;
+
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "procurementPartner")
+    private List<Bid> bids;
 }
-
-
-/*
-    CREATE TABLE MiniprocurementPartner(
-        link_id BINARY(16) NOT NULL,
-    procurement_id MEDIUMINT NOT NULL,
-    partner_id MEDIUMINT NOT NULL,
-    time_added DATETIME NOT NULL DEFAULT NOW(),
-    link_first_accessed DATETIME DEFAULT NULL,
-    CONSTRAINT pk_link_id PRIMARY KEY (link_id),
-    CONSTRAINT fk_procurement_link_partner_id FOREIGN KEY (partner_id)
-    REFERENCES Partner(partner_id),
-    CONSTRAINT fk_procurement_link_procurement_id FOREIGN KEY (procurement_id)
-    REFERENCES Miniprocurement(procurement_id)
-);
-*/

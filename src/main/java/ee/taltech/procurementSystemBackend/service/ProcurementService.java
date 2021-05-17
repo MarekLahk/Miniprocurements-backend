@@ -4,10 +4,8 @@ import ee.taltech.procurementSystemBackend.exception.ProcurementException;
 import ee.taltech.procurementSystemBackend.models.Dto.ProcurementDto;
 import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
-import ee.taltech.procurementSystemBackend.models.model.Procurer;
 import ee.taltech.procurementSystemBackend.models.model.person.Person;
 import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
-import ee.taltech.procurementSystemBackend.repository.ProcurerRepository;
 import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import ee.taltech.procurementSystemBackend.utils.ProcurementUtils;
@@ -23,15 +21,18 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
     private final PocurementRepository pocurementRepository;
     private final AuthUtils authUtils;
     private final ProcurementUtils procurementUtils;
+    private final EmailService emailService;
+
 
     public ProcurementService(RepositoryInterface<Procurement> repository,
                               PocurementRepository pocurementRepository,
                               AuthUtils authUtils,
-                              ProcurementUtils procurementUtils) {
+                              ProcurementUtils procurementUtils, EmailService emailService) {
         super(repository, ProcurementMapper.INSTANCE);
         this.pocurementRepository = pocurementRepository;
         this.authUtils = authUtils;
         this.procurementUtils = procurementUtils;
+        this.emailService = emailService;
     }
 
     public ProcurementDto addProcurement(ProcurementDto dto, Authentication authentication) {
@@ -42,12 +43,7 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
         procurement.setCreatedById(creatorId);
         procurement.setStatus((short) 1);
         procurement.setCreatedAt(null);
-        boolean hasContract = dto.getContractId() != null;
-        procurement.setHasContract(dto.getContractId() != null);
-        if (hasContract) {
-            Integer contractSubId = pocurementRepository.countByContractId(dto.getContractId()) + 1;
-            procurement.setContractSubId(contractSubId);
-        }
+
 
         Procurement savedProcurement = pocurementRepository.save(procurement);
 
@@ -113,8 +109,16 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
 
         Short newStatus = dto.getStatus();
         if (procurement.getStatus() == 1 && newStatus == 2) {
+            boolean hasContract = dto.getContractId() != null;
+            procurement.setHasContract(dto.getContractId() != null);
+            if (hasContract) {
+                Integer contractSubId = pocurementRepository.countByContractId(dto.getContractId()) + 1;
+                procurement.setContractSubId(contractSubId);
+            }
             System.out.println("Procurement was activated");
             // TODO: 5/5/2021 Send emails that procurement was activated
+            emailService.sendProcurementEmail(procurement);
+
         }
         if (procurement.getStatus() == 2 && newStatus == 4) {
             System.out.println("Procurement was deleted");

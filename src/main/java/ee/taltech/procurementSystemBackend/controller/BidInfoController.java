@@ -1,6 +1,6 @@
 package ee.taltech.procurementSystemBackend.controller;
 
-import ee.taltech.procurementSystemBackend.models.Dto.BidResponseDto;
+import ee.taltech.procurementSystemBackend.models.Dto.BidInfoDto;
 import ee.taltech.procurementSystemBackend.service.BidService;
 import ee.taltech.procurementSystemBackend.service.ProcurementPartnerService;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ public class BidInfoController {
     private final BidService bidService;
 
     @GetMapping("{partnerUuid}")
-    public BidResponseDto getBidInfo(@PathVariable UUID partnerUuid) {
+    public BidInfoDto getBidInfo(@PathVariable UUID partnerUuid) {
         return bidService.getBidInfo(partnerUuid);
     }
 

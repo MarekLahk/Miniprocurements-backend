@@ -1,15 +1,14 @@
 package ee.taltech.procurementSystemBackend.models.model.person;
 
 import com.googlecode.jmapper.annotations.JGlobalMap;
+import ee.taltech.procurementSystemBackend.models.model.ProcurementPartner;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -26,6 +25,9 @@ public class Partner extends Person {
     Long regNr;
     @Column(name = "partner_info")
     String partnerInfo;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
+    private Set<ProcurementPartner> procurementPartners;
 
 
 }

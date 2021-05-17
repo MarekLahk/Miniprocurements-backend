@@ -14,7 +14,7 @@ public class BidController extends ControllerBase<Bid, BidDto, BidSearch>{
     private final BidService bidService;
 
     public BidController(BidService bidService) {
-        super(bidService, Bid.class, BidDto.class);
+        super(bidService);
         this.bidService = bidService;
     }
 }

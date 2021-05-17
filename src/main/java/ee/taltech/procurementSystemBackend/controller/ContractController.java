@@ -24,7 +24,7 @@ public class ContractController extends ControllerBase<Contract, ContractDto, Co
     private final ContractService contractService;
 
     public ContractController(ContractService contractService) {
-        super(contractService, Contract.class, ContractDto.class);
+        super(contractService);
         this.contractService = contractService;
     }
 
@@ -41,6 +41,7 @@ public class ContractController extends ControllerBase<Contract, ContractDto, Co
         return contractService.updateContract(id, dto, authentication);
     }
 
+    @Deprecated
     @PatchMapping("{id}")
     public ContractDto patchContractStatus(@PathVariable Integer id,
                                                          @RequestBody ContractDto dto,

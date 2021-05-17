@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @JGlobalMap
+@Table(name = "Person")
 public class Person extends ModelBase {
 
     @Id()
@@ -26,7 +27,7 @@ public class Person extends ModelBase {
     @Column(name = "person_name", length=100)
     private String name;
 
-    @Column(name = "e_mail", length = 100, nullable = false)
+    @Column(name = "e_mail", length = 100, nullable = false, unique = true)
     private String eMail;
 
     @CreationTimestamp@Column(name = "created_at", columnDefinition = "TIMESTAMP")
