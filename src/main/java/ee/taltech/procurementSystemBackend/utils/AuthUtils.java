@@ -20,13 +20,13 @@ public class AuthUtils {
 
     public String getRedirectUrl(String queryString) {
         String url = webAuthConfig.getRedirectUrl();
-        if (queryString != null) {
-            String query = queryString;
-            if (queryString.startsWith("/")) {
-                query = queryString.substring(1);
-            }
-            url += query;
-        }
+//        if (queryString != null) {
+//            String query = queryString;
+//            if (queryString.startsWith("/")) {
+//                query = queryString.substring(1);
+//            }
+//            url += query;
+//        }
         return url;
     }
 

@@ -27,6 +27,8 @@ public class AuthController {
                                       @RequestParam(value = "redirect", required = false) String queryString) {
         authService.addNewEmployeeIfNeeded(authentication);
         //return "<script>window.location.href = 'http://localhost:3000/';</script>";
+//        return ResponseEntity.status(HttpStatus.FOUND).location(
+//                URI.create(authService.getRedirectUrl(queryString))).build();
         return ResponseEntity.status(HttpStatus.FOUND).location(
                 URI.create(authService.getRedirectUrl(queryString))).build();
     }
