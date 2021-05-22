@@ -8,6 +8,7 @@ import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
 import ee.taltech.procurementSystemBackend.repository.ProcurerRepository;
 import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.repository.person.EmployeeRepository;
+import ee.taltech.procurementSystemBackend.service.EmailService;
 import ee.taltech.procurementSystemBackend.service.ProcurementService;
 import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import ee.taltech.procurementSystemBackend.utils.ProcurementUtils;
@@ -50,6 +51,8 @@ public class ProcurementIntegrationTest {
     private ProcurementUtils procurementUtils;
 
     private ProcurementService procurementService;
+    @Autowired
+    private EmailService emailService;
 
     @BeforeEach
     void setUp() {
@@ -59,7 +62,7 @@ public class ProcurementIntegrationTest {
         employee.setCreatedAt(LocalDateTime.now());
         employeeRepository.save(employee);
 
-        procurementService = new ProcurementService(repository, pocurementRepository, authUtils, procurementUtils);
+        procurementService = new ProcurementService(repository, pocurementRepository, authUtils, procurementUtils, emailService);
     }
 
     @AfterEach

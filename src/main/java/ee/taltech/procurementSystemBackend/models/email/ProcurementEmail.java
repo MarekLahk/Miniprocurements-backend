@@ -20,7 +20,7 @@ public class ProcurementEmail implements EmailBase {
 
     private String procurementTitle;
     private String procurementNumber;
-    private String procurementRequirements;
+    private String procurementDescription;
     private LocalDateTime procurementDeadline;
     private String Bid_link;
     private String questionLink;
@@ -32,9 +32,9 @@ public class ProcurementEmail implements EmailBase {
         Context ctx = new Context(locale);
         ctx.setVariable("procurementTitle", this.procurementTitle);
         ctx.setVariable("procurementNumber", this.procurementNumber);
-        ctx.setVariable("procurementRequirements", this.procurementRequirements);
+        ctx.setVariable("procurementDescription", this.procurementDescription);
         ctx.setVariable("procurementDeadline", this.procurementDeadline.format(Statics.formatter));
-        ctx.setVariable("Bid_link", this.Bid_link);
+        ctx.setVariable("bidLink", this.Bid_link);
         ctx.setVariable("questionLink", this.questionLink);
         return ctx;
     }

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 
 @RestController
-@RequestMapping("api/partner")
+@RequestMapping("api/partners")
 public class PartnerController extends ControllerBase<Partner, PartnerDto, PartnerSearch> {
 
     private final PartnerService partnerService;

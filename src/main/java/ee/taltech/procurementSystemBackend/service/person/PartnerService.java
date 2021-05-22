@@ -38,16 +38,22 @@ public class PartnerService extends PersonServiceInterface<Partner, PartnerDto> 
 
 
     public PartnerDto updatePartner(Integer id, PartnerDto dto) {
-        Person initialPerson = personRepository.findById(id)
+        Partner currentPartner = partnerRepository.findById(id)
                 .orElseThrow(() -> new PersonException("Person with such id does not exist."));
-        Optional<String> emailOtional = Optional.ofNullable(dto.getEMail());
-        if (emailOtional.isPresent() &&
-                personRepository.findByeMailAndId(emailOtional.get(), id).isPresent()) {
-            throw new PersonException("Person with such email already exists.");
+        Optional<String> emailOptional = Optional.ofNullable(dto.getEMail());
+        if (emailOptional.isPresent()) {
+            Optional<Person> personOptional = personRepository.findByeMailAndId(emailOptional.get(), id);
+            if (personOptional.isPresent()) {
+                if (!personOptional.get().getId().equals(id))
+                throw new PersonException("Person with such email already exists.");
+            }
         }
-        Partner partner = toModelOptional(dto).get();
-        partner.setId(id);
-        partner.setCreatedAt(initialPerson.getCreatedAt());
-        return toDtoOptional(partnerRepository.save(partner)).get();
+
+        currentPartner.setId(id);
+        currentPartner.setEMail(dto.getEMail());
+        currentPartner.setPartnerInfo(dto.getPartnerInfo());
+        currentPartner.setRegNr(dto.getRegNr());
+        currentPartner.setName(dto.getName());
+        return toDtoOptional(partnerRepository.save(currentPartner)).get();
     }
 }

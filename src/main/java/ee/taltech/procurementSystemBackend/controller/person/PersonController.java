@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("api/person")
+@RequestMapping("api/persons")
 public class PersonController extends ControllerBase<Person, PersonDto, PersonSearch<Person>> {
 
     public PersonController(PersonService personService) {
