@@ -26,6 +26,7 @@ public class ProcurementEmail implements EmailBase {
     private String questionLink;
     private String recipientEmail;
     private Locale locale;
+    private Boolean hasContract;
 
 
     public Context buildContext() {
@@ -36,6 +37,7 @@ public class ProcurementEmail implements EmailBase {
         ctx.setVariable("procurementDeadline", this.procurementDeadline.format(Statics.formatter));
         ctx.setVariable("bidLink", this.Bid_link);
         ctx.setVariable("questionLink", this.questionLink);
+        ctx.setVariable("hasContract", this.hasContract);
         return ctx;
     }
 

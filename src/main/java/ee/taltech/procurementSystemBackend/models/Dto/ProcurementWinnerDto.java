@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Builder
 @Schema(name = "ProcurementWinnersDto", description = "DTO for Procurement Winners")
-public class ProcurementWinnersDto extends DtoBase {
+public class ProcurementWinnerDto extends DtoBase {
     @Schema(title="procurementId of ProcurementWinnersDto")
     @NotNull(message = "Procurement id cannot be null")
     private Integer procurementId;

@@ -2,9 +2,11 @@ package ee.taltech.procurementSystemBackend.utils;
 
 import ee.taltech.procurementSystemBackend.exception.ProcurementException;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
+import ee.taltech.procurementSystemBackend.repository.ProcurementRepository;
 import ee.taltech.procurementSystemBackend.repository.ProcurerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -21,9 +23,14 @@ public class ProcurementUtlisPathcCheckTest {
 
     private ProcurementUtils procurementUtils;
 
+    @Autowired
+    private ProcurementRepository procurementRepository;
+    @Autowired
+    private AuthUtils authUtils;
+
     @BeforeEach
     void setUp() {
-        procurementUtils = new ProcurementUtils(procurerRepository);
+        procurementUtils = new ProcurementUtils(procurerRepository, procurementRepository, authUtils);
     }
 
     @Test

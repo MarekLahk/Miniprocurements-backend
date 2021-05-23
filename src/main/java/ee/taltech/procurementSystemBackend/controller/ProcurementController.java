@@ -41,9 +41,9 @@ public class ProcurementController extends ControllerBase<Procurement, Procureme
         return procurementService.patchProcurementStatus(id, dto, authentication);
     }
 
-    @Deprecated
     @DeleteMapping("{id}")
-    public void deleteProcurement(@PathVariable Integer id) {
-        procurementService.deleteProcurement(id);
+    public void deleteProcurement(@PathVariable Integer id,
+                                  Authentication authentication) {
+        procurementService.deleteProcurement(id, authentication);
     }
 }

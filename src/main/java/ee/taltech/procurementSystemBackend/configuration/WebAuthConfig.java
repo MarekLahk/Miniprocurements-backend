@@ -12,4 +12,6 @@ import org.springframework.stereotype.Component;
 public class WebAuthConfig {
 
     private String redirectUrl;
+
+    private String logoutUrl;
 }

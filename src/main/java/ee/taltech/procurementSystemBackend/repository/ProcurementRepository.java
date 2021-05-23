@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface PocurementRepository extends RepositoryInterface<Procurement> {
+public interface ProcurementRepository extends RepositoryInterface<Procurement> {
 
     Optional<Procurement> findByIdAndCreatedById(Integer procurementId, Integer addedBy);
 

@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Schema(name = "ProcurerDto", description = "DTO for Procurer")
 public class ProcurerDto extends DtoBase {
-    @Schema(title="procurerId of ProcurerDto")
-    private Integer procurerId;
+    @Schema(title="id of ProcurerDto")
+    private Integer id;
 
     @NotNull(message = "Procurement id cannot be null")
     @Schema(title="procurementId of ProcurerDto")

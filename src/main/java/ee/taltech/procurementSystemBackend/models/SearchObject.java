@@ -1,8 +1,10 @@
 package ee.taltech.procurementSystemBackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ee.taltech.procurementSystemBackend.models.search.SearchSpecPack;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -10,6 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public abstract class SearchObject<T> {
 
@@ -18,7 +21,14 @@ public abstract class SearchObject<T> {
     private String sort;
     private Sort.Direction dir;
 
-//    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+//    public SearchObject(Integer limit, Integer page, String sort, Sort.Direction dir) {
+//        this.limit = limit;
+//        this.page = page;
+//        this.sort = sort;
+//        this.dir = dir;
+//    }
+
+    //    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     private Sort getSort() {
         if (sort == null) return Sort.unsorted();
@@ -33,6 +43,8 @@ public abstract class SearchObject<T> {
                 getSort()
         );
     }
+
+    @JsonIgnore
     public SearchSpecPack<T> getSearchSpec() {
         return new SearchSpecPack<>(
                 Specification.where(null),

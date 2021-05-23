@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/procurementPartners")
-@Tag(name = "procurementPartners", description = "Link 0 or 1 procurement and 0 or more partners", externalDocs = @ExternalDocumentation(url = "https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/issues/22", description = "Gitlab issue about creation of this API."))
+@Tag(name = "procurement-partner-controller", description = "Link 0 or 1 procurement and 0 or more partners", externalDocs = @ExternalDocumentation(url = "https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/issues/22", description = "Gitlab issue about creation of this API."))
 public class ProcurementPartnerController extends ControllerBase<ProcurementPartner, ProcurementPartnerDto, ProcurementPartnerSearch> {
 
     private final ProcurementPartnerService procurementPartnerService;

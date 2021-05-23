@@ -3,6 +3,7 @@ package ee.taltech.procurementSystemBackend.models.model;
 import com.googlecode.jmapper.annotations.JGlobalMap;
 import ee.taltech.procurementSystemBackend.models.ModelBase;
 import lombok.*;
+import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
@@ -24,7 +25,7 @@ public class Document extends ModelBase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "document_id", nullable = false)
     private Integer id;
-    @org.hibernate.annotations.Generated(GenerationTime.INSERT)
+    @Generated(GenerationTime.INSERT)
     @Column(name = "document_uuid", nullable = false)
     private UUID linkId;
     @Basic

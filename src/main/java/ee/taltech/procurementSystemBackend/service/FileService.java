@@ -103,7 +103,7 @@ public class FileService {
         }
         Document.DocumentBuilder documentBuilder = Document.builder();
 
-        Bid bid = bidRepository.findFirstByLinkIdAndBidStatus(bidLinkUUID, 1)
+        Bid bid = bidRepository.findFirstByLinkIdAndStatus(bidLinkUUID, 1)
                 .orElseThrow(() -> new FileException("No such bid link ID"));
 
         documentBuilder

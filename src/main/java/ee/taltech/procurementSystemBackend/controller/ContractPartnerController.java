@@ -26,7 +26,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/contractPartners")
-@Tag(name = "contractPartners", description = "Link 0 or 1 contract and 0 or more partners", externalDocs = @ExternalDocumentation(url = "https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/issues/27", description = "Gitlab issue about creation of this API."))
+@Tag(name = "contract-partner-controller", description = "Link 0 or 1 contract and 0 or more partners", externalDocs = @ExternalDocumentation(url = "https://gitlab.cs.ttu.ee/taltech-uurimisryhmad/riigihanked/small-procurement-system-backend/-/issues/27", description = "Gitlab issue about creation of this API."))
 public class ContractPartnerController extends ControllerBase<ContractPartner, ContractPartnerDto, ContractPartnerSearch> {
 
     private final ContractPartnerService contractPartnerService;

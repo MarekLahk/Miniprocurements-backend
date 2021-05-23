@@ -1,19 +1,19 @@
 package ee.taltech.procurementSystemBackend.integration;
 
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
-import ee.taltech.procurementSystemBackend.models.Dto.BidInfoDto;
-import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
+import ee.taltech.procurementSystemBackend.models.Dto.ProcurementPublicDto;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
 import ee.taltech.procurementSystemBackend.models.model.ProcurementPartner;
 import ee.taltech.procurementSystemBackend.models.model.person.Employee;
 import ee.taltech.procurementSystemBackend.models.model.person.Partner;
 import ee.taltech.procurementSystemBackend.repository.BidRepository;
-import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
+import ee.taltech.procurementSystemBackend.repository.ProcurementRepository;
 import ee.taltech.procurementSystemBackend.repository.ProcurementPartnerRepository;
 import ee.taltech.procurementSystemBackend.repository.ProcurerRepository;
 import ee.taltech.procurementSystemBackend.repository.person.EmployeeRepository;
 import ee.taltech.procurementSystemBackend.repository.person.PartnerRepository;
 import ee.taltech.procurementSystemBackend.service.BidService;
+import ee.taltech.procurementSystemBackend.service.ProcurementService;
 import ee.taltech.procurementSystemBackend.utils.BidUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,19 +37,20 @@ public class BidIntegrationTest {
     @Autowired
     private BidUtils bidUtils;
 
-    private ProcurementMapper procurementMapper;
-
     @Autowired
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    private PocurementRepository pocurementRepository;
+    private ProcurementRepository procurementRepository;
 
     @Autowired
     private PartnerRepository partnerRepository;
 
     @Autowired
     private ProcurerRepository procurerRepository;
+
+    @Autowired
+    private ProcurementService procurementService;
 
     private BidService bidService;
 
@@ -84,7 +85,7 @@ public class BidIntegrationTest {
                 .createdById(1)
                 .build();
         procurement.setCreatedAt(LocalDateTime.now());
-        pocurementRepository.save(procurement);
+        procurementRepository.save(procurement);
 
         ProcurementPartner procurementPartner = new ProcurementPartner();
         procurementPartner.setProcurementId(1);
@@ -99,7 +100,7 @@ public class BidIntegrationTest {
         bidRepository.deleteAll();
         procurementPartnerRepository.deleteAll();
         procurerRepository.deleteAll();
-        pocurementRepository.deleteAll();
+        procurementRepository.deleteAll();
         partnerRepository.deleteAll();
         employeeRepository.deleteAll();
     }
@@ -110,7 +111,7 @@ public class BidIntegrationTest {
         System.out.println(link);
 
         BidDto dto = new BidDto();
-        dto.setBidValue(1234L);
+        dto.setValue(1234L);
         dto.setDescription("Description");
 
         // add bid
@@ -118,19 +119,21 @@ public class BidIntegrationTest {
         assertThat(result.getDescription()).isEqualTo("Description");
 
         // get bid info
-        BidInfoDto searchResult = bidService.getBidInfo(link);
+        ProcurementPublicDto searchResult = procurementService.getProcurementInfo(link);
         assertThat(searchResult.getName()).isEqualTo("Procurement");
 
         // update bid
         dto.setDescription("Updated");
         dto.setId(1);
+        dto.setValue(123L);
         BidDto resultUpdated = bidService.updateBid(link, dto);
+        System.out.println("Result: " + resultUpdated);
         assertThat(resultUpdated.getDescription()).isEqualTo("Updated");
 
         // patch bid
         BidDto patchDto = new BidDto();
         patchDto.setId(1);
         BidDto resultPatched = bidService.patchBidStatus(link, dto);
-        assertThat(resultPatched.getBidStatus()).isEqualTo(2);
+        assertThat(resultPatched.getStatus()).isEqualTo(2);
     }
 }

@@ -1,9 +1,9 @@
 package ee.taltech.procurementSystemBackend.service;
 
-import ee.taltech.procurementSystemBackend.models.Dto.ProcurementWinnersDto;
-import ee.taltech.procurementSystemBackend.models.mapper.ProcurementWinnersMapper;
+import ee.taltech.procurementSystemBackend.models.Dto.ProcurementWinnerDto;
+import ee.taltech.procurementSystemBackend.models.mapper.ProcurementWinnerMapper;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
-import ee.taltech.procurementSystemBackend.models.model.ProcurementWinners;
+import ee.taltech.procurementSystemBackend.models.model.ProcurementWinner;
 import ee.taltech.procurementSystemBackend.repository.*;
 import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import ee.taltech.procurementSystemBackend.utils.ProcurementWinnersUtils;
@@ -13,25 +13,25 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class ProcurementWinnersService extends ServiceBase<ProcurementWinners, ProcurementWinnersDto> {
+public class ProcurementWinnerService extends ServiceBase<ProcurementWinner, ProcurementWinnerDto> {
 
-    private final ProcurementWinnersRepository procurementWinnersRepository;
-    private final PocurementRepository pocurementRepository;
+    private final ProcurementWinnerRepository procurementWinnerRepository;
+    private final ProcurementRepository procurementRepository;
     private final AuthUtils authUtils;
     private final ProcurementWinnersUtils procurementWinnersUtils;
 
-    public ProcurementWinnersService(RepositoryInterface<ProcurementWinners> repository,
-                                     ProcurementWinnersRepository procurementWinnersRepository,
-                                     PocurementRepository pocurementRepository,
-                                     AuthUtils authUtils, ProcurementWinnersUtils procurementWinnersUtils) {
-        super(repository, ProcurementWinnersMapper.INSTANCE);
-        this.procurementWinnersRepository = procurementWinnersRepository;
-        this.pocurementRepository = pocurementRepository;
+    public ProcurementWinnerService(RepositoryInterface<ProcurementWinner> repository,
+                                    ProcurementWinnerRepository procurementWinnerRepository,
+                                    ProcurementRepository procurementRepository,
+                                    AuthUtils authUtils, ProcurementWinnersUtils procurementWinnersUtils) {
+        super(repository, ProcurementWinnerMapper.INSTANCE);
+        this.procurementWinnerRepository = procurementWinnerRepository;
+        this.procurementRepository = procurementRepository;
         this.authUtils = authUtils;
         this.procurementWinnersUtils = procurementWinnersUtils;
     }
 
-    public ProcurementWinnersDto addProcurementWinner(ProcurementWinnersDto dto, Authentication authentication) {
+    public ProcurementWinnerDto addProcurementWinner(ProcurementWinnerDto dto, Authentication authentication) {
         if (dto.getWinnerId() != null) {
             procurementWinnersUtils.checkProcurementWinner(dto);
         }
@@ -41,17 +41,17 @@ public class ProcurementWinnersService extends ServiceBase<ProcurementWinners, P
 
         LocalDateTime decisionTime = LocalDateTime.now();
         // dto cannot be null, checked with @NotNull annotation in controller
-        ProcurementWinners winner = toModelOptional(dto).get();
+        ProcurementWinner winner = toModelOptional(dto).get();
         winner.setJudgeId(creatorId);
         winner.setCreatedAt(decisionTime);
         winner.setUpdatedAt(decisionTime);
         procurement.setStatus((short) 3);
 
-        pocurementRepository.save(procurement);
+        procurementRepository.save(procurement);
 
         // todo Send Emails
 
-        return toDtoOptional(procurementWinnersRepository.save(winner)).get();
+        return toDtoOptional(procurementWinnerRepository.save(winner)).get();
     }
 }
 

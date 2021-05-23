@@ -4,7 +4,8 @@ import ee.taltech.procurementSystemBackend.models.Dto.ProcurementDto;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
 import ee.taltech.procurementSystemBackend.models.model.person.Employee;
 import ee.taltech.procurementSystemBackend.models.model.person.Person;
-import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
+import ee.taltech.procurementSystemBackend.repository.ProcurementRepository;
+import ee.taltech.procurementSystemBackend.repository.ProcurementPartnerRepository;
 import ee.taltech.procurementSystemBackend.repository.ProcurerRepository;
 import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.repository.person.EmployeeRepository;
@@ -36,7 +37,7 @@ public class ProcurementIntegrationTest {
     private EmployeeRepository employeeRepository;
 
     @Autowired
-    private PocurementRepository pocurementRepository;
+    private ProcurementRepository procurementRepository;
 
     @Autowired
     private ProcurerRepository procurerRepository;
@@ -53,6 +54,8 @@ public class ProcurementIntegrationTest {
     private ProcurementService procurementService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private ProcurementPartnerRepository procurementPartnerRepository;
 
     @BeforeEach
     void setUp() {
@@ -62,13 +65,13 @@ public class ProcurementIntegrationTest {
         employee.setCreatedAt(LocalDateTime.now());
         employeeRepository.save(employee);
 
-        procurementService = new ProcurementService(repository, pocurementRepository, authUtils, procurementUtils, emailService);
+        procurementService = new ProcurementService(repository, procurementRepository, authUtils, procurementUtils, emailService, procurementPartnerRepository);
     }
 
     @AfterEach
     void tearDown() {
         procurerRepository.deleteAll();
-        pocurementRepository.deleteAll();
+        procurementRepository.deleteAll();
         employeeRepository.deleteAll();
     }
 

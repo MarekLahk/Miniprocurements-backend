@@ -42,6 +42,7 @@ public abstract class ServiceBase<ModelT extends ModelBase, DtoT extends DtoBase
 
     public List<DtoT> getByParams(SearchObject<ModelT> searchObject) {
         SearchSpecPack<ModelT> searchSpec = searchObject.getSearchSpec();
+        System.out.println(searchSpec);
         List<ModelT> result = repository.findAll(searchSpec.getSpecification(), searchSpec.getPageable()).getContent();
         return toDtoList(result);
     }

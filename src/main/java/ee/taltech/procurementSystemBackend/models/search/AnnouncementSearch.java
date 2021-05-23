@@ -3,19 +3,17 @@ package ee.taltech.procurementSystemBackend.models.search;
 import ee.taltech.procurementSystemBackend.models.SearchObject;
 import ee.taltech.procurementSystemBackend.models.model.Announcement;
 import ee.taltech.procurementSystemBackend.repository.person.Specifications;
-import org.springframework.data.domain.Sort;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
+@AllArgsConstructor
 public class AnnouncementSearch extends SearchObject<Announcement> {
 
-    private final Integer procurementID;
-    private final Integer employeeID;
-
-    public AnnouncementSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer procurementID, Integer employeeID) {
-        super(limit, page, sort, dir);
-        this.procurementID = procurementID;
-        this.employeeID = employeeID;
-    }
-
+    private Integer procurementID;
+    private Integer employeeID;
 
     @Override
     public SearchSpecPack<Announcement> getSearchSpec() {

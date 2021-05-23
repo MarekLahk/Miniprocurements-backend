@@ -29,13 +29,13 @@ public class Bid extends ModelBase {
     @Column(name = "procurement_partner_id")
     private Integer procurementPartnerId;
     @Basic
-    @Column(name = "bid_value", nullable = false)
-    private Long bidValue;
+    @Column(name = "value", nullable = false)
+    private Long value;
     @Basic
     @Column(name = "description", length = -1)
     private String description;
-    @Column(name = "bid_status")
-    private Integer bidStatus;
+    @Column(name = "status")
+    private Integer status;
     @Column(name = "procurement_id")
     private Integer procurementId;
 
