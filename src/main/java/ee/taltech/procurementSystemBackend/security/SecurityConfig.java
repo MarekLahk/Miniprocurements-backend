@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/v3/api-docs/**",
                         "/api/public/bids/*",
                         "/api/public/questions/*",
-                        "/api/public/bidInfo/*");
+                        "/api/public/procurements/*");
     }
 }
 
