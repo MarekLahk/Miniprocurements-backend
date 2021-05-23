@@ -32,7 +32,7 @@ public class BidUtilsTest {
     @Test
     void checkBidBeforeAddingShouldThrowException() {
         UUID uuid = UUID.randomUUID();
-        when(bidRepository.findFirstByLinkIdAndBidStatus(uuid, 1))
+        when(bidRepository.findFirstByLinkIdAndStatus(uuid, 1))
                 .thenReturn(Optional.of(new Bid()));
         assertThatThrownBy(() -> bidUtils.checkBidBeforeAdding(uuid))
                 .isInstanceOf(BidException.class)
@@ -42,7 +42,7 @@ public class BidUtilsTest {
     @Test
     void checkBidBeforeAddingShouldPass() {
         UUID uuid = UUID.randomUUID();
-        when(bidRepository.findFirstByLinkIdAndBidStatus(uuid, 1))
+        when(bidRepository.findFirstByLinkIdAndStatus(uuid, 1))
                 .thenReturn(Optional.empty());
         try {
             bidUtils.checkBidBeforeAdding(uuid);
@@ -62,7 +62,7 @@ public class BidUtilsTest {
     @Test
     void checkIfBidIsInactiveShouldThrowError() {
         Bid bid = new Bid();
-        bid.setBidStatus(3);
+        bid.setStatus(3);
         assertThatThrownBy(() -> bidUtils.checkIfBidIsInactive(bid))
                 .isInstanceOf(BidException.class)
                 .hasMessageContaining("Inactive bid cannot be updated");
@@ -71,7 +71,7 @@ public class BidUtilsTest {
     @Test
     void checkIfBidIsInactiveShouldPass() {
         Bid bid = new Bid();
-        bid.setBidStatus(1);
+        bid.setStatus(1);
         try {
             bidUtils.checkIfBidIsInactive(bid);
         } catch(Exception e) {
@@ -82,7 +82,7 @@ public class BidUtilsTest {
     @Test
     void checkIfBidIsActiveShouldThrowError() {
         Bid bid = new Bid();
-        bid.setBidStatus(2);
+        bid.setStatus(2);
         assertThatThrownBy(() -> bidUtils.checkIfBidIsActive(bid))
                 .isInstanceOf(BidException.class)
                 .hasMessageContaining("Active bid cannot be updated");
@@ -91,7 +91,7 @@ public class BidUtilsTest {
     @Test
     void checkIfBidIsActiveShouldPass() {
         Bid bid = new Bid();
-        bid.setBidStatus(1);
+        bid.setStatus(1);
         try {
             bidUtils.checkIfBidIsActive(bid);
         } catch(Exception e) {

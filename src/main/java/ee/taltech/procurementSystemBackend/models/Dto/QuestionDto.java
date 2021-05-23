@@ -24,4 +24,8 @@ public class QuestionDto extends DtoBase {
     @NotNull(message = "Question cannot be null.")
     @Schema(title="question of QuestionDto")
     private String question;
+
+    @NotNull(message = "Creator cannot be null")
+    @Schema(title="Id of partner who asked the question")
+    private Integer createdBy;
 }

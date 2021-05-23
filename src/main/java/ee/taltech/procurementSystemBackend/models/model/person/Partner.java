@@ -2,6 +2,7 @@ package ee.taltech.procurementSystemBackend.models.model.person;
 
 import com.googlecode.jmapper.annotations.JGlobalMap;
 import ee.taltech.procurementSystemBackend.models.model.ProcurementPartner;
+import ee.taltech.procurementSystemBackend.models.model.Question;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,6 +29,8 @@ public class Partner extends Person {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
     private Set<ProcurementPartner> procurementPartners;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
+    private Set<Question> questions;
 
 
 }

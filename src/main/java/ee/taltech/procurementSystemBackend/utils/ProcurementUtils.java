@@ -5,9 +5,11 @@ import ee.taltech.procurementSystemBackend.exception.ProcurementException;
 import ee.taltech.procurementSystemBackend.exception.RequestedObjectNotFoundException;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
 import ee.taltech.procurementSystemBackend.models.model.Procurer;
-import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
+import ee.taltech.procurementSystemBackend.models.model.person.Person;
+import ee.taltech.procurementSystemBackend.repository.ProcurementRepository;
 import ee.taltech.procurementSystemBackend.repository.ProcurerRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -19,6 +21,8 @@ import java.util.Optional;
 public class ProcurementUtils {
 
     private final ProcurerRepository procurerRepository;
+    private final ProcurementRepository procurementRepository;
+    private final AuthUtils authUtils;
 
     public void checkProcurementDeadlineIsNotInPast(Timestamp timestamp) {
         if (timestamp.before(new Timestamp(System.currentTimeMillis()))) {
@@ -26,17 +30,17 @@ public class ProcurementUtils {
         }
     }
 
-    public void checkEmployeePermissionAndProcurementPresence(Integer procurementId,
-                                                              Integer personId,
-                                                              Optional<Procurement> optionalProcurement) {
-        if (procurerRepository.findByProcurementIdAndAndEmployeeId(procurementId, personId).isEmpty()) {
+    public Person checkEmployeePermissionAndProcurementPresence(Integer procurementId, Authentication authentication) {
+
+        Person person = authUtils.getPersonToPerformOperations(authentication);
+        Optional<Procurer> procurer = procurerRepository.findByProcurementIdAndAndEmployeeId(
+                procurementId,
+                person.getId());
+
+        if (procurer.isEmpty()) {
             throw new AuthException("This person does not have permission to update this procurement");
         }
-
-        if (optionalProcurement.isEmpty()) {
-            throw new RequestedObjectNotFoundException(
-                    String.format("Procurement with id [%d] does not exist", procurementId));
-        }
+        return person;
     }
 
     public void checkProcurementBeforeStatusPatch(Procurement procurement) {
@@ -76,5 +80,10 @@ public class ProcurementUtils {
         procurerRepository.save(
                 procurer
         );
+    }
+
+    public Procurement getProcurement(Integer id) {
+        return procurementRepository.findById(id).orElseThrow(() -> new RequestedObjectNotFoundException(
+                String.format("Procurement with id [%d] does not exist", id)));
     }
 }

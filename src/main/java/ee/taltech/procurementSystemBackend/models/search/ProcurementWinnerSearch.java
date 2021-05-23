@@ -1,7 +1,7 @@
 package ee.taltech.procurementSystemBackend.models.search;
 
 import ee.taltech.procurementSystemBackend.models.SearchObject;
-import ee.taltech.procurementSystemBackend.models.model.Procurer;
+import ee.taltech.procurementSystemBackend.models.model.ProcurementWinner;
 import ee.taltech.procurementSystemBackend.repository.person.Specifications;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,28 +10,28 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
-public class ProcurerSearch extends SearchObject<Procurer> {
+public class ProcurementWinnerSearch extends SearchObject<ProcurementWinner> {
 
     private Integer procurementId;
-    private Integer employeeId;
+    private Integer winnerId;
 
-//    public ProcurerSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer procurementId, Integer employeeId) {
+//    public ProcurementWinnerSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer procurementId, Integer winnerId) {
 //        super(limit, page, sort, dir);
 //        this.procurementId = procurementId;
-//        this.employeeId = employeeId;
+//        this.winnerId = winnerId;
 //    }
 
     @Override
-    public SearchSpecPack<Procurer> getSearchSpec() {
-
-        SearchSpecPack<Procurer> searchSpec = super.getSearchSpec();
+    public SearchSpecPack<ProcurementWinner> getSearchSpec() {
+        SearchSpecPack<ProcurementWinner> searchSpec = super.getSearchSpec();
         if (procurementId != null) {
             searchSpec.addSpec(Specifications.specEquals("procurementId", this.procurementId));
         }
-        if (employeeId != null) {
-            searchSpec.addSpec(Specifications.specEquals("employeeId", this.employeeId));
+        if (winnerId != null) {
+            searchSpec.addSpec(Specifications.specEquals("winnerId", this.winnerId));
         }
 
         return searchSpec;
     }
 }
+

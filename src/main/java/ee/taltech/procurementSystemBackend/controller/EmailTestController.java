@@ -1,6 +1,6 @@
 package ee.taltech.procurementSystemBackend.controller;
 
-import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
+import ee.taltech.procurementSystemBackend.repository.ProcurementRepository;
 import ee.taltech.procurementSystemBackend.service.EmailService;
 import ee.taltech.procurementSystemBackend.service.ProcurementService;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ public class EmailTestController {
 
     private final EmailService emailService;
     private final ProcurementService procurementService;
-    private final PocurementRepository pocurementRepository;
+    private final ProcurementRepository procurementRepository;
 
     @GetMapping
     public String sendMail(
@@ -66,7 +66,7 @@ public class EmailTestController {
 //
 //        // Send mail
 //        this.mailSender.send(mimeMessage);
-        emailService.sendProcurementEmail(pocurementRepository.findById(1).get());
+        emailService.sendProcurementEmail(procurementRepository.findById(1).get());
         return "Success";
     }
 }

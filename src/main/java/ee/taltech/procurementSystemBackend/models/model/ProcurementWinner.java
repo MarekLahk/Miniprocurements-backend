@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @JGlobalMap
-public class ProcurementWinners extends ModelBase {
+public class ProcurementWinner extends ModelBase {
 
     @Id
     @Column(name = "procurement_id", nullable = false)

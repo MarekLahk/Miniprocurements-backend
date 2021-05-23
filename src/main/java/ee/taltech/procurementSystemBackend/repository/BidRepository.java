@@ -8,7 +8,7 @@ import java.util.UUID;
 @Repository
 public interface BidRepository  extends RepositoryInterface<Bid> {
 
-    Optional<Bid> findFirstByLinkIdAndBidStatus(UUID bidderLinkId, Integer status);
+    Optional<Bid> findFirstByLinkIdAndStatus(UUID bidderLinkId, Integer status);
 
     Optional<Bid> findByIdAndLinkId(Integer id, UUID bidderLinkId);
 }

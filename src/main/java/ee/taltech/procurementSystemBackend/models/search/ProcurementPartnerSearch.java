@@ -3,22 +3,27 @@ package ee.taltech.procurementSystemBackend.models.search;
 import ee.taltech.procurementSystemBackend.models.SearchObject;
 import ee.taltech.procurementSystemBackend.models.model.ProcurementPartner;
 import ee.taltech.procurementSystemBackend.repository.person.Specifications;
-import org.springframework.data.domain.Sort;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
+@AllArgsConstructor
 public class ProcurementPartnerSearch extends SearchObject<ProcurementPartner> {
 
-    private final Integer linkId;
-    private final Integer procurementId;
-    private final Integer partnerId;
-    private final Integer id;
+    private Integer linkId;
+    private Integer procurementId;
+    private Integer partnerId;
+    private Integer id;
 
-    public ProcurementPartnerSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer id, Integer linkId, Integer procurementId, Integer partnerId) {
-        super(limit, page, sort, dir);
-        this.id = id;
-        this.linkId = linkId;
-        this.procurementId = procurementId;
-        this.partnerId = partnerId;
-    }
+//    public ProcurementPartnerSearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer id, Integer linkId, Integer procurementId, Integer partnerId) {
+//        super(limit, page, sort, dir);
+//        this.id = id;
+//        this.linkId = linkId;
+//        this.procurementId = procurementId;
+//        this.partnerId = partnerId;
+//    }
 
 
     @Override

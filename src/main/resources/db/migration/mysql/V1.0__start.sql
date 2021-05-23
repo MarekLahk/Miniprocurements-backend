@@ -105,7 +105,7 @@ CREATE TABLE Procurement
     deadline                 DATETIME,
     status                   SMALLINT                 NOT NULL default (1),
     completion_deadline      DATETIME,
-    completion_deadline_days DATETIME,
+    completion_deadline_days SMALLINT,
 
     created_at               DATETIME                          DEFAULT NOW(),
     updated_at               DATETIME                          DEFAULT NOW()
@@ -198,8 +198,8 @@ CREATE TABLE Bid
     bid_id                 MEDIUMINT AUTO_INCREMENT NOT NULL UNIQUE,
     link_id                BINARY(16)               NOT NULL,
     procurement_partner_id MEDIUMINT                NOT NULL,
-    bid_value              BIGINT,
-    bid_status             SMALLINT                 NOT NULL DEFAULT 1,
+    value                  BIGINT,
+    status             SMALLINT                 NOT NULL DEFAULT 1,
     description            TEXT,
     procurement_id         MEDIUMINT                NOT NULL,
 
@@ -208,7 +208,7 @@ CREATE TABLE Bid
         ON UPDATE NOW(),
 
     CONSTRAINT pk_bid_id PRIMARY KEY (bid_id),
-    CONSTRAINT fk_bid_status FOREIGN KEY (bid_status)
+    CONSTRAINT fk_bid_status FOREIGN KEY (status)
         REFERENCES BidStatus (status_id)
         ON UPDATE CASCADE
         ON DELETE NO ACTION,
@@ -254,7 +254,7 @@ CREATE TABLE Question
     bidder_link_id BINARY(16)               NOT NULL,
     procurement_id MEDIUMINT                NOT NULL,
     question_text  TEXT                     NOT NULL,
-
+    created_by     MEDIUMINT                NOT NULL,
     created_at     DATETIME DEFAULT NOW(),
     updated_at     DATETIME DEFAULT NOW()
         ON UPDATE NOW(),
@@ -266,6 +266,10 @@ CREATE TABLE Question
         ON DELETE NO ACTION,
     CONSTRAINT fk_q_procurement_id FOREIGN KEY (procurement_id)
         REFERENCES Procurement (procurement_id)
+        ON UPDATE CASCADE
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_q_created_by FOREIGN KEY (created_by)
+        REFERENCES Partner (partner_id)
         ON UPDATE CASCADE
         ON DELETE NO ACTION
 );

@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Schema(name = "BidInfoDto", description = "DTO for BidInfo")
-public class BidInfoDto extends DtoBase {
+public class ProcurementPublicDto extends DtoBase {
     @Schema(title="ID of bidinfo")
     private Integer id;
 
@@ -60,7 +60,7 @@ public class BidInfoDto extends DtoBase {
     private Timestamp completionDeadline;
 
     @Schema(title="completionDeadlineDays of bidinfo")
-    private Timestamp completionDeadlineDays;
+    private Integer completionDeadlineDays;
 
     @Schema(title="announcements of bidinfo")
     private List<AnnouncementDto> announcements;

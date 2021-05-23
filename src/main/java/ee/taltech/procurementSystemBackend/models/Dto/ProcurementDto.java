@@ -4,9 +4,7 @@ import ee.taltech.procurementSystemBackend.models.DtoBase;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 @EqualsAndHashCode(callSuper = true)
@@ -19,6 +17,7 @@ public class ProcurementDto extends DtoBase  {
     @Schema(title="id of ProcurementDto")
     private Integer id;
 
+    @Size(max = 50)
     @Schema(title="name of ProcurementDto")
     private String name;
 
@@ -56,5 +55,5 @@ public class ProcurementDto extends DtoBase  {
     private Timestamp completionDeadline;
 
     @Schema(title="completionDeadlineDays of ProcurementDto")
-    private Timestamp completionDeadlineDays;
+    private Integer completionDeadlineDays;
 }

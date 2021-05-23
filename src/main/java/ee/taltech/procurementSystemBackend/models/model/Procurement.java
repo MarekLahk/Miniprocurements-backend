@@ -59,7 +59,7 @@ public class Procurement extends ModelBase {
     private Timestamp completionDeadline;
     @Basic
     @Column(name = "completion_deadline_days")
-    private Timestamp completionDeadlineDays;
+    private Integer completionDeadlineDays;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", insertable = false, updatable = false)

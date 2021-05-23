@@ -1,11 +1,15 @@
 package ee.taltech.procurementSystemBackend.service;
 
+import ee.taltech.procurementSystemBackend.exception.BidException;
 import ee.taltech.procurementSystemBackend.exception.ProcurementException;
 import ee.taltech.procurementSystemBackend.models.Dto.ProcurementDto;
+import ee.taltech.procurementSystemBackend.models.Dto.ProcurementPublicDto;
 import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Procurement;
+import ee.taltech.procurementSystemBackend.models.model.ProcurementPartner;
 import ee.taltech.procurementSystemBackend.models.model.person.Person;
-import ee.taltech.procurementSystemBackend.repository.PocurementRepository;
+import ee.taltech.procurementSystemBackend.repository.ProcurementRepository;
+import ee.taltech.procurementSystemBackend.repository.ProcurementPartnerRepository;
 import ee.taltech.procurementSystemBackend.repository.RepositoryInterface;
 import ee.taltech.procurementSystemBackend.utils.AuthUtils;
 import ee.taltech.procurementSystemBackend.utils.ProcurementUtils;
@@ -14,25 +18,29 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProcurementService extends ServiceBase<Procurement, ProcurementDto> {
 
-    private final PocurementRepository pocurementRepository;
+    private final ProcurementRepository procurementRepository;
     private final AuthUtils authUtils;
     private final ProcurementUtils procurementUtils;
     private final EmailService emailService;
+    private final ProcurementPartnerRepository procurementPartnerRepository;
+    static ProcurementMapper procurementMapper = ProcurementMapper.INSTANCE;
 
 
     public ProcurementService(RepositoryInterface<Procurement> repository,
-                              PocurementRepository pocurementRepository,
+                              ProcurementRepository procurementRepository,
                               AuthUtils authUtils,
-                              ProcurementUtils procurementUtils, EmailService emailService) {
+                              ProcurementUtils procurementUtils, EmailService emailService, ProcurementPartnerRepository procurementPartnerRepository) {
         super(repository, ProcurementMapper.INSTANCE);
-        this.pocurementRepository = pocurementRepository;
+        this.procurementRepository = procurementRepository;
         this.authUtils = authUtils;
         this.procurementUtils = procurementUtils;
         this.emailService = emailService;
+        this.procurementPartnerRepository = procurementPartnerRepository;
     }
 
     public ProcurementDto addProcurement(ProcurementDto dto, Authentication authentication) {
@@ -45,7 +53,7 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
         procurement.setCreatedAt(null);
 
 
-        Procurement savedProcurement = pocurementRepository.save(procurement);
+        Procurement savedProcurement = procurementRepository.save(procurement);
 
         procurementUtils.saveProcurerForAddedProcurement(savedProcurement.getId(), creatorId);
 
@@ -55,10 +63,9 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
     public ProcurementDto updateProcurement(Integer id,
                                             ProcurementDto dto,
                                             Authentication authentication) {
-        Optional<Procurement> optionalProcurement = pocurementRepository.findById(id);
-        Person person = authUtils.getPersonToPerformOperations(authentication);
+        Optional<Procurement> optionalProcurement = procurementRepository.findById(id);
 
-        procurementUtils.checkEmployeePermissionAndProcurementPresence(id, person.getId(), optionalProcurement);
+        Person person = procurementUtils.checkEmployeePermissionAndProcurementPresence(id, authentication);
 
         // optional isPresent is checked in utils
         Integer addedBy = optionalProcurement.get().getCreatedById();
@@ -78,7 +85,7 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
         boolean hasContract = dto.getContractId() != null;
         procurement.setHasContract(dto.getContractId() != null);
         if (hasContract) {
-            Integer contractSubId = pocurementRepository.countByContractId(dto.getContractId()) + 1;
+            Integer contractSubId = procurementRepository.countByContractId(dto.getContractId()) + 1;
             procurement.setContractSubId(contractSubId);
         }
 
@@ -92,15 +99,14 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
             // TODO: 5/5/2021 send emails claiming that active procurement was updated
         }
 
-        return toDtoOptional(pocurementRepository.save(procurement))
+        return toDtoOptional(procurementRepository.save(procurement))
                 .orElseThrow(() -> new ProcurementException("Could not update procurement"));
     }
 
     public ProcurementDto patchProcurementStatus(Integer id, ProcurementDto dto, Authentication authentication) {
-        Optional<Procurement> optionalProcurement = pocurementRepository.findById(id);
-        Person person = authUtils.getPersonToPerformOperations(authentication);
+        Optional<Procurement> optionalProcurement = procurementRepository.findById(id);
 
-        procurementUtils.checkEmployeePermissionAndProcurementPresence(id, person.getId(), optionalProcurement);
+        procurementUtils.checkEmployeePermissionAndProcurementPresence(id, authentication);
         if (dto.getStatus() == null) throw new ProcurementException("Provided status is not present");
         if (!(dto.getStatus() == 2 || dto.getStatus() == 4)) throw new ProcurementException("Status to patch must be equal to 2 or 4");
         // optional isPresent is checked in utils
@@ -112,7 +118,7 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
             boolean hasContract = dto.getContractId() != null;
             procurement.setHasContract(dto.getContractId() != null);
             if (hasContract) {
-                Integer contractSubId = pocurementRepository.countByContractId(dto.getContractId()) + 1;
+                Integer contractSubId = procurementRepository.countByContractId(dto.getContractId()) + 1;
                 procurement.setContractSubId(contractSubId);
             }
             System.out.println("Procurement was activated");
@@ -130,11 +136,25 @@ public class ProcurementService extends ServiceBase<Procurement, ProcurementDto>
             procurementUtils.checkProcurementBeforeStatusPatch(procurement);
             procurementUtils.checkProcurementDeadlineIsNotInPast(procurement.getDeadline());
         }
-        return toDtoOptional(pocurementRepository.save(procurement)).get();
+        return toDtoOptional(procurementRepository.save(procurement)).get();
     }
 
-    @Deprecated
-    public void deleteProcurement(Integer id) {
-        pocurementRepository.deleteById(id);
+    public ProcurementPublicDto getProcurementInfo(UUID partnerUUID) {
+        ProcurementPartner procurementPartner = procurementPartnerRepository.findByLinkId(partnerUUID)
+                .orElseThrow(() -> new BidException("No such bid"));
+        System.out.println(procurementPartner.getProcurement().getCreatedAt());
+        System.out.println(procurementPartner.getProcurement().getUpdatedAt());
+        return procurementMapper.toPublicDto(procurementPartner.getProcurement());
+
+    }
+
+    public void deleteProcurement(Integer id, Authentication authentication) {
+        Procurement procurement = procurementUtils.getProcurement(id);
+        procurementUtils.checkEmployeePermissionAndProcurementPresence(id, authentication);
+        if (procurement.getStatus() != 1) {
+            throw new ProcurementException("Can only delete procurement drafts!");
+        }
+
+        procurementRepository.deleteById(id);
     }
 }

@@ -2,7 +2,6 @@ package ee.taltech.procurementSystemBackend.service;
 
 import ee.taltech.procurementSystemBackend.exception.BidException;
 import ee.taltech.procurementSystemBackend.models.Dto.BidDto;
-import ee.taltech.procurementSystemBackend.models.Dto.BidInfoDto;
 import ee.taltech.procurementSystemBackend.models.mapper.BidMapper;
 import ee.taltech.procurementSystemBackend.models.mapper.ProcurementMapper;
 import ee.taltech.procurementSystemBackend.models.model.Bid;
@@ -34,17 +33,9 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         this.procurementMapper = ProcurementMapper.INSTANCE;
     }
 
-    public BidInfoDto getBidInfo(UUID partnerUUID) {
-        ProcurementPartner procurementPartner = procurementPartnerRepository.findByLinkId(partnerUUID)
-                .orElseThrow(() -> new BidException("No such bid"));
-        System.out.println(procurementPartner.getProcurement().getCreatedAt());
-        System.out.println(procurementPartner.getProcurement().getUpdatedAt());
-        return procurementMapper.toInfoDto(procurementPartner.getProcurement());
-
-    }
 
     public Optional<Bid> getCurrentWaitingBit(UUID partnerUUID) {
-        return bidRepository.findFirstByLinkIdAndBidStatus(partnerUUID, 1);
+        return bidRepository.findFirstByLinkIdAndStatus(partnerUUID, 1);
     }
 
 //    public BidInfoDto getCurrentWaitingBid(UUID partnerUuid) {
@@ -88,7 +79,7 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         bidUtils.checkBidBeforeAdding(partnerUuid);
         bid.setLinkId(partnerUuid);
         bid.setProcurementPartnerId(procurementPartner.getId());
-        bid.setBidStatus(1);
+        bid.setStatus(1);
         bid.setProcurementId(procurementPartner.getProcurementId());
         return toDtoOptional(bidRepository.save(bid)).get();
     }
@@ -101,7 +92,7 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         bidUtils.checkIfBidIsInactive(sourceBid);
         bidUtils.checkIfBidIsActive(sourceBid);
 
-        sourceBid.setBidValue(bid.getBidValue());
+        sourceBid.setValue(bid.getValue());
         sourceBid.setDescription(bid.getDescription());
 
 
@@ -116,11 +107,11 @@ public class BidService extends ServiceBase<Bid, BidDto> {
         Optional<Bid> currentActiveOptional = bidUtils.getCurrentActiveBid(partnerUuid);
         if (currentActiveOptional.isPresent()) {
             Bid currentActive = currentActiveOptional.get();
-            currentActive.setBidStatus(3);
+            currentActive.setStatus(3);
             bidRepository.save(currentActive);
         }
 
-        sourceBid.setBidStatus(2);
+        sourceBid.setStatus(2);
         sourceBid.setCreatedAt(null);
         return toDtoOptional(bidRepository.save(sourceBid)).get();
 
@@ -129,12 +120,8 @@ public class BidService extends ServiceBase<Bid, BidDto> {
     public List<BidDto> getPartnerBids(UUID partnerUUID) {
         ProcurementPartner procurementPartner = procurementPartnerRepository.findByLinkId(partnerUUID)
                 .orElseThrow(() -> new BidException("Invalid UUID"));
-        System.out.println(procurementPartner.getLinkId());
-        System.out.println(procurementPartner.toString());
         List<Bid> bids1 = procurementPartner.getBids();
-        System.out.println(bids1);
-        List<BidDto> bids = toDtoList(bids1);
-        return bids;
+        return toDtoList(bids1);
 
     }
 }

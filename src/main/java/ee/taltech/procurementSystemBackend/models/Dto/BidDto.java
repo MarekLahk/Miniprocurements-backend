@@ -4,7 +4,6 @@ import ee.taltech.procurementSystemBackend.models.DtoBase;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
@@ -18,16 +17,19 @@ public class BidDto extends DtoBase {
     private Integer id;
 
     @Schema(title="ID of link")
-    private UUID LinkId;
+    private UUID linkId;
+
+    @Schema(title="ID of procurementPartner")
+    private Integer procurementPartnerId;
 
     @Schema(title="Value of the bid")
-    private Long bidValue;
+    private Long value;
 
     @Schema(title="Description of the bid")
     private String description;
 
     @Schema(title="Status of the bid")
-    private Integer bidStatus;
+    private Integer status;
 
     @Schema(title="ID of procurement")
     private Integer procurementId;

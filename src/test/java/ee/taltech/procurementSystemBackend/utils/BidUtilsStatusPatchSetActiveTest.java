@@ -28,7 +28,7 @@ public class BidUtilsStatusPatchSetActiveTest {
     @Test
     void checkBidBeforeSetToActiveShouldFailBidIsAlreadyActive() {
         Bid bid = new Bid();
-        bid.setBidStatus(2);
+        bid.setStatus(2);
         assertThatThrownBy(() -> bidUtils.checkBidBeforeSetToActive(bid))
                 .isInstanceOf(BidException.class)
                 .hasMessageContaining("Bid is already active");
@@ -37,7 +37,7 @@ public class BidUtilsStatusPatchSetActiveTest {
     @Test
     void checkBidBeforeSetToActiveShouldFailBidValueNull() {
         Bid bid = new Bid();
-        bid.setBidStatus(1);
+        bid.setStatus(1);
         bid.setDescription("test");
         UUID uuid = UUID.randomUUID();
         assertThatThrownBy(() -> bidUtils.checkBidBeforeSetToActive(bid))
@@ -48,9 +48,9 @@ public class BidUtilsStatusPatchSetActiveTest {
     @Test
     void checkBidBeforeSetToActiveShouldFailBidValueNuBlank() {
         Bid bid = new Bid();
-        bid.setBidStatus(1);
+        bid.setStatus(1);
         bid.setDescription("test");
-        bid.setBidValue(0L);
+        bid.setValue(0L);
         UUID uuid = UUID.randomUUID();
         assertThatThrownBy(() -> bidUtils.checkBidBeforeSetToActive(bid))
                 .isInstanceOf(BidException.class)

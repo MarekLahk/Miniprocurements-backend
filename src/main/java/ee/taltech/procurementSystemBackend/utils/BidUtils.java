@@ -17,7 +17,7 @@ public class BidUtils {
     private final BidRepository bidRepository;
 
     public void checkBidBeforeAdding(UUID bidderLinkId) {
-        if (bidRepository.findFirstByLinkIdAndBidStatus(
+        if (bidRepository.findFirstByLinkIdAndStatus(
                 bidderLinkId, 1).isPresent()) {
             throw new BidException("There can be maximally one waiting bid per procurement partner.");
         }
@@ -32,13 +32,13 @@ public class BidUtils {
     }
 
     public void checkBidBeforeSetToActive(Bid bid) {
-        if (bid.getBidStatus() == 2) {
+        if (bid.getStatus() == 2) {
             throw new BidException("Bid is already active");
         }
-        if (bid.getBidValue() == null) {
+        if (bid.getValue() == null) {
             throw new BidException("Bid value cannot be null when setting to active");
         }
-        if (bid.getBidValue() <= 0) {
+        if (bid.getValue() <= 0) {
             throw new BidException("Bid value must be higher than 0 when setting to active");
         }
         // TODO: 4/26/2021 document or description must be provided
@@ -51,18 +51,18 @@ public class BidUtils {
     }
 
     public Optional<Bid> getCurrentActiveBid(UUID bidderLinkId) {
-        return bidRepository.findFirstByLinkIdAndBidStatus(
+        return bidRepository.findFirstByLinkIdAndStatus(
                 bidderLinkId, 2);
     }
 
     public void checkIfBidIsInactive(Bid bid) {
-        if (bid.getBidStatus() == 3) {
+        if (bid.getStatus() == 3) {
             throw new BidException("Inactive bid cannot be updated");
         }
     }
 
     public void checkIfBidIsActive(Bid bid) {
-        if (bid.getBidStatus() == 2) {
+        if (bid.getStatus() == 2) {
             throw new BidException("Active bid cannot be updated");
         }
     }

@@ -3,20 +3,26 @@ package ee.taltech.procurementSystemBackend.models.search;
 import ee.taltech.procurementSystemBackend.models.SearchObject;
 import ee.taltech.procurementSystemBackend.models.model.Reply;
 import ee.taltech.procurementSystemBackend.repository.person.Specifications;
-import org.springframework.data.domain.Sort;
+import lombok.*;
 
+//@EqualsAndHashCode(callSuper = true)
+//@Getter
+//@Setter
+@EqualsAndHashCode(callSuper = true)
+@Data
+@AllArgsConstructor
 public class ReplySearch extends SearchObject<Reply> {
 
-    private final Integer replierId;
-    private final Integer questionId;
-    private final Integer procurementId;
+    private Integer replierId;
+    private Integer questionId;
+    private Integer procurementId;
 
-    public ReplySearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer replierId, Integer questionId, Integer procurementId) {
-        super(limit, page, sort, dir);
-        this.replierId = replierId;
-        this.questionId = questionId;
-        this.procurementId = procurementId;
-    }
+//    public ReplySearch(Integer limit, Integer page, String sort, Sort.Direction dir, Integer replierId, Integer questionId, Integer procurementId) {
+//        super(limit, page, sort, dir);
+//        this.replierId = replierId;
+//        this.questionId = questionId;
+//        this.procurementId = procurementId;
+//    }
 
     @Override
     public SearchSpecPack<Reply> getSearchSpec() {

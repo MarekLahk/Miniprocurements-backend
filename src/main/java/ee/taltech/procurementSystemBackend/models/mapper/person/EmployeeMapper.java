@@ -14,8 +14,8 @@ public interface EmployeeMapper extends PersonMapperInterface<Employee, Employee
      EmployeeMapper INSTANCE = Mappers.getMapper(EmployeeMapper.class);
 
      @Override
-     @Mapping(target = "regNr", ignore = true)
-     @Mapping(target = "partnerInfo", ignore = true)
+//     @Mapping(target = "regNr", ignore = true)
+//     @Mapping(target = "partnerInfo", ignore = true)
      @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL)
      EmployeeDto toDto(Employee model);
 
